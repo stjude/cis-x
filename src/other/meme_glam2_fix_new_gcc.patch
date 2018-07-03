@@ -1,0 +1,13 @@
+diff --git a/src/glam2_glam2.c b/src/glam2_glam2.c
+index 60a9a3f..ef9c3dc 100644
+--- a/src/glam2_glam2.c
++++ b/src/glam2_glam2.c
+@@ -145,7 +145,7 @@ int aln_cmp(const void *a, const void *b) {
+   return x < y ? +1 : x > y ? -1 : 0;
+ }
+ 
+-inline void report_external_failure(const char *prog, int status) {
++void report_external_failure(const char *prog, int status) {
+   if (status == 0) {
+     // success
+   } if (status == -1) {

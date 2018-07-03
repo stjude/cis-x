@@ -1,0 +1,130 @@
+{
+  "name": "cis-x",
+  "title": "St. Jude cis-X",
+  "summary": "Search for activating regulatory variants in the tumor genome",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "sample_id",
+      "label": "Sample ID",
+      "class": "string"
+    },
+    {
+      "name": "snv_input",
+      "label": "Single nucleotide variants",
+      "class": "file",
+      "help": "Tab delimited text file containing raw sequence variants"
+    },
+    {
+      "name": "cnv_loh",
+      "label": "CNV/LOH regions",
+      "class": "file",
+      "help": "Tab delimited text file containing any aneuploidy region existing in the tumor genome under analysis"
+    },
+    {
+      "name": "bam",
+      "label": "RNA-seq BAM",
+      "class": "file"
+    },
+    {
+      "name": "bai",
+      "label": "RNA-seq BAM index",
+      "class": "file"
+    },
+    {
+      "name": "fpkm_matrix",
+      "label": "Gene expression table",
+      "class": "file",
+      "help": "Tab delimited text file containing gene level expressions for the tumor under analysis in FPKM (fragments per kilobase of transcript per million mapped reads)"
+    },
+    {
+      "name": "snv_indel",
+      "label": "Somatic SNV/indel list",
+      "class": "file",
+      "help": "Tab delimited file containing somatic SNV/indel in the tumor genome"
+    },
+    {
+      "name": "cna",
+      "label": "Somatic CNV",
+      "class": "file",
+      "help": "Tab delimited file containing copy number aberrations in the tumor genome"
+    },
+    {
+      "name": "structural_variants",
+      "label": "Somatic SV",
+      "class": "file",
+      "help": "Tab delimited file containing somatic acquired structural variants in the tumor genome"
+    },
+    {
+      "name": "disease",
+      "label": "Disease subtype",
+      "class": "string",
+      "choices": ["TALL", "AML"]
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "cis_activated_candidates",
+      "label": "cis-activated candidates",
+      "class": "file",
+      "help": "cis-activated candidates in the tumor genome under analysis"
+    },
+    {
+      "name": "sv_candidates",
+      "label": "SV candidates",
+      "class": "file",
+      "help": "Structural variants (SV) candidates predicted as the causal for the cis-activated genes in the regulatory territory"
+    },
+    {
+      "name": "cna_candidates",
+      "label": "CNA candidates",
+      "class": "file",
+      "help": "Copy number aberrations (CNA) predicted as the causal for the cis-activated genes in the regulatory territory"
+    },
+    {
+      "name": "snv_indel_candidates",
+      "label": "SNV/indel candidates",
+      "class": "file",
+      "help": "SNV/indel candidates predicted as functional and predicted transcription factors"
+    },
+    {
+      "name": "ohe_results",
+      "label": "OHE results",
+      "class": "file",
+      "help": "Raw outlier high expression (OHE) results"
+    },
+    {
+      "name": "ase_gene_results",
+      "label": "Gene level ASE results",
+      "class": "file",
+      "help": "Raw gene level allelic specific expression (ASE) results"
+    },
+    {
+      "name": "ase_marker_results",
+      "label": "Single marker ASE results",
+      "class": "file",
+      "help": "Raw single marker allelic specific expression (ASE) results"
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "distribution": "Ubuntu",
+    "release": "14.04",
+    "file": "src/cis-x.sh"
+  },
+  "regionalOptions": {
+    "azure:westus": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "azure:mem1_ssd1_x4"
+        }
+      }
+    }
+  }
+}
