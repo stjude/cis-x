@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "open-uri"
+
+require "nokogiri"
+
+url = ARGV[0] or raise "missing url"
+
+document = Nokogiri::HTML(open(url))
+rows = document.css("table tr")
+
+raise "missing data table" if rows.empty?
+
+rows.each do |row|
+  puts row.css("th, td").map(&:text).join("\t")
+end

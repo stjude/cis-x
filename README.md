@@ -32,7 +32,7 @@ export CLASSPATH=$V2M_HOME/lib/java/bambino-1.0.jar:$V2M_HOME/lib/java/indelxref
 
 ### References
 
-See the manuscript for the required reference files.
+See cis-X-seed for a list of required reference files.
 
 ## Demo
 

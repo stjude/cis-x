@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "csv"
+
+EPIGENOME_ID_PATTERN = /E\d{3}/
+
+# This expects a csv-formatted version of `jul2013.roadmapData.qc`:
+# https://docs.google.com/spreadsheets/d/1yikGx4MsO9Ei36b64yOy9Vb6oPC5IBGlFbYEt-N6gOM/view
+def read_groups(path)
+  File.open(path) do |f|
+    # skip meta
+    6.times { f.readline }
+
+    csv = CSV.new(f)
+
+    csv.each.reduce({}) do |map, row|
+      map[row[1]] = row[3]
+      map
+    end
+  end
+end
+
+def parse_eid(s)
+  matches = s.match(EPIGENOME_ID_PATTERN)
+  raise if !matches
+  matches[0]
+end
+
+input_dir = ARGV[0] or raise "missing input_dir"
+meta_file = ARGV[1] or raise "missing meta_file"
+
+groups = read_groups(meta_file)
+
+pathnames = Dir[File.join(input_dir, "*.bed")].sort
+
+pathnames.each do |pathname|
+  basename = File.basename(pathname)
+  eid = parse_eid(basename)
+  group = groups[eid]
+
+  raise if !group
+
+  File.foreach(pathname) do |line|
+    puts "#{line.chomp}\t#{eid}\t#{group}"
+  end
+end

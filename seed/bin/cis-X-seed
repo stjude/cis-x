@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+set -e -x
+
+OUT_DIR=$1
+TMP_DIR=${2:-/tmp}
+
+if [ ! -f $OUT_DIR/GRCh37-lite.2bit ]; then
+    wget --directory-prefix $TMP_DIR \
+        http://genome.wustl.edu/pub/reference/GRCh37-lite/GRCh37-lite.fa.gz
+    # wget --directory-prefix $TMP_DIR \
+    #     http://genome.wustl.edu/pub/reference/GRCh37-lite/GRCh37-lite.fa.gz.md5
+    # md5sum --check $TMP_DIR/GRCh37-lite.fa.gz.md5
+    gzip --decompress $TMP_DIR/GRCh37-lite.fa.gz
+    faToTwoBit $TMP_DIR/GRCh37-lite.fa $OUT_DIR/GRCh37-lite.2bit
+fi
+
+if [ ! -f $OUT_DIR/hg19_refGene ]; then
+    wget --output-document $OUT_DIR/hg19_refGene \
+        --post-data 'clade=mammal&org=Human&db=hg19&hgta_group=genes&hgta_track=refSeqComposite&hgta_table=refGene&hgta_regionType=genome&position=chr21%3A33031597-33041570&hgta_outputType=primaryTable&boolshad.sendToGalaxy=0&boolshad.sendToGreat=0&boolshad.sendToGenomeSpace=0&hgta_outFileName=hg19_refGene&hgta_compressType=none&hgta_doTopSubmit=get+output' \
+        http://genome.ucsc.edu/cgi-bin/hgTables
+fi
+
+if [ ! -f $OUT_DIR/hg19_refGene.bed ]; then
+    hg19_ref_gene_to_bed $OUT_DIR/hg19_refGene > $OUT_DIR/hg19_refGene.bed
+fi
+
+if [ ! -f $OUT_DIR/HOCOMOCOv10_HUMAN_mono_meme_format.meme ]; then
+    wget --directory-prefix $OUT_DIR \
+        http://hocomoco10.autosome.ru/final_bundle/HUMAN/mono/HOCOMOCOv10_HUMAN_mono_meme_format.meme
+fi
+
+if [ ! -f $OUT_DIR/HOCOMOCOv10_annotation_HUMAN_mono.tsv ]; then
+    wget --directory-prefix $OUT_DIR \
+        http://hocomoco10.autosome.ru/final_bundle/HUMAN/mono/HOCOMOCOv10_annotation_HUMAN_mono.tsv
+fi
+
+if [ ! -f $OUT_DIR/hESC.combined.domain.hg19.bed ]; then
+    wget --directory-prefix $TMP_DIR http://chromosome.sdsc.edu/mouse/hi-c/hESC.domain.tar.gz
+    tar xf $TMP_DIR/hESC.domain.tar.gz --directory $TMP_DIR
+
+    wget --directory-prefix $TMP_DIR \
+        http://hgdownload.cse.ucsc.edu/goldenPath/hg18/liftOver/hg18ToHg19.over.chain.gz
+
+    liftOver \
+        $TMP_DIR/hESC/combined/total.combined.domain \
+        $TMP_DIR/hg18ToHg19.over.chain.gz \
+        $OUT_DIR/hESC.combined.domain.hg19.bed \
+        /dev/null
+fi
+
+if [ ! -f $OUT_DIR/ImprintGenes.txt ]; then
+    scrape_geneimprint \
+        http://www.geneimprint.com/site/genes-by-species.Homo+sapiens \
+        > $OUT_DIR/ImprintGenes.txt
+fi
+
+if [ ! -f $OUT_DIR/roadmapData.promoter.merged.111.bed ] \
+    || [ ! -f $OUT_DIR/roadmapData.enhancer.mergeducsc.111.bed ] \
+    || [ ! -f $OUT_DIR/roadmapData.dyadic.merged.111.bed ]
+then
+    wget --output-document $TMP_DIR/jul2013.roadmapData.qc.csv \
+        https://docs.google.com/spreadsheets/d/1yikGx4MsO9Ei36b64yOy9Vb6oPC5IBGlFbYEt-N6gOM/export?format=csv
+fi
+
+if [ ! -f $OUT_DIR/roadmapData.promoter.merged.111.bed ]; then
+    wget --no-directories --no-parent --recursive --level 1 --accept bed.gz --directory-prefix $TMP_DIR/prom \
+        https://egg2.wustl.edu/roadmap/data/byDataType/dnase/BED_files_prom/
+    gzip --decompress $TMP_DIR/prom/*.bed.gz
+    merge_roadmap $TMP_DIR/prom $TMP_DIR/jul2013.roadmapData.qc.csv > $OUT_DIR/roadmapData.promoter.merged.111.bed
+fi
+
+if [ ! -f $OUT_DIR/roadmapData.enhancer.merged.111.bed ]; then
+    wget --no-directories --no-parent --recursive --level 1 --accept bed.gz --directory-prefix enh \
+        https://egg2.wustl.edu/roadmap/data/byDataType/dnase/BED_files_enh/
+    gzip --decompress enh/*.bed.gz
+    merge_roadmap enh $TMP_DIR/jul2013.roadmapData.qc.csv > $OUT_DIR/roadmapData.enhancer.merged.111.bed
+fi
+
+if [ ! -f $OUT_DIR/roadmapData.dyadic.merged.111.bed ]; then
+    wget --no-directories --no-parent --recursive --level 1 --accept bed.gz --directory-prefix dyadic \
+        https://egg2.wustl.edu/roadmap/data/byDataType/dnase/BED_files_dyadic/
+    gzip --decompress dyadic/*.bed.gz
+    merge_roadmap enh $TMP_DIR/jul2013.roadmapData.qc.csv > $OUT_DIR/roadmapData.dyadic.merged.111.bed
+fi

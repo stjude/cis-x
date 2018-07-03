@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+input = ARGV[0] or raise "missing input"
+
+File.open(input) do |f|
+  # skip header
+  f.readline
+
+  f.each_line do |line|
+    r = line.split("\t")
+    puts "#{r[2]}\t#{r[4]}\t#{r[5]}\t#{r[12]}\t#{r[1]}\t#{r[3]}"
+  end
+end
