@@ -13,7 +13,13 @@ DISEASE=${10}
 
 CODE_DIR=$(dirname $0)
 
-ln -s /ref/* $CODE_DIR/ref
+# Currently, all references are assumed to be merged in `$CODE_DIR/ref`. Since
+# there are already static references there and mounting to that directory
+# would shadow them, when running in a container, external references mounted
+# at `/ref` are symlinked to `$CODE_DIR/ref`.
+if [ -f /.dockerenv ] && [ -d /ref ]; then
+    ln -s /ref/* $CODE_DIR/ref
+fi
 
 ### set up directory for output
 WORKDIR="$ROOTDIR/$SAMPLE_ID/working_space"
