@@ -85,7 +85,7 @@ while(<IN>) {
             }
         }
     }
-    next unless $candidate_group;
+    next unless $candidate_group eq "ase_outlier";
     print OUT "$_\t$g2loo{$F[1]}{fpkm}\t$g2loo{$F[1]}{source}\t$g2loo{$F[1]}{size}\t$g2loo{$F[1]}{pval}\t$g2loo{$F[1]}{rank}\t$imprint\t$candidate_group\n";
 }
 close IN;
