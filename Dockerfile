@@ -9,8 +9,12 @@ RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
         # cis-candidates
         r-base \
         # screening
+        #   fimo: libxml2-dev libxslt1-dev zlib1g-dev
+        #   twoBitToFa: libkrb5-3
         build-essential \
         libkrb5-3 \
+        libxml2-dev \
+        libxslt1-dev  \
         wget \
         zlib1g-dev \
     && rm -r /var/lib/apt/lists/*
@@ -26,10 +30,10 @@ RUN cd /tmp \
     && tar xf meme_4.9.0_4.tar.gz \
     && cd meme_4.9.0 \
     && patch -p1 < /tmp/meme_glam2_fix_new_gcc.patch \
-    && ./configure --prefix=/usr/local --with-url=http://meme-suite.org --enable-build-libxml2 --enable-build-libxslt \
-    && make \
+    && ./configure --prefix=/opt/meme \
+    && make -j$(nproc) \
     && make install \
-    && rm -r /tmp/meme_4.9.0* /tmp/meme_glam2_fix_new_gcc.patch
+    && rm -r /tmp/meme*
 
 RUN cd /tmp \
     && echo 'source("http://bioconductor.org/biocLite.R")\nbiocLite("multtest")' > install-multtest.R \
@@ -43,9 +47,9 @@ RUN cd /usr/local/bin \
 
 # paths for variants2matrix
 ENV V2M_HOME /opt/variants2matrix
-ENV PATH ${V2M_HOME}/bin:${PATH}
 ENV PERL5LIB ${V2M_HOME}/lib/perl
 ENV CLASSPATH ${V2M_HOME}/lib/java/bambino-1.0.jar:${V2M_HOME}/lib/java/indelxref-1.0.jar:${V2M_HOME}/lib/java/picard.jar:${V2M_HOME}/lib/java/samplenamelib-1.0.jar
+ENV PATH ${V2M_HOME}/bin:/opt/meme/bin:${PATH}
 
 COPY src /app
 COPY vendor /opt
