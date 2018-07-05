@@ -71,15 +71,15 @@ if [ ! -f $OUT_DIR/roadmapData.promoter.merged.111.bed ]; then
 fi
 
 if [ ! -f $OUT_DIR/roadmapData.enhancer.merged.111.bed ]; then
-    wget --no-directories --no-parent --recursive --level 1 --accept bed.gz --directory-prefix enh \
+    wget --no-directories --no-parent --recursive --level 1 --accept bed.gz --directory-prefix $TMP_DIR/enh \
         https://egg2.wustl.edu/roadmap/data/byDataType/dnase/BED_files_enh/
-    gzip --decompress enh/*.bed.gz
-    merge_roadmap enh $TMP_DIR/jul2013.roadmapData.qc.csv > $OUT_DIR/roadmapData.enhancer.merged.111.bed
+    gzip --decompress $TMP_DIR/enh/*.bed.gz
+    merge_roadmap $TMP_DIR/enh $TMP_DIR/jul2013.roadmapData.qc.csv > $OUT_DIR/roadmapData.enhancer.merged.111.bed
 fi
 
 if [ ! -f $OUT_DIR/roadmapData.dyadic.merged.111.bed ]; then
-    wget --no-directories --no-parent --recursive --level 1 --accept bed.gz --directory-prefix dyadic \
+    wget --no-directories --no-parent --recursive --level 1 --accept bed.gz --directory-prefix $TMP_DIR/dyadic \
         https://egg2.wustl.edu/roadmap/data/byDataType/dnase/BED_files_dyadic/
-    gzip --decompress dyadic/*.bed.gz
-    merge_roadmap enh $TMP_DIR/jul2013.roadmapData.qc.csv > $OUT_DIR/roadmapData.dyadic.merged.111.bed
+    gzip --decompress $TMP_DIR/dyadic/*.bed.gz
+    merge_roadmap $TMP_DIR/enh $TMP_DIR/jul2013.roadmapData.qc.csv > $OUT_DIR/roadmapData.dyadic.merged.111.bed
 fi
