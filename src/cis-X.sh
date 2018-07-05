@@ -32,18 +32,8 @@ pwd
 BILIST=$CODE_DIR/ref/$DISEASE/exp.ref.bi.txt
 WHITELIST=$CODE_DIR/ref/$DISEASE/exp.ref.white.txt
 WHOLELIST=$CODE_DIR/ref/$DISEASE/exp.ref.entire.txt
-CHECK=1
-if [ ! -f $BILIST ]; then
-    CHECK=0
-fi
-if [ ! -f $WHITELIST ]; then
-    CHECK=0
-fi
-if [ ! -f $WHOLELIST ]; then
-    CHECK=0
-fi
-if [ $CHECK -eq 0 ]; then
-    echo "Reference expression data not exist for $DISEASE. Exiting."
+if [ ! -f $BILIST ] || [ ! -f $WHITELIST ] || [ ! -f $WHOLELIST ]; then
+    echo "Reference expression data missing for $DISEASE. Exiting."
     exit 1
 fi
 echo "Reference expression data checked."
