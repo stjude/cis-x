@@ -53,7 +53,6 @@ RUN cd /tmp \
 
 RUN cd /usr/local/bin \
     && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/twoBitToFa \
-    # && echo "84eba4f4031f2b2045d3f76ef7017075e83a6a4916bbcabf45c73cd66fb9b2cf *twoBitToFa" | sha256sum --check \
     && chmod +x twoBitToFa
 
 # seed
@@ -62,12 +61,10 @@ RUN gem install nokogiri --no-ri --no-rdoc
 
 RUN cd /usr/local/bin \
     && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/faToTwoBit \
-    # && echo "64b21f214a9a83cca052f25d3af0c1a65a61fd35a64c41a75ea7f5c5be7fbab4 *faToTwoBit" | sha256sum --check \
     && chmod +x faToTwoBit
 
 RUN cd /usr/local/bin \
     && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/liftOver \
-    # && echo "1b10607173c2081bdf6e9ca2600a2dbcd7bfc03d645fedc732c59221be4ffbaa *liftOver" | sha256sum --check \
     && chmod +x liftOver
 
 # paths for variants2matrix
