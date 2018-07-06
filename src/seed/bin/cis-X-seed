@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e -x
+set -e
 
 OUT_DIR=$1
 TMP_DIR=${2:-/tmp}
