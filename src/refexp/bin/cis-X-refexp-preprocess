@@ -8,11 +8,11 @@ PATH=$CIS_X_CORE_HOME/bin:$PATH
 SAMPLE_ID=$1
 ROOTDIR=$2
 HIGH20=$3
-CNV_LOH=$4
-RNABAM=$5
+RNABAM=$4
+CNV_LOH=$5
 
 if [ $# -lt 5 ]; then
-    echo "Usage: $(basename $0) <sample-id> <results-dir> <markers> <cnv-loh> <bam>"
+    echo "Usage: $(basename $0) <sample-id> <results-dir> <markers> <bam> <cnv-loh>"
     exit 1
 fi
 
