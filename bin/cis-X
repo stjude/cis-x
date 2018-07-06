@@ -5,7 +5,7 @@ CIS_X_HOME=$(realpath $(dirname $0)/..)
 COMMAND=$1
 
 usage() {
-    echo "Usage: $0 <run|seed> [args...]"
+    echo "Usage: $(basename $0) <run|seed> [args...]"
     exit 1
 }
 
