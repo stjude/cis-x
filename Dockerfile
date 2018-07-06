@@ -49,9 +49,11 @@ RUN cd /usr/local/bin \
 ENV V2M_HOME /opt/variants2matrix
 ENV PERL5LIB ${V2M_HOME}/lib/perl
 ENV CLASSPATH ${V2M_HOME}/lib/java/bambino-1.0.jar:${V2M_HOME}/lib/java/indelxref-1.0.jar:${V2M_HOME}/lib/java/picard.jar:${V2M_HOME}/lib/java/samplenamelib-1.0.jar
-ENV PATH ${V2M_HOME}/bin:/opt/meme/bin:${PATH}
 
-COPY src /app
+ENV PATH /app/bin:/opt/meme/bin:${V2M_HOME}/bin:${PATH}
+
+COPY bin /app/bin
+COPY src /app/src
 COPY vendor /opt
 
-ENTRYPOINT ["/app/cis-X.sh"]
+ENTRYPOINT ["/app/bin/cis-X"]

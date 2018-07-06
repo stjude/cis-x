@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+CIS_X_HOME=$(realpath $(dirname $0)/../src)
+
+SAMPLE_ID=$1
+ASE_RESULT_GENE=$2
+OHE_RESULT=$3
+CANDIDATES_RESULT=$4
+
+THRESH_AI=0.3
+THRESH_PVALUE_ASE=0.05
+THRESH_PVALUE_LOO=0.05
+THRESH_FPKM=5
+THRESH_LOO_Hi_Perc=0.1
+
+IMPRINTING_GENES=$CIS_X_HOME/ref/ImprintGenes.txt
+
+perl $CIS_X_HOME/code/ase.candidate.pl \
+    $THRESH_PVALUE_ASE \
+    $THRESH_AI \
+    $THRESH_FPKM \
+    $THRESH_PVALUE_LOO \
+    $SAMPLE_ID \
+    $CANDIDATES_RESULT \
+    $ASE_RESULT_GENE \
+    $OHE_RESULT \
+    $THRESH_LOO_Hi_Perc \
+    $IMPRINTING_GENES

@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+CIS_X_HOME=$(realpath $(dirname $0)/../src)
+
+RNABAM=$1
+SNV4_OUT=$2
+WORKDIR=$3
+MATRIX_OUT=$4
+
+RNABAMLST="$WORKDIR/bam.lst"
+
+echo $RNABAM > $RNABAMLST
+
+for i in $(seq 1 22); do
+    CHROM="chr$i"
+    SNV4_CHR=snv4.seqchr.txt
+
+    if [ -f $SNV4_CHR ]; then
+        rm $SNV4_CHR
+    fi
+
+    if [ -f "commands.txt" ]; then
+        rm commands.txt
+    fi
+
+    if [ -f "commands.sh" ]; then
+        rm commands.sh
+    fi
+
+    perl $CIS_X_HOME/code/sepCHR.pl $SNV4_OUT $CHROM $SNV4_CHR
+
+    LINE_TEMP=$(wc -l $SNV4_CHR | sed -e 's/^ *//' | cut -d" " -f1)
+
+    if [ $LINE_TEMP -gt 0 ]; then
+        variants2matrix -now -bam-list $RNABAMLST -variant-file $SNV4_CHR -snv4 -flat -name $CHROM -step1 commands.txt
+        cat commands.txt |sed 's/^\/bin\/env //' > commands.sh
+        sh commands.sh 2>commands.err
+        variants2matrix -now -bam-list $RNABAMLST -variant-file $SNV4_CHR -snv4 -flat -name $CHROM -step2 -clean
+    fi
+done
+
+perl $CIS_X_HOME/code/mergeVariantOut.pl $WORKDIR $MATRIX_OUT
+
+MATRIX_OUT_LINE=$(wc -l $MATRIX_OUT | sed -e 's/^ *//' | cut -d" " -f1)
+
+if [ $MATRIX_OUT_LINE -lt 2 ]; then
+    echo "No output from variants2matrix. Exiting."
+    exit 1
+fi

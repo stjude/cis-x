@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+CIS_X_HOME=$(realpath $(dirname $0)/../src)
+
+SAMPLE_ID=$1
+DISEASE=$2
+FPKM_MATRIX=$3
+OHE_RESULT=$4
+
+# Ensure reference expression matrices exist for the given disease ID.
+BILIST=$CIS_X_HOME/ref/$DISEASE/exp.ref.bi.txt
+WHITELIST=$CIS_X_HOME/ref/$DISEASE/exp.ref.white.txt
+WHOLELIST=$CIS_X_HOME/ref/$DISEASE/exp.ref.entire.txt
+
+if [ ! -f $BILIST ] || [ ! -f $WHITELIST ] || [ ! -f $WHOLELIST ]; then
+    echo "Reference expression data missing for $DISEASE. Exiting."
+    exit 1
+fi
+
+echo "Reference expression data checked."
+
+Rscript $CIS_X_HOME/code/exp.check.R \
+    $SAMPLE_ID \
+    $FPKM_MATRIX \
+    $BILIST \
+    $WHOLELIST \
+    $WHITELIST \
+    $OHE_RESULT
