@@ -7,7 +7,7 @@ unless ($config and $workdir) {
     die("Usage: cis-X.refexp.step1.pl [config file] [working dir]");
 }
 
-my $outfile = "cis-X.refexp.step1.commands.sh";
+my $outfile = "$workdir/cis-X.refexp.step1.commands.sh";
 open OUT, "> $outfile" or die "$outfile: $!";
 open IN, "< $config" or die "$config: $!";
 while(<IN>) {
