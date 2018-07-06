@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+CIS_X_REFEXP_HOME=$(realpath $(dirname $0)/..)
+
+CONFIG=$1
+RESULTS_DIR=$2
+EXP_MATRIX=$3
+
+if [ $# -lt 3 ]; then
+    echo "Usage: $(basename $0) <config> <results-dir> <exp-matrix>"
+    exit 1
+fi
+
+perl $CIS_X_REFEXP_HOME/src/cis-X.refexp.step2.pl $CONFIG $RESULTS_DIR $EXP_MATRIX

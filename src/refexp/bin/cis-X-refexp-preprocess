@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -e
+
+CIS_X_CORE_HOME=$(realpath $(dirname $0)/../../core)
+PATH=$CIS_X_CORE_HOME/bin:$PATH
+
+SAMPLE_ID=$1
+ROOTDIR=$2
+HIGH20=$3
+CNV_LOH=$4
+RNABAM=$5
+
+if [ $# -lt 5 ]; then
+    echo "Usage: $(basename $0) <sample-id> <results-dir> <markers> <cnv-loh> <bam>"
+    exit 1
+fi
+
+WORKDIR=$ROOTDIR/$SAMPLE_ID/working_space
+mkdir -p $WORKDIR
+cd $WORKDIR
+
+SNV4_OUT="$WORKDIR/$SAMPLE_ID.snv4.txt"
+HET_OUT="$WORKDIR/$SAMPLE_ID.heterozygous.markers.txt"
+cis-X-mark $SAMPLE_ID $HIGH20 $CNV_LOH $SNV4_OUT $HET_OUT
+
+MATRIX_OUT="$WORKDIR/matrix_combined_matrix_simple.tab"
+cis-X-build-matrix $RNABAM $SNV4_OUT $WORKDIR $MATRIX_OUT
+
+ASE_RESULT_MARKER="$WORKDIR/$SAMPLE_ID.ase.combine.WGS.RNAseq.goodmarkers.binom.txt"
+ASE_RESULT_GENE="$WORKDIR/$SAMPLE_ID.ase.gene.model.fdr.txt"
+cis-X-ase $SAMPLE_ID $HET_OUT $MATRIX_OUT $ASE_RESULT_MARKER $ASE_RESULT_GENE

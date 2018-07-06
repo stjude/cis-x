@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+CIS_X_REFEXP_HOME=$(realpath $(dirname $0)/..)
+
+COMMAND=$1
+
+usage() {
+    echo "Usage: $(basename $0) <generate|prepare|preprocess> [args...]"
+    exit 1
+}
+
+case $COMMAND in
+    generate) $CIS_X_REFEXP_HOME/bin/cis-X-refexp-generate "${@:2}" ;;
+    prepare) $CIS_X_REFEXP_HOME/bin/cis-X-refexp-prepare "${@:2}" ;;
+    preprocess) $CIS_X_REFEXP_HOME/bin/cis-X-refexp-preprocess "${@:2}" ;;
+    *) usage ;;
+esac
