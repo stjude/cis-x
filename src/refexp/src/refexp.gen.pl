@@ -4,7 +4,7 @@ my $workdir = $ARGV[0];
 my $expfile = $ARGV[1];
 
 my $outdir = "$workdir/refexp";
-system "mkdir $outdir";
+system "mkdir -p $outdir";
 
 my $infile = "$workdir/cis-X.refexp.step2.collect.filtered.bi.samples.cleared.txt";
 my $outfile = "$outdir/exp.ref.bi.txt";
