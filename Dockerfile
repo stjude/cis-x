@@ -1,23 +1,34 @@
 FROM ubuntu:18.04
 
+# fimo: libxml2-dev libxslt1-dev zlib1g-dev
+# multtest: r-base build-essential
+# nokogiri: build-essential ruby-dev zlib1g-dev liblzma-dev
+# twoBitToFa: libkrb5-3
+#
 # Set the timezone before updating to avoid having to interact with tzdata (r-base dep).
 RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
     && apt-get update \
     && apt-get install -y \
-        # variants2matrix
-        openjdk-8-jre-headless \
-        # cis-candidates
-        r-base \
-        # screening
-        #   fimo: libxml2-dev libxslt1-dev zlib1g-dev
-        #   twoBitToFa: libkrb5-3
+        # common
         build-essential \
         libkrb5-3 \
-        libxml2-dev \
-        libxslt1-dev  \
         wget \
         zlib1g-dev \
+        # variants2matrix
+        openjdk-8-jre-headless \
+        # ase, test-outliers
+        r-base \
+        # screen
+        libxml2-dev \
+        libxslt1-dev  \
+        zlib1g-dev \
+        # seed
+        liblzma-dev \
+        ruby \
+        ruby-dev \
     && rm -r /var/lib/apt/lists/*
+
+# core
 
 RUN wget -O - https://cpanmin.us | perl - App::cpanminus \
     && cpanm Data::Compare
@@ -45,10 +56,27 @@ RUN cd /usr/local/bin \
     # && echo "84eba4f4031f2b2045d3f76ef7017075e83a6a4916bbcabf45c73cd66fb9b2cf *twoBitToFa" | sha256sum --check \
     && chmod +x twoBitToFa
 
+# seed
+
+RUN gem install nokogiri --no-ri --no-rdoc
+
+RUN cd /usr/local/bin \
+    && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/faToTwoBit \
+    # && echo "64b21f214a9a83cca052f25d3af0c1a65a61fd35a64c41a75ea7f5c5be7fbab4 *faToTwoBit" | sha256sum --check \
+    && chmod +x faToTwoBit
+
+RUN cd /usr/local/bin \
+    && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/liftOver \
+    # && echo "1b10607173c2081bdf6e9ca2600a2dbcd7bfc03d645fedc732c59221be4ffbaa *liftOver" | sha256sum --check \
+    && chmod +x liftOver
+
 # paths for variants2matrix
 ENV V2M_HOME /opt/variants2matrix
 ENV PERL5LIB ${V2M_HOME}/lib/perl
 ENV CLASSPATH ${V2M_HOME}/lib/java/bambino-1.0.jar:${V2M_HOME}/lib/java/indelxref-1.0.jar:${V2M_HOME}/lib/java/picard.jar:${V2M_HOME}/lib/java/samplenamelib-1.0.jar
+
+# set for ruby
+ENV LANG C.UTF-8
 
 ENV PATH /app/bin:/opt/meme/bin:${V2M_HOME}/bin:${PATH}
 
