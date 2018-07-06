@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+CIS_X_HOME=$(realpath $(dirname $0)/../src)
+
+$CIS_X_HOME/seed/bin/cis-X-seed "${@:1}"

@@ -63,6 +63,7 @@ $ docker run \
     --mount type=bind,source=$(pwd)/tmp/demo/ref,target=/ref,readonly \
     --mount type=bind,source=$(pwd)/tmp,target=/results \
     cis-x \
+    run \
     SJALL018373_D1 \
     /results \
     /data/SJALL018373_D1.test.wgs.markers.txt \

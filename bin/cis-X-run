@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+set -e
+
+CIS_X_HOME=$(realpath $(dirname $0)/../src)
+
+SAMPLE_ID=$1
+ROOTDIR=$2
+HIGH20=$3
+CNV_LOH=$4
+RNABAM=$5
+FPKM_MATRIX=$6
+SNVINDEL_IN=$7
+SV_IN=$8
+CNA_IN=$9
+DISEASE=${10}
+
+if [ $# -lt 10 ]; then
+    echo "Usage: $0 <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease>"
+    exit 1
+fi
+
+# Currently, all references are assumed to be merged in `$CIS_X_HOME/ref`.
+# Since there are already static references there and mounting to that
+# directory would shadow them, when running in a container, external
+# references mounted at `/ref` are symlinked to `$CIS_X_HOME/ref`.
+if [ -f /.dockerenv ] && [ -d /ref ]; then
+    ln -s /ref/* $CIS_X_HOME/ref
+fi
+
+WORKDIR=$ROOTDIR/$SAMPLE_ID/working_space
+mkdir -p $WORKDIR
+cd $WORKDIR
+
+SNV4_OUT="$WORKDIR/$SAMPLE_ID.snv4.txt"
+HET_OUT="$WORKDIR/$SAMPLE_ID.heterozygous.markers.txt"
+cis-X-mark $SAMPLE_ID $HIGH20 $CNV_LOH $SNV4_OUT $HET_OUT
+
+MATRIX_OUT="$WORKDIR/matrix_combined_matrix_simple.tab"
+cis-X-build-matrix $RNABAM $SNV4_OUT $WORKDIR $MATRIX_OUT
+
+ASE_RESULT_MARKER="$WORKDIR/$SAMPLE_ID.ase.combine.WGS.RNAseq.goodmarkers.binom.txt"
+ASE_RESULT_GENE="$WORKDIR/$SAMPLE_ID.ase.gene.model.fdr.txt"
+cis-X-ase $SAMPLE_ID $HET_OUT $MATRIX_OUT $ASE_RESULT_MARKER $ASE_RESULT_GENE
+
+OHE_RESULT="$WORKDIR/$SAMPLE_ID.OHE.results.txt"
+cis-X-test-outliers $SAMPLE_ID $DISEASE $FPKM_MATRIX $OHE_RESULT
+
+CANDIDATES_RESULT="$WORKDIR/$SAMPLE_ID.cisActivated.candidates.txt"
+cis-X-nominate $SAMPLE_ID $ASE_RESULT_GENE $OHE_RESULT $CANDIDATES_RESULT
+
+SV_CAN="$SAMPLE_ID.sv.candidates.txt"
+CNA_CAN="$SAMPLE_ID.cna.candidates.txt"
+SNVINDEL_CAN="$SAMPLE_ID.snvindel.candidates.txt"
+cis-X-screen $SAMPLE_ID $CANDIDATES_RESULT $SV_IN $CNA_IN $SNVINDEL_IN $FPKM_MATRIX $WORKDIR $SV_CAN $CNA_CAN $SNVINDEL_CAN
+
+RESDIR="$ROOTDIR/$SAMPLE_ID"
+
+cp $ASE_RESULT_GENE $RESDIR
+cp $ASE_RESULT_MARKER $RESDIR
+cp $OHE_RESULT $RESDIR
+cp $CANDIDATES_RESULT $RESDIR
+cp $SNVINDEL_CAN $RESDIR
+cp $CNA_CAN $RESDIR
+cp $SV_CAN $RESDIR
