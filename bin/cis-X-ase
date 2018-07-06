@@ -17,10 +17,10 @@ WGS_RNA_COUNT="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.txt"
 GENE_MODEL_Temp1="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.binom.genemodel.summary.txt"
 GENE_MODEL_Temp2="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.binom.genemodel.summary.merged.txt"
 
-perl $CIS_X_HOME/code/02.add.count.pl $SAMPLE_ID $HET_OUT $MATRIX_OUT $WGS_RNA_COUNT
-Rscript $CIS_X_HOME/code/binom.R $WGS_RNA_COUNT $ASE_RESULT_MARKER
+perl $CIS_X_HOME/core/02.add.count.pl $SAMPLE_ID $HET_OUT $MATRIX_OUT $WGS_RNA_COUNT
+Rscript $CIS_X_HOME/core/binom.R $WGS_RNA_COUNT $ASE_RESULT_MARKER
 
-perl $CIS_X_HOME/code/07.gene.model.Oct2017.pl \
+perl $CIS_X_HOME/core/07.gene.model.Oct2017.pl \
     $SAMPLE_ID \
     $ASE_RESULT_MARKER \
     $GENE_MODEL \
@@ -28,5 +28,5 @@ perl $CIS_X_HOME/code/07.gene.model.Oct2017.pl \
     $THRESH_PVALUE_ASE \
     $GENE_MODEL_Temp1
 
-perl $CIS_X_HOME/code/05.merge.pl $GENE_MODEL_Temp1 $GENE_MODEL_Temp2
-Rscript $CIS_X_HOME/code/fdr.R $GENE_MODEL_Temp2 $ASE_RESULT_GENE
+perl $CIS_X_HOME/core/05.merge.pl $GENE_MODEL_Temp1 $GENE_MODEL_Temp2
+Rscript $CIS_X_HOME/core/fdr.R $GENE_MODEL_Temp2 $ASE_RESULT_GENE

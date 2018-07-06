@@ -10,7 +10,7 @@ HET_OUT=$5
 
 BADLST=$CIS_X_HOME/ref/SuperBad.good.bad.new
 
-perl $CIS_X_HOME/code/01.get.markder.pl \
+perl $CIS_X_HOME/core/01.get.markder.pl \
     $SAMPLE_ID \
     $HIGH20 \
     $CNVLOH \

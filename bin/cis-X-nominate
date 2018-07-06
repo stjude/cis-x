@@ -15,7 +15,7 @@ THRESH_LOO_Hi_Perc=0.1
 
 IMPRINTING_GENES=$CIS_X_HOME/ref/ImprintGenes.txt
 
-perl $CIS_X_HOME/code/ase.candidate.pl \
+perl $CIS_X_HOME/core/ase.candidate.pl \
     $THRESH_PVALUE_ASE \
     $THRESH_AI \
     $THRESH_FPKM \

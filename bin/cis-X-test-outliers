@@ -19,7 +19,7 @@ fi
 
 echo "Reference expression data checked."
 
-Rscript $CIS_X_HOME/code/exp.check.R \
+Rscript $CIS_X_HOME/core/exp.check.R \
     $SAMPLE_ID \
     $FPKM_MATRIX \
     $BILIST \

@@ -36,12 +36,12 @@ FIMO_FA_IN="$WORKDIR/$SAMPLE_ID.snvindel.fimo.input.fa"
 FIMO_OUT="$WORKDIR/fimo_out/fimo.txt"
 FIMO_ACC2GSYM="$CIS_X_HOME/ref/HOCOMOCOv10_annotation_HUMAN_mono.tsv"
 
-perl $CIS_X_HOME/code/scan.sv.pl $SAMPLE_ID $CANDIDATES_RESULT $SV_IN $SV_TEMP1 $SV_WIN
-perl $CIS_X_HOME/code/check.TAD.pl $SAMPLE_ID $TAD $REFGENE $SV_TEMP1 $SV_CAN
-perl $CIS_X_HOME/code/scan.cnv.pl $SAMPLE_ID $CANDIDATES_RESULT $CNA_IN $CNA_TEMP1 $CNA_WIN $CNA_SIZE
-perl $CIS_X_HOME/code/check.TAD.cnv.pl $SAMPLE_ID $TAD $REFGENE $CNA_TEMP1 $CNA_CAN
+perl $CIS_X_HOME/core/scan.sv.pl $SAMPLE_ID $CANDIDATES_RESULT $SV_IN $SV_TEMP1 $SV_WIN
+perl $CIS_X_HOME/core/check.TAD.pl $SAMPLE_ID $TAD $REFGENE $SV_TEMP1 $SV_CAN
+perl $CIS_X_HOME/core/scan.cnv.pl $SAMPLE_ID $CANDIDATES_RESULT $CNA_IN $CNA_TEMP1 $CNA_WIN $CNA_SIZE
+perl $CIS_X_HOME/core/check.TAD.cnv.pl $SAMPLE_ID $TAD $REFGENE $CNA_TEMP1 $CNA_CAN
 
-perl $CIS_X_HOME/code/snvindel.prep.pl $SAMPLE_ID \
+perl $CIS_X_HOME/core/snvindel.prep.pl $SAMPLE_ID \
     $SNVINDEL_IN \
     $CANDIDATES_RESULT \
     $SV_CAN \
@@ -52,10 +52,10 @@ perl $CIS_X_HOME/code/snvindel.prep.pl $SAMPLE_ID \
     $SNVINDEL_WIN
 
 twoBitToFa -seqList=$SNVINDEL_SEQLIST $REF_2BIT $SNVINDEL_FA
-perl $CIS_X_HOME/code/merge.fa.pl $SAMPLE_ID $SNVINDEL_VAR $SNVINDEL_FA $FIMO_FA_IN
+perl $CIS_X_HOME/core/merge.fa.pl $SAMPLE_ID $SNVINDEL_VAR $SNVINDEL_FA $FIMO_FA_IN
 fimo --verbosity 1 --thresh 1e-3 $MOTIF $FIMO_FA_IN
 
-perl $CIS_X_HOME/code/snvindel.process.pl \
+perl $CIS_X_HOME/core/snvindel.process.pl \
     $SAMPLE_ID \
     $FIMO_OUT \
     $FIMO_ACC2GSYM \
