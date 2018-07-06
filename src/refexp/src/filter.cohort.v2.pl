@@ -5,7 +5,7 @@ my $workdir = $ARGV[1];
 
 my (%gene,%imprint);
 
-my $infile = "$codedir/ref/hg19_refGene";
+my $infile = "$codedir/../../../refs/hg19_refGene";
 open IN, "< $infile" or die "$infile: $!";
 while(<IN>) {
     chomp;
@@ -16,7 +16,7 @@ while(<IN>) {
 }
 close IN;
 
-$infile = "$codedir/ref/ImprintGenes.txt";
+$infile = "$codedir/../../../refs/ImprintGenes.txt";
 open IN, "< $infile" or die "$infile: $!";
 while(<IN>) {
     chomp;
@@ -34,7 +34,7 @@ while(<IN>) {
     chomp;
     if ($. == 1) {
         print OUT "$_\tchrom\timprinting\tase_fpkm_max\tase_fpkm_gt1_count\tbi_fpkm_max\tbi_fpkm_gt1_count\n";
-        next;   
+        next;
     }
     my @F = split/\t/;
     next unless $F[1] == 1;

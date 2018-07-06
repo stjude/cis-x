@@ -15,8 +15,7 @@ my $codedir  = `dirname $codepath`;
 chomp($codedir);
 print "$codedir\n";
 
-system "perl -w $codedir/code/collect.cohort.pl $config $workdir $expfile";
-system "perl -w $codedir/code/filter.cohort.v2.pl $codedir $workdir";
-system "Rscript $codedir/code/cleanup.bi.cases.R $workdir";
-system "perl -w $codedir/code/refexp.gen.pl $workdir $expfile";
-
+system "perl -w $codedir/collect.cohort.pl $config $workdir $expfile";
+system "perl -w $codedir/filter.cohort.v2.pl $codedir $workdir";
+system "Rscript $codedir/cleanup.bi.cases.R $workdir";
+system "perl -w $codedir/refexp.gen.pl $workdir $expfile";
