@@ -5,6 +5,11 @@ set -e -x
 OUT_DIR=$1
 TMP_DIR=${2:-/tmp}
 
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <out-dir> [tmp-dir]"
+    exit 1
+fi
+
 if [ ! -f $OUT_DIR/GRCh37-lite.2bit ]; then
     wget --directory-prefix $TMP_DIR \
         http://genome.wustl.edu/pub/reference/GRCh37-lite/GRCh37-lite.fa.gz
