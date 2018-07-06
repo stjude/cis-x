@@ -10,7 +10,7 @@ usage() {
 }
 
 case $COMMAND in
-    run) $CIS_X_HOME/bin/cis-X-run "${@:2}" ;;
+    run) $CIS_X_HOME/src/core/bin/cis-X-run "${@:2}" ;;
     seed) $CIS_X_HOME/bin/cis-X-seed "${@:2}" ;;
     *) usage ;;
 esac

@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+CIS_X_HOME=$(realpath $(dirname $0)/../../..)
+CIS_X_CORE_HOME=$(realpath $(dirname $0)/..)
+
+SAMPLE_ID=$1
+CANDIDATES_RESULT=$2
+SV_IN=$3
+CNA_IN=$4
+SNVINDEL_IN=$5
+FPKM_MATRIX=$6
+WORKDIR=$7
+SV_CAN=$8
+CNA_CAN=$9
+SNVINDEL_CAN=${10}
+
+SV_WIN=1000000
+CNA_WIN=1000000
+CNA_SIZE=5000000
+SNVINDEL_WIN=200000
+TF_FPKM_THRESH=3
+
+TAD=$CIS_X_HOME/src/ref/hESC.combined.domain.hg19.bed
+REFGENE=$CIS_X_HOME/src/ref/hg19_refGene.bed
+REF_2BIT=$CIS_X_HOME/src/ref/GRCh37-lite.2bit
+MOTIF=$CIS_X_HOME/src/ref/HOCOMOCOv10_HUMAN_mono_meme_format.meme
+ROADMAP_ENH=$CIS_X_HOME/src/ref/roadmapData.enhancer.merged.111.bed
+ROADMAP_PRO=$CIS_X_HOME/src/ref/roadmapData.promoter.merged.111.bed
+ROADMAP_DYA=$CIS_X_HOME/src/ref/roadmapData.dyadic.merged.111.bed
+
+SV_TEMP1="$WORKDIR/$SAMPLE_ID.sv.candidates.temp1.txt"
+CNA_TEMP1="$WORKDIR/$SAMPLE_ID.cna.candidates.temp1.txt"
+SNVINDEL_VAR="$WORKDIR/$SAMPLE_ID.snvindel.varlist.txt"
+SNVINDEL_SEQLIST="$WORKDIR/$SAMPLE_ID.snvindel.seqlist.txt"
+SNVINDEL_FA="$WORKDIR/$SAMPLE_ID.snvindel.fa"
+FIMO_FA_IN="$WORKDIR/$SAMPLE_ID.snvindel.fimo.input.fa"
+FIMO_OUT="$WORKDIR/fimo_out/fimo.txt"
+FIMO_ACC2GSYM="$CIS_X_HOME/src/ref/HOCOMOCOv10_annotation_HUMAN_mono.tsv"
+
+perl $CIS_X_CORE_HOME/src/scan.sv.pl $SAMPLE_ID $CANDIDATES_RESULT $SV_IN $SV_TEMP1 $SV_WIN
+perl $CIS_X_CORE_HOME/src/check.TAD.pl $SAMPLE_ID $TAD $REFGENE $SV_TEMP1 $SV_CAN
+perl $CIS_X_CORE_HOME/src/scan.cnv.pl $SAMPLE_ID $CANDIDATES_RESULT $CNA_IN $CNA_TEMP1 $CNA_WIN $CNA_SIZE
+perl $CIS_X_CORE_HOME/src/check.TAD.cnv.pl $SAMPLE_ID $TAD $REFGENE $CNA_TEMP1 $CNA_CAN
+
+perl $CIS_X_CORE_HOME/src/snvindel.prep.pl $SAMPLE_ID \
+    $SNVINDEL_IN \
+    $CANDIDATES_RESULT \
+    $SV_CAN \
+    $CNA_CAN \
+    $TAD \
+    $SNVINDEL_VAR \
+    $SNVINDEL_SEQLIST \
+    $SNVINDEL_WIN
+
+twoBitToFa -seqList=$SNVINDEL_SEQLIST $REF_2BIT $SNVINDEL_FA
+perl $CIS_X_CORE_HOME/src/merge.fa.pl $SAMPLE_ID $SNVINDEL_VAR $SNVINDEL_FA $FIMO_FA_IN
+fimo --verbosity 1 --thresh 1e-3 $MOTIF $FIMO_FA_IN
+
+perl $CIS_X_CORE_HOME/src/snvindel.process.pl \
+    $SAMPLE_ID \
+    $FIMO_OUT \
+    $FIMO_ACC2GSYM \
+    $SNVINDEL_VAR \
+    $FPKM_MATRIX \
+    $TF_FPKM_THRESH \
+    $SNVINDEL_CAN \
+    $ROADMAP_ENH \
+    $ROADMAP_PRO \
+    $ROADMAP_DYA

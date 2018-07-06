@@ -2,7 +2,9 @@
 
 set -e
 
-CIS_X_HOME=$(realpath $(dirname $0)/../src)
+CIS_X_HOME=$(realpath $(dirname $0)/../../..)
+CIS_X_CORE_HOME=$(realpath $(dirname $0)/..)
+PATH=$CIS_X_CORE_HOME/bin:$PATH
 
 SAMPLE_ID=$1
 ROOTDIR=$2
@@ -16,16 +18,16 @@ CNA_IN=$9
 DISEASE=${10}
 
 if [ $# -lt 10 ]; then
-    echo "Usage: $0 <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease>"
+    echo "Usage: $(basename $0) <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease>"
     exit 1
 fi
 
-# Currently, all references are assumed to be merged in `$CIS_X_HOME/ref`.
+# Currently, all references are assumed to be merged in `$CIS_X_HOME/src/ref`.
 # Since there are already static references there and mounting to that
 # directory would shadow them, when running in a container, external
-# references mounted at `/ref` are symlinked to `$CIS_X_HOME/ref`.
+# references mounted at `/ref` are symlinked to `$CIS_X_HOME/src/ref`.
 if [ -f /.dockerenv ] && [ -d /ref ]; then
-    ln -s /ref/* $CIS_X_HOME/ref
+    ln -s /ref/* $CIS_X_HOME/src/ref
 fi
 
 WORKDIR=$ROOTDIR/$SAMPLE_ID/working_space

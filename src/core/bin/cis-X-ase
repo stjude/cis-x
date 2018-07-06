@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-CIS_X_HOME=$(realpath $(dirname $0)/../src)
+CIS_X_HOME=$(realpath $(dirname $0)/../../..)
+CIS_X_CORE_HOME=$(realpath $(dirname $0)/..)
 
 SAMPLE_ID=$1
 HET_OUT=$2
@@ -11,16 +12,16 @@ ASE_RESULT_GENE=$5
 THRESH_AI=0.3
 THRESH_PVALUE_ASE=0.05
 
-GENE_MODEL=$CIS_X_HOME/ref/hg19_refGene
+GENE_MODEL=$CIS_X_HOME/src/ref/hg19_refGene
 
 WGS_RNA_COUNT="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.txt"
 GENE_MODEL_Temp1="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.binom.genemodel.summary.txt"
 GENE_MODEL_Temp2="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.binom.genemodel.summary.merged.txt"
 
-perl $CIS_X_HOME/core/02.add.count.pl $SAMPLE_ID $HET_OUT $MATRIX_OUT $WGS_RNA_COUNT
-Rscript $CIS_X_HOME/core/binom.R $WGS_RNA_COUNT $ASE_RESULT_MARKER
+perl $CIS_X_CORE_HOME/src/02.add.count.pl $SAMPLE_ID $HET_OUT $MATRIX_OUT $WGS_RNA_COUNT
+Rscript $CIS_X_CORE_HOME/src/binom.R $WGS_RNA_COUNT $ASE_RESULT_MARKER
 
-perl $CIS_X_HOME/core/07.gene.model.Oct2017.pl \
+perl $CIS_X_CORE_HOME/src/07.gene.model.Oct2017.pl \
     $SAMPLE_ID \
     $ASE_RESULT_MARKER \
     $GENE_MODEL \
@@ -28,5 +29,5 @@ perl $CIS_X_HOME/core/07.gene.model.Oct2017.pl \
     $THRESH_PVALUE_ASE \
     $GENE_MODEL_Temp1
 
-perl $CIS_X_HOME/core/05.merge.pl $GENE_MODEL_Temp1 $GENE_MODEL_Temp2
-Rscript $CIS_X_HOME/core/fdr.R $GENE_MODEL_Temp2 $ASE_RESULT_GENE
+perl $CIS_X_CORE_HOME/src/05.merge.pl $GENE_MODEL_Temp1 $GENE_MODEL_Temp2
+Rscript $CIS_X_CORE_HOME/src/fdr.R $GENE_MODEL_Temp2 $ASE_RESULT_GENE

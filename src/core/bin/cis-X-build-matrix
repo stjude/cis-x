@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CIS_X_HOME=$(realpath $(dirname $0)/../src)
+CIS_X_CORE_HOME=$(realpath $(dirname $0)/..)
 
 RNABAM=$1
 SNV4_OUT=$2
@@ -27,7 +27,7 @@ for i in $(seq 1 22); do
         rm commands.sh
     fi
 
-    perl $CIS_X_HOME/core/sepCHR.pl $SNV4_OUT $CHROM $SNV4_CHR
+    perl $CIS_X_CORE_HOME/src/sepCHR.pl $SNV4_OUT $CHROM $SNV4_CHR
 
     LINE_TEMP=$(wc -l $SNV4_CHR | sed -e 's/^ *//' | cut -d" " -f1)
 
@@ -39,7 +39,7 @@ for i in $(seq 1 22); do
     fi
 done
 
-perl $CIS_X_HOME/core/mergeVariantOut.pl $WORKDIR $MATRIX_OUT
+perl $CIS_X_CORE_HOME/src/mergeVariantOut.pl $WORKDIR $MATRIX_OUT
 
 MATRIX_OUT_LINE=$(wc -l $MATRIX_OUT | sed -e 's/^ *//' | cut -d" " -f1)
 

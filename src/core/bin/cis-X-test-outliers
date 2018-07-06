@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-CIS_X_HOME=$(realpath $(dirname $0)/../src)
+CIS_X_HOME=$(realpath $(dirname $0)/../../..)
+CIS_X_CORE_HOME=$(realpath $(dirname $0)/..)
 
 SAMPLE_ID=$1
 DISEASE=$2
@@ -8,9 +9,9 @@ FPKM_MATRIX=$3
 OHE_RESULT=$4
 
 # Ensure reference expression matrices exist for the given disease ID.
-BILIST=$CIS_X_HOME/ref/$DISEASE/exp.ref.bi.txt
-WHITELIST=$CIS_X_HOME/ref/$DISEASE/exp.ref.white.txt
-WHOLELIST=$CIS_X_HOME/ref/$DISEASE/exp.ref.entire.txt
+BILIST=$CIS_X_HOME/src/ref/$DISEASE/exp.ref.bi.txt
+WHITELIST=$CIS_X_HOME/src/ref/$DISEASE/exp.ref.white.txt
+WHOLELIST=$CIS_X_HOME/src/ref/$DISEASE/exp.ref.entire.txt
 
 if [ ! -f $BILIST ] || [ ! -f $WHITELIST ] || [ ! -f $WHOLELIST ]; then
     echo "Reference expression data missing for $DISEASE. Exiting."
@@ -19,7 +20,7 @@ fi
 
 echo "Reference expression data checked."
 
-Rscript $CIS_X_HOME/core/exp.check.R \
+Rscript $CIS_X_CORE_HOME/src/exp.check.R \
     $SAMPLE_ID \
     $FPKM_MATRIX \
     $BILIST \
