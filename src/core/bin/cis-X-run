@@ -22,12 +22,12 @@ if [ $# -lt 10 ]; then
     exit 1
 fi
 
-# Currently, all references are assumed to be merged in `$CIS_X_HOME/src/ref`.
+# Currently, all references are assumed to be merged in `$CIS_X_HOME/refs`.
 # Since there are already static references there and mounting to that
 # directory would shadow them, when running in a container, external
-# references mounted at `/ref` are symlinked to `$CIS_X_HOME/src/ref`.
+# references mounted at `/ref` are symlinked to `$CIS_X_HOME/refs`.
 if [ -f /.dockerenv ] && [ -d /ref ]; then
-    ln -s /ref/* $CIS_X_HOME/src/ref
+    ln -s /ref/* $CIS_X_HOME/refs
 fi
 
 WORKDIR=$ROOTDIR/$SAMPLE_ID/working_space

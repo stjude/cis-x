@@ -12,7 +12,7 @@ ASE_RESULT_GENE=$5
 THRESH_AI=0.3
 THRESH_PVALUE_ASE=0.05
 
-GENE_MODEL=$CIS_X_HOME/src/ref/hg19_refGene
+GENE_MODEL=$CIS_X_HOME/refs/hg19_refGene
 
 WGS_RNA_COUNT="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.txt"
 GENE_MODEL_Temp1="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.binom.genemodel.summary.txt"

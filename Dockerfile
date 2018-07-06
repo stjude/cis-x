@@ -81,6 +81,7 @@ ENV LANG C.UTF-8
 ENV PATH /app/bin:/opt/meme/bin:${V2M_HOME}/bin:${PATH}
 
 COPY bin /app/bin
+COPY refs /app/refs
 COPY src /app/src
 COPY vendor /opt
 

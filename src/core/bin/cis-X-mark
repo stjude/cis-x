@@ -9,7 +9,7 @@ CNVLOH=$3
 SNV4_OUT=$4
 HET_OUT=$5
 
-BADLST=$CIS_X_HOME/src/ref/SuperBad.good.bad.new
+BADLST=$CIS_X_HOME/refs/SuperBad.good.bad.new
 
 perl $CIS_X_CORE_HOME/src/01.get.markder.pl \
     $SAMPLE_ID \

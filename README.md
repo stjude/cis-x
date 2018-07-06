@@ -60,7 +60,7 @@ are relative to the container's target.
 ```
 $ docker run \
     --mount type=bind,source=$(pwd)/tmp/demo/data,target=/data,readonly \
-    --mount type=bind,source=$(pwd)/tmp/demo/ref,target=/ref,readonly \
+    --mount type=bind,source=$(pwd)/tmp/demo/ref,target=/refs,readonly \
     --mount type=bind,source=$(pwd)/tmp,target=/results \
     cis-x \
     run \
