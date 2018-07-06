@@ -23,9 +23,10 @@ main() {
 
     dx-docker run \
         --volume $DATA_DIR:/data \
-        --volume $REFS_DIR:/ref \
+        --volume $REFS_DIR:/refs \
         --volume $RESULTS_DIR:/results \
         cis-x \
+        run \
         $sample_id \
         /results \
         /data/wgs.markers.txt \
