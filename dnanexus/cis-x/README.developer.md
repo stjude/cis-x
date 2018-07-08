@@ -1,44 +1,17 @@
-# cis-x (dev)
+# St. Jude cis-X (dev)
+
+The main script runs a container with a pre-built cis-X image. The DNAnexus
+applet only executes the `run` command.
 
 ## Build
 
-While a container is used to run cis-X,
+```
+$ docker build --tag cis-x ../..
+$ dx-docker add-to-applet cis-x .
+$ dx build
+```
 
-### Prerequisites
-
-  * [docker2aci]
+Note dx-docker exports the image in the ACI format, which requires
+[docker2aci] to be installed.
 
 [docker2aci]: https://github.com/appc/docker2aci
-
-###
-
-Use `dx-docker add-to-applet` to add an image to the applet's resources.
-<!--
-TODO: Please edit this Readme.developer.md file to include information
-for developers or advanced users, for example:
-
-* Information about app internals and implementation details
-* How to report bugs or contribute to development
--->
-
-## Running this app with additional computational resources
-
-This app has the following entry points:
-
-* main
-
-When running this app, you can override the instance type to be used by
-providing the ``systemRequirements`` field to ```/applet-XXXX/run``` or
-```/app-XXXX/run```, as follows:
-
-    {
-      systemRequirements: {
-        "main": {"instanceType": "mem2_hdd2_x2"}
-      },
-      [...]
-    }
-
-See <a
-href="https://wiki.dnanexus.com/API-Specification-v1.0.0/IO-and-Run-Specifications#Run-Specification">Run
-Specification</a> in the API documentation for more information about the
-available instance types.
