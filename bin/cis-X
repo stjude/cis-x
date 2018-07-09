@@ -5,12 +5,12 @@ CIS_X_HOME=$(realpath $(dirname $0)/..)
 COMMAND=$1
 
 usage() {
-    echo "Usage: $(basename $0) <refexp|run|seed> [args...]"
+    echo "Usage: $(basename $0) <ref-exp|run|seed> [args...]"
     exit 1
 }
 
 case $COMMAND in
-    refexp) $CIS_X_HOME/src/refexp/bin/cis-X-refexp "${@:2}" ;;
+    ref-exp) $CIS_X_HOME/src/ref-exp/bin/cis-X-ref-exp "${@:2}" ;;
     run) $CIS_X_HOME/src/core/bin/cis-X-run "${@:2}" ;;
     seed) $CIS_X_HOME/src/seed/bin/cis-X-seed "${@:2}" ;;
     *) usage ;;

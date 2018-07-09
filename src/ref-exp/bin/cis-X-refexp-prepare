@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CIS_X_REFEXP_HOME=$(realpath $(dirname $0)/..)
+CIS_X_REF_EXP_HOME=$(realpath $(dirname $0)/..)
 
 CONFIG=$1
 RESULTS_DIR=$2
@@ -10,4 +10,4 @@ if [ $# -lt 2 ]; then
     exit 1
 fi
 
-perl $CIS_X_REFEXP_HOME/src/cis-X.refexp.step1.pl $CONFIG $RESULTS_DIR
+perl $CIS_X_REF_EXP_HOME/src/cis-X.refexp.step1.pl $CONFIG $RESULTS_DIR
