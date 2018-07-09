@@ -7,7 +7,10 @@ RESULTS_DIR=$2
 EXP_MATRIX=$3
 
 if [ $# -lt 3 ]; then
-    echo "Usage: $(basename $0) <config> <results-dir> <exp-matrix>"
+    basename $0
+    echo
+    echo "USAGE:"
+    echo "    cis-X ref-exp generate <config> <results-dir> <exp-matrix>"
     exit 1
 fi
 

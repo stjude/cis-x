@@ -8,7 +8,10 @@ OUT_DIR=$1
 TMP_DIR=${2:-/tmp}
 
 if [ $# -lt 1 ]; then
-    echo "Usage: $(basename $0) <out-dir> [tmp-dir]"
+    basename $0
+    echo
+    echo "USAGE:"
+    echo "    cis-X seed <out-dir> [tmp-dir]"
     exit 1
 fi
 

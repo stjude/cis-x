@@ -5,7 +5,15 @@ CIS_X_HOME=$(realpath $(dirname $0)/..)
 COMMAND=$1
 
 usage() {
-    echo "Usage: $(basename $0) <ref-exp|run|seed> [args...]"
+    basename $0
+    echo
+    echo "USAGE:"
+    echo "    $(basename $0) [SUBCOMMAND] [args...]"
+    echo ""
+    echo "SUBCOMMANDS:"
+    echo "    ref-exp   Generate reference expression matrices"
+    echo "    run       Search for activating regulatory variants in the tumor genome"
+    echo "    seed      Download and generate a set of common references"
     exit 1
 }
 

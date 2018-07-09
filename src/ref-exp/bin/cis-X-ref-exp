@@ -5,7 +5,10 @@ CIS_X_REF_EXP_HOME=$(realpath $(dirname $0)/..)
 COMMAND=$1
 
 usage() {
-    echo "Usage: $(basename $0) <generate|prepare|preprocess> [args...]"
+    basename $0
+    echo
+    echo "USAGE:"
+    echo "    $(basename $0) <generate|prepare|preprocess> [args...]"
     exit 1
 }
 

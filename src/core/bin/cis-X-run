@@ -18,7 +18,10 @@ CNA_IN=$9
 DISEASE=${10}
 
 if [ $# -lt 10 ]; then
-    echo "Usage: $(basename $0) <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease>"
+    basename $0
+    echo
+    echo "USAGE:"
+    echo "    $(basename $0) <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease>"
     exit 1
 fi
 

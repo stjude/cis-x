@@ -1,7 +1,7 @@
 # cis-X seed
 
-`cis-X seed` is a command to download and generate a set of common reference
-files used by cis-X.
+`cis-X seed` downloads and generates a set of common reference files required
+by cis-X.
 
 ## Prerequisites
 

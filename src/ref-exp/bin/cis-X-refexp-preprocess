@@ -12,7 +12,10 @@ RNABAM=$4
 CNV_LOH=$5
 
 if [ $# -lt 5 ]; then
-    echo "Usage: $(basename $0) <sample-id> <results-dir> <markers> <bam> <cnv-loh>"
+    basename $0
+    echo
+    echo "USAGE:"
+    echo "    cis-X ref-exp preprocess <sample-id> <results-dir> <markers> <bam> <cnv-loh>"
     exit 1
 fi
 
