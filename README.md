@@ -42,10 +42,10 @@ $ docker build --tag cis-x .
 The Docker image uses `bin/cis-X` as its entrypoint, giving access to all
 commands.
 
-The image assumes three working directories: `/data` for inputs,
-`/refs` for common references, and `/results` for outputs. `/data` and
-`/refs` can be read-only, whereas `/results` needs write access. For example,
-mounting to these directories requires three flags:
+The image assumes two working directories: `/data` for inputs and `/results`
+for outputs. `/data` can be read-only, whereas `/results` needs write access.
+External references also need to be mounted to `/app/refs/external`. For
+example, mounting to these directories requires three flags:
 
 ```
 --mount type=bind,source=$HOME/research/data,target=/data,readonly \
@@ -54,8 +54,8 @@ mounting to these directories requires three flags:
 ```
 
 The source directives can point to any absolute path that can be accessed
-locally. Also note that the results directory must exist before running the
-command.
+locally. They do not need to match their target directory. Also note that the
+results directory must exist before running the command.
 
 The following template is the entire command to run the `run` command, with
 variables showing what needs to be set.
@@ -63,7 +63,7 @@ variables showing what needs to be set.
 ```
 $ docker run \
     --mount type=bind,source=$DATA_DIR,target=/data,readonly \
-    --mount type=bind,source=$REF_DIR,target=/refs,readonly \
+    --mount type=bind,source=$REFS_DIR,target=/app/refs/external,readonly \
     --mount type=bind,source=$RESULT_DIR,target=/results \
     cis-x \
     run \
@@ -93,7 +93,7 @@ assumes the demo was extracted to a `tmp` directory in the project directory.
 ```
 $ docker run \
     --mount type=bind,source=$(pwd)/tmp/demo/data,target=/data,readonly \
-    --mount type=bind,source=$(pwd)/tmp/demo/ref,target=/refs,readonly \
+    --mount type=bind,source=$(pwd)/tmp/demo/ref,target=/app/refs/external,readonly \
     --mount type=bind,source=$(pwd)/tmp,target=/results \
     cis-x \
     run \

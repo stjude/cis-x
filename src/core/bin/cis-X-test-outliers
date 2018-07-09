@@ -9,9 +9,9 @@ FPKM_MATRIX=$3
 OHE_RESULT=$4
 
 # Ensure reference expression matrices exist for the given disease ID.
-BILIST=$CIS_X_HOME/refs/$DISEASE/exp.ref.bi.txt
-WHITELIST=$CIS_X_HOME/refs/$DISEASE/exp.ref.white.txt
-WHOLELIST=$CIS_X_HOME/refs/$DISEASE/exp.ref.entire.txt
+BILIST=$CIS_X_HOME/refs/diseases/$DISEASE/exp.ref.bi.txt
+WHITELIST=$CIS_X_HOME/refs/diseases/$DISEASE/exp.ref.white.txt
+WHOLELIST=$CIS_X_HOME/refs/diseases/$DISEASE/exp.ref.entire.txt
 
 if [ ! -f $BILIST ] || [ ! -f $WHITELIST ] || [ ! -f $WHOLELIST ]; then
     echo "Reference expression data missing for $DISEASE. Exiting."

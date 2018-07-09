@@ -23,7 +23,7 @@ main() {
 
     dx-docker run \
         --volume $DATA_DIR:/data \
-        --volume $REFS_DIR:/refs \
+        --volume $REFS_DIR:/app/refs/external \
         --volume $RESULTS_DIR:/results \
         cis-x \
         run \

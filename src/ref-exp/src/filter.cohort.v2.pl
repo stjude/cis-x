@@ -5,7 +5,7 @@ my $workdir = $ARGV[1];
 
 my (%gene,%imprint);
 
-my $infile = "$codedir/../../../refs/hg19_refGene";
+my $infile = "$codedir/../../../refs/external/hg19_refGene";
 open IN, "< $infile" or die "$infile: $!";
 while(<IN>) {
     chomp;
@@ -16,7 +16,7 @@ while(<IN>) {
 }
 close IN;
 
-$infile = "$codedir/../../../refs/ImprintGenes.txt";
+$infile = "$codedir/../../../refs/external/ImprintGenes.txt";
 open IN, "< $infile" or die "$infile: $!";
 while(<IN>) {
     chomp;
