@@ -2,54 +2,34 @@
 
 **cis-X** searches for activating regulatory variants in the tumor genome.
 
-## Prerequisites
+## Installation
 
-  * [Perl] ^5.10.1
-    * [Data::Compare] ~1.25
-  * [R] ^3.1.0
-    * [multtest] ~2.36.0
-  * [Java SE Runtime Environment] ~1.8.0_66
-  * [MEME Suite] =4.9.0
-  * [twoBitToFa] (The UCSC Genome Browser does not version their pre-compiled
-    binaries, but the latest version _should_ work.)
-  * [variants2matrix] (See below.)
+Installation is simply unpacking the source to a working directory and adding
+`$CIS_X_HOME/bin` to `PATH`.
 
-[Perl]: https://www.perl.org/
-[Data::Compare]: https://metacpan.org/pod/Data::Compare
-[R]: https://www.r-project.org/
-[multtest]: https://www.bioconductor.org/packages/release/bioc/html/multtest.html
-[Java SE Runtime Environment]: http://www.oracle.com/technetwork/java/javase/overview/index.html
-[MEME Suite]: http://meme-suite.org/
-[twoBitToFa]: https://genome.ucsc.edu/goldenpath/help/twoBit.html
-[variants2matrix]: #variants2matrix
+### Prerequisites
 
-### variants2matrix
+See cis-X-run and cis-X-seed for the required tools and references.
 
-variants2matrix is (maybe) included with cis-X in the `vendor` directory. It
-is expected to be in `PATH`, along with its Perl library and Java class
-paths.
+## Usage
 
 ```
-V2M_HOME=$(pwd)/vendor/variants2matrix
-export PATH=$V2M_HOME/bin:$PATH
-export PERL5LIB=$V2M_HOME/lib/perl
-export CLASSPATH=$V2M_HOME/lib/java/bambino-1.0.jar:$V2M_HOME/lib/java/indelxref-1.0.jar:$V2M_HOME/lib/java/picard.jar:$V2M_HOME/lib/java/samplenamelib-1.0.jar
+$ cis-X <ref-exp|run|seed> [args...]
 ```
-
-### References
-
-See cis-X-seed for a list of required reference files.
-
-## Demo
 
 ### Docker
 
 cis-X has a `Dockerfile` to create a [Docker] image, which sets up and
-installs all the required dependencies. To use this image, [install
-Docker](https://docs.docker.com/install) for your platform.
+installs all the required dependencies (sans references). To use this image,
+[install Docker](https://docs.docker.com/install) for your platform.
 
-cis-X requires at least 4 GiB of RAM. This resource can be increased for the
-desktop version of Docker by going to Docker preferences > Advanced > Memory.
+For typical inputs, cis-X requires at least 4 GiB of RAM. This resource can
+be increased for the desktop version of Docker by going to Docker preferences
+> Advanced > Memory.
+
+[Docker]: https://www.docker.com/
+
+#### Build
 
 In the cis-X project directory, build the Docker image.
 
@@ -57,11 +37,58 @@ In the cis-X project directory, build the Docker image.
 $ docker build --tag cis-x .
 ```
 
-The next example runs the newly created cis-X image with the demo data and
-references. It assumes the demo was extracted to a `tmp` directory in the
-project directory. The `source` directives in the `mount` option can be any
-absolute path on the local filesystem, but note that the arguments to cis-X
-are relative to the container's target.
+#### Run
+
+The Docker image uses `bin/cis-X` as its entrypoint, giving access to all
+commands.
+
+The image assumes three working directories: `/data` for inputs,
+`/refs` for common references, and `/results` for outputs. `/data` and
+`/refs` can be read-only, whereas `/results` needs write access. For example,
+mounting to these directories requires three flags:
+
+```
+--mount type=bind,source=$HOME/research/data,target=/data,readonly \
+--mount type=bind,source=/tmp/references,target=/refs,readonly \
+--mount type=bind,source=$(pwd)/cis-x-out,target=/results \
+```
+
+The source directives can point to any absolute path that can be accessed
+locally. Also note that the results directory must exist before running the
+command.
+
+The following template is the entire command to run the `run` command, with
+variables showing what needs to be set.
+
+```
+$ docker run \
+    --mount type=bind,source=$DATA_DIR,target=/data,readonly \
+    --mount type=bind,source=$REF_DIR,target=/refs,readonly \
+    --mount type=bind,source=$RESULT_DIR,target=/results \
+    cis-x \
+    run \
+    $SAMPLE_ID \
+    /results \
+    /data/$MARKERS \
+    /data/$CNV_LOH_REGIONS \
+    /data/$BAM \
+    /data/$GENE_EXPRESSION_TABLE \
+    /data/$SOMATIC_SNV_INDEL \
+    /data/$SOMATIC_SV \
+    /data/$SOMATIC_CNV \
+    $DISEASE
+```
+
+Note that pathname arguments are relative to the container's target.
+
+See the [Docker reference for `run`][docker-run] for more options.
+
+[docker-run]: https://docs.docker.com/engine/reference/run/
+
+## Demo
+
+The next example runs a cis-X image with the demo data and references. It
+assumes the demo was extracted to a `tmp` directory in the project directory.
 
 ```
 $ docker run \
@@ -81,5 +108,3 @@ $ docker run \
     /data/SJALL018373_D1.test.cna.txt \
     TALL
 ```
-
-[Docker]: https://www.docker.com/
