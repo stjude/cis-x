@@ -1,48 +1,32 @@
-# cis-X refs
+# cis-X seed
 
-`cis-X-seed` is a utility script to download and generate a set of common
-reference files used by cis-X.
+`cis-X seed` is a command to download and generate a set of common reference
+files used by cis-X.
 
-## Quick Start
+## Prerequisites
 
-```
-$ PLATFORM=linux.x86_64 # or "macOSX.x86_64"
-$ UCSCGB_HOME=$(realpath ../tmp/vendor/ucscgb)
-$ OUT_DIR=../tmp/refs
-$ gem install nokogiri --no-ri --no-rdoc
-$ mkdir -p $UCSCGB_HOME/bin
-$ wget --directory-prefix $UCSCGB_HOME/bin \
-    http://hgdownload.soe.ucsc.edu/admin/exe/$PLATFORM/faToTwoBit \
-    http://hgdownload.soe.ucsc.edu/admin/exe/$PLATFORM/liftOver
-$ chmod +x $UCSCGB_HOME/bin/*
-$ export PATH=$(pwd)/bin:$UCSCGB_HOME/bin:$PATH
-$ mkdir -p $OUT_DIR
-$ cis-X-seed $OUT_DIR
-```
-
-## Usage
-
-### Prerequisites
-
-  * Ruby ^2.2.2
-    * nokogiri ~1.8.3
+  * [Ruby] ^2.2.2
+    * [nokogiri] ~1.8.3
   * [faToTwoBit]\*
   * [liftOver]\*
 
-\* UCSC Genome Browser binaries are not versioned. The latest versions _should_ work.
+\* UCSC Genome Browser binaries are not versioned. The latest versions
+_should_ work.
 
 [Ruby]: http://ruby-lang.org/
 [nokogiri]: http://www.nokogiri.org/
 [faToTwoBit]: https://genome.ucsc.edu/goldenpath/help/twoBit.html
 [liftOver]: https://genome.ucsc.edu/cgi-bin/hgLiftOver
 
-### Usage
+## Usage
 
 ```
-$ cis-X-seed <out-dir> [tmp-dir]
+$ cis-X seed <out-dir> [tmp-dir]
 ```
 
 ## References
+
+The following files are created by `cis-X seed`.
 
   * `GRCh37-lite.2bit`
   * `hESC.combined.domain.hg19.bed`
