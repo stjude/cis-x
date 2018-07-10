@@ -14,7 +14,7 @@ while(<IN>) {
     chomp;
     next if $. == 1;
     my @F = split/\t/;
-    print OUT "cis-X refexp preprocess $F[0] $workdir $F[1] $F[2] $F[3]\n";
+    print OUT "cis-X ref-exp preprocess $F[0] $workdir $F[1] $F[2] $F[3]\n";
 }
 close IN;
 close OUT;
