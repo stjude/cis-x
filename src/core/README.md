@@ -88,7 +88,7 @@ Running cis-X requires quite a few inputs.
       * `reference_normal_count`: the reference allele count in the matched normal genome
       * `alternative_normal_count`: the alternative count in the matched normal genome
 
-    This file can be genereated with Bambino.
+    This file can be generated with Bambino.
 
   * `cnv-loh`: CNV/LOH regions. It contains all the genomic regions carrying
     copy number variations (CNV) or loss of heterozygosity (LOH), which will be
@@ -141,7 +141,7 @@ Running cis-X requires quite a few inputs.
     This file can can be created with Bambino and then preprocessed using the
     steps taken in "[The genetic basis of early T-cell precursor acute lymphoblastic leukaemia][22237106]".
 
-  * `sv` Somatic SVs. This is a tab-deliminated file containing somatic-acquired
+  * `sv` Somatic SVs. This is a tab-delimited file containing somatic-acquired
     structural variants (SV) in the cancer genome. The file must have the
     following columns:
 

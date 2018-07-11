@@ -58,7 +58,7 @@ The preparation stage creates a batch script from a list of inputs.
 $ cis-X ref-exp prepare /path/to/config.txt /results
 ```
 
-It requires a tab-deliminated configuration file with four columns:
+It requires a tab-delimited configuration file with four columns:
 
   * sample_id
   * markers: path to a list of single nucleotide markers
