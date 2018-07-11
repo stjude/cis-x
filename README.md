@@ -29,7 +29,15 @@ See [cis-X run] and [cis-X seed] for the required tools and references.
 ## Usage
 
 ```
-$ cis-X <ref-exp|run|seed> [args...]
+cis-X
+
+USAGE:
+    cis-X <SUBCOMMAND> [args...]
+
+SUBCOMMANDS:
+    ref-exp  Generate reference expression matrices
+    run      Search for activating regulatory variants in the tumor genome
+    seed     Download and generate a set of common references
 ```
 
 ### Docker

@@ -8,12 +8,12 @@ usage() {
     basename $0
     echo
     echo "USAGE:"
-    echo "    $(basename $0) [SUBCOMMAND] [args...]"
+    echo "    cis-X <SUBCOMMAND> [args...]"
     echo ""
     echo "SUBCOMMANDS:"
-    echo "    ref-exp   Generate reference expression matrices"
-    echo "    run       Search for activating regulatory variants in the tumor genome"
-    echo "    seed      Download and generate a set of common references"
+    echo "    ref-exp  Generate reference expression matrices"
+    echo "    run      Search for activating regulatory variants in the tumor genome"
+    echo "    seed     Download and generate a set of common references"
     exit 1
 }
 
