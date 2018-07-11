@@ -3,6 +3,11 @@
 **cis-X ref-exp** generates reference expression matrices used for outlier
 high expression (OHE) tests.
 
+cis-X uses precalculated reference expression matrices for finding outlier
+high expression (OHE) signals, which is disease specific. cis-X includes
+references for pediatric T-ALL and AML, but user-defined references can be added
+as well.
+
 This command helps generate the biallelic expression cases as described
 below (`exp.ref.bi.txt`).
 
