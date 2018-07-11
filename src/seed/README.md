@@ -26,7 +26,8 @@ $ cis-X seed <out-dir> [tmp-dir]
 
 ## References
 
-The following files are created by `cis-X seed`.
+The following files are created by `cis-X seed`. They are all required to run
+cis-X.
 
   * `GRCh37-lite.2bit`
   * `hESC.combined.domain.hg19.bed`
@@ -38,3 +39,12 @@ The following files are created by `cis-X seed`.
   * `roadmapData.dyadic.merged.111.bed`
   * `roadmapData.enhancer.merged.111.bed`
   * `roadmapData.promoter.merged.111.bed`
+
+## Example
+
+`cis-X seed` will commonly be used to seed the `$CIS_X_HOME/refs/external`
+directory.
+
+```
+$ cis-X seed $CIS_X_HOME/refs/external
+```
