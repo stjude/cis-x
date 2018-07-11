@@ -14,10 +14,15 @@ below (`exp.ref.bi.txt`).
 ## Usage
 
 ```
-$ cis-X ref-exp <generate|prepare|preprocess> [args...]
-$ cis-X ref-exp generate <config> <results-dir> <exp-matrix>
-$ cis-X ref-exp prepare <config> <results-dir>
-$ cis-X ref-exp preprocess <sample-id> <results-dir> <markers> <bam> <cnv-loh>
+cis-X-ref-exp
+
+USAGE:
+    cis-X ref-exp <SUBCOMMAND> [args...]
+
+SUBCOMMANDS:
+    generate    Generate a biallelic reference expression matrix
+    prepare     Create a batch script for preprocessing inputs
+    preprocess  Runs allelic specific expression (ASE) tests on inputs
 ```
 
 ## Reference matrices

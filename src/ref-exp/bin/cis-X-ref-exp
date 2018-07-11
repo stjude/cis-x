@@ -8,7 +8,12 @@ usage() {
     basename $0
     echo
     echo "USAGE:"
-    echo "    $(basename $0) <generate|prepare|preprocess> [args...]"
+    echo "    cis-X ref-exp <SUBCOMMAND> [args...]"
+    echo
+    echo "SUBCOMMANDS:"
+    echo "    generate    Generate a biallelic reference expression matrix"
+    echo "    prepare     Create a batch script for preprocessing inputs"
+    echo "    preprocess  Runs allelic specific expression (ASE) tests on inputs"
     exit 1
 }
 
