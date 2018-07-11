@@ -21,7 +21,19 @@ if [ $# -lt 10 ]; then
     basename $0
     echo
     echo "USAGE:"
-    echo "    $(basename $0) <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease>"
+    echo "    cis-X run <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease>"
+    echo
+    echo "ARGS:"
+    echo "    <sample-id>    Sample ID"
+    echo "    <results-dir>  Output directory"
+    echo "    <markers>      Path to single nucleotide markers"
+    echo "    <cnv-loh>      Path to CNV/LOH regions"
+    echo "    <bam>          Path to a RNA-Seq BAM (index must be in same directory)"
+    echo "    <fpkm-matrix>  Path to gene expression table"
+    echo "    <snv-indel>    Path to somatic SNV/indels"
+    echo "    <sv>           Path to somatic SVs"
+    echo "    <cna>          Path to somatic CNVs"
+    echo "    <disease>      Disease name"
     exit 1
 fi
 
