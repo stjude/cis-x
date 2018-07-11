@@ -2,6 +2,18 @@
 
 **cis-X** searches for activating regulatory variants in the tumor genome.
 
+Activating regular variants usually cause the cis-activation of target genes.
+To find cis-activated genes, allelic specific/imbalance expressions (ASE) and
+outlier high expression (OHE) signals are used. Variants in the same
+topologically associated domains with the candidates can then be searched,
+including structural variants (SV), copy number aberrations (CNA), and single
+nucleotide variations (SNV) and insertion/deletions (indel).
+
+A transcription factor binding analysis is also done, using motifs from
+HOCOMOCO v10 models.
+
+cis-X currently only works with hg19 (GRCh37).
+
 ## Installation
 
 Installation is simply unpacking the source to a working directory and adding
