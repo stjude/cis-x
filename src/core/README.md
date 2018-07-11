@@ -41,7 +41,10 @@ export CLASSPATH=$V2M_HOME/lib/java/bambino-1.0.jar:$V2M_HOME/lib/java/indelxref
 
 ### References
 
-See cis-X-seed for a list of required reference files.
+External references are expected to be in `$CIS_X_HOME/refs/external`. These
+are not distributed with cis-X, but the `cis-X seed` command can download and
+generate them. See cis-X-seed for more details and a list of required
+reference files.
 
 ## Usage
 
