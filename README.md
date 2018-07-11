@@ -39,7 +39,7 @@ $ docker build --tag cis-x .
 
 #### Run
 
-The Docker image uses `bin/cis-X` as its entrypoint, giving access to all
+The Docker image uses `bin/cis-X` as its entrypoint, giving access to all of its
 commands.
 
 The image assumes two working directories: `/data` for inputs and `/results`
@@ -49,7 +49,7 @@ example, mounting to these directories requires three flags:
 
 ```
 --mount type=bind,source=$HOME/research/data,target=/data,readonly \
---mount type=bind,source=/tmp/references,target=/refs,readonly \
+--mount type=bind,source=/tmp/references,target=/app/refs/external,readonly \
 --mount type=bind,source=$(pwd)/cis-x-out,target=/results \
 ```
 
@@ -57,8 +57,8 @@ The source directives can point to any absolute path that can be accessed
 locally. They do not need to match their target directory. Also note that the
 results directory must exist before running the command.
 
-The following template is the entire command to run the `run` command, with
-variables showing what needs to be set.
+The following template is the entire command to execute the `run` command,
+with variables showing what needs to be set.
 
 ```
 $ docker run \
@@ -79,7 +79,10 @@ $ docker run \
     $DISEASE
 ```
 
-Note that pathname arguments are relative to the container's target.
+Note that pathname arguments are relative to the container's target. For
+example, mounting `$HOME/research` and with an input located at
+`$HOME/research/sample-001/markers.txt`, the corresponding argument is
+`/data/sample-001/markers.txt`.
 
 See the [Docker reference for `run`][docker-run] for more options.
 
