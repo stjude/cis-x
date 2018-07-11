@@ -10,9 +10,11 @@ including structural variants (SV), copy number aberrations (CNA), and single
 nucleotide variations (SNV) and insertion/deletions (indel).
 
 A transcription factor binding analysis is also done, using motifs from
-HOCOMOCO v10 models.
+[HOCOMOCO] v10 models.
 
 cis-X currently only works with hg19 (GRCh37).
+
+[HOCOMOCO]: http://hocomoco11.autosome.ru/
 
 ## Installation
 
