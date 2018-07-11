@@ -21,7 +21,10 @@ Installation is simply unpacking the source to a working directory and adding
 
 ### Prerequisites
 
-See cis-X-run and cis-X-seed for the required tools and references.
+See [cis-X run] and [cis-X seed] for the required tools and references.
+
+[cis-X run]: https://github.com/stjude/cis-x/tree/master/src/core
+[cis-X seed]: https://github.com/stjude/cis-x/tree/master/src/seed
 
 ## Usage
 

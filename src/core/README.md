@@ -43,8 +43,10 @@ export CLASSPATH=$V2M_HOME/lib/java/bambino-1.0.jar:$V2M_HOME/lib/java/indelxref
 
 External references are expected to be in `$CIS_X_HOME/refs/external`. These
 are not distributed with cis-X, but the `cis-X seed` command can download and
-generate them. See cis-X-seed for more details and a list of required
+generate them. See [cis-X seed] for more details and a list of required
 reference files.
+
+[cis-X seed]: https://github.com/stjude/cis-x/tree/master/src/seed
 
 ## Usage
 
@@ -120,7 +122,7 @@ Running cis-X requires quite a few inputs.
     This FPKM matrix can be generated with the output of HTseq-count and
     preprocessed through `src/other/mergeData_geneName.pl`. The data must be
     able to match values in the given gene specific reference expression
-    matrices (see `cis-X ref-exp`) generated from a larger cohort.
+    matrices (see [cis-X ref-exp]) generated from a larger cohort.
 
   * `snv-indel`: Somatic SNV/indels. This is a tab-delimited file containing
     somatic sequence mutations present in the genome under analysis. It includes
@@ -173,6 +175,7 @@ Running cis-X requires quite a few inputs.
 
   * `disease`: The disease name.
 
+[cis-X ref-exp]: https://github.com/stjude/cis-x/tree/master/src/ref-exp
 [22237106]: https://www.ncbi.nlm.nih.gov/pubmed/22237106
 
 ## Outputs
