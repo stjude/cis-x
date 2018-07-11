@@ -18,7 +18,7 @@ cis-X currently only works with hg19 (GRCh37).
 
 ## Inputs
 
-  * `sample-id`: The sample ID.
+  * `sample_id`: The sample ID.
 
   * `markers`: A list of single nucleotide markers. This is a tab-delimited
     file with the following columns:
@@ -34,7 +34,7 @@ cis-X currently only works with hg19 (GRCh37).
 
     This file can be generated with Bambino.
 
-  * `cnv-loh`: CNV/LOH regions. It contains all the genomic regions carrying
+  * `cnv_loh`: CNV/LOH regions. It contains all the genomic regions carrying
     copy number variations (CNV) or loss of heterozygosity (LOH), which will be
     filtered out during analysis.
 
@@ -50,13 +50,13 @@ cis-X currently only works with hg19 (GRCh37).
 
     This file can be generated with CONSERTING.
 
-  * `bam`: The RNA-Seq BAM file aligned to hg19 (GRCh37). The index file is
-    expected to be in the same directory with the same name and extension
-    `.bai`, e.g, `/path/to/SJ001_D1.bam` and `/path/to/SJ001_D1.bam.bai`.
+  * `bam`: The RNA-Seq BAM file aligned to hg19 (GRCh37).
+
+  * `bai`: The index file associated with the given BAM file.
 
     StrongArm or STAR can be used for RNA-Seq alignment.
 
-  * `fpkm-matrix`: A gene expression table. This is a tab-delimited file
+  * `fpkm_matrix`: A gene expression table. This is a tab-delimited file
     containing gene level expressions for the tumor under analysis. The
     expression are in FPKM (fragments per kilobase of transcript per million
     mapped reads).
@@ -66,7 +66,7 @@ cis-X currently only works with hg19 (GRCh37).
     able to match values in the given gene specific reference expression
     matrices (see `cis-X ref-exp`) generated from a larger cohort.
 
-  * `snv-indel`: Somatic SNV/indels. This is a tab-delimited file containing
+  * `snv_indel`: Somatic SNV/indels. This is a tab-delimited file containing
     somatic sequence mutations present in the genome under analysis. It includes
     both single nucleotide variants (SNV) and small insertion/deletions (indel).
     The file must have the following columns:

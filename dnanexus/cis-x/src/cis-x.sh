@@ -9,13 +9,13 @@ main() {
 
     mkdir $DATA_DIR $RESULTS_DIR
 
-    dx download --output $DATA_DIR/wgs.markers.txt "$snv_input"
+    dx download --output $DATA_DIR/wgs.markers.txt "$markers"
     dx download --output $DATA_DIR/wgs.cnvloh.txt "$cnv_loh"
     dx download --output $DATA_DIR/RNAseq.bam "$bam"
     dx download --output $DATA_DIR/RNAseq.bam.bai "$bai"
     dx download --output $DATA_DIR/RNAseq_all_fpkm.txt "$fpkm_matrix"
     dx download --output $DATA_DIR/mut.txt "$snv_indel"
-    dx download --output $DATA_DIR/sv.txt "$structural_variants"
+    dx download --output $DATA_DIR/sv.txt "$sv"
     dx download --output $DATA_DIR/cna.txt "$cna"
 
     dx ls $DX_PROJECT_CONTEXT_ID:/refs

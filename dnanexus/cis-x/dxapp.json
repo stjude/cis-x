@@ -11,7 +11,7 @@
       "class": "string"
     },
     {
-      "name": "snv_input",
+      "name": "markers",
       "label": "Single nucleotide variants",
       "class": "file",
       "help": "Tab delimited text file containing raw sequence variants"
@@ -45,16 +45,16 @@
       "help": "Tab delimited file containing somatic SNV/indel in the tumor genome"
     },
     {
+      "name": "sv",
+      "label": "Somatic SV",
+      "class": "file",
+      "help": "Tab delimited file containing somatic acquired structural variants in the tumor genome"
+    },
+    {
       "name": "cna",
       "label": "Somatic CNV",
       "class": "file",
       "help": "Tab delimited file containing copy number aberrations in the tumor genome"
-    },
-    {
-      "name": "structural_variants",
-      "label": "Somatic SV",
-      "class": "file",
-      "help": "Tab delimited file containing somatic acquired structural variants in the tumor genome"
     },
     {
       "name": "disease",
