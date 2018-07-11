@@ -25,7 +25,7 @@ installs all the required dependencies (sans references). To use this image,
 
 For typical inputs, cis-X requires at least 4 GiB of RAM. This resource can
 be increased for the desktop version of Docker by going to Docker preferences
-> Advanced > Memory.
+\> Advanced \> Memory.
 
 [Docker]: https://www.docker.com/
 
