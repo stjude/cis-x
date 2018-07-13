@@ -47,7 +47,7 @@ RUN cd /tmp \
     && rm -r /tmp/meme*
 
 RUN cd /tmp \
-    && echo 'source("http://bioconductor.org/biocLite.R")\nbiocLite("multtest")' > install-multtest.R \
+    && echo 'source("http://bioconductor.org/biocLite.R"); biocLite("multtest")' > install-multtest.R \
     && Rscript install-multtest.R \
     && rm install-multtest.R
 
