@@ -54,7 +54,7 @@ perl $CIS_X_CORE_HOME/src/snvindel.prep.pl $SAMPLE_ID \
 
 twoBitToFa -seqList=$SNVINDEL_SEQLIST $REF_2BIT $SNVINDEL_FA
 perl $CIS_X_CORE_HOME/src/merge.fa.pl $SAMPLE_ID $SNVINDEL_VAR $SNVINDEL_FA $FIMO_FA_IN
-fimo --verbosity 1 --thresh 1e-3 $MOTIF $FIMO_FA_IN
+fimo --verbosity 1 --thresh 1e-3 $MOTIF $FIMO_FA_IN 2> /dev/null
 
 perl $CIS_X_CORE_HOME/src/snvindel.process.pl \
     $SAMPLE_ID \
