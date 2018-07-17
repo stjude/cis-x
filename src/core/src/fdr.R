@@ -1,5 +1,4 @@
-
-library(multtest)
+suppressMessages(library(multtest))
 
 argv <- commandArgs(TRUE)
 
