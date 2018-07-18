@@ -19,7 +19,7 @@ for my $i (1 .. 22) {
     $chrom{$c} = 1;
 }
 
-my $infile = $bad_lst; 
+my $infile = $bad_lst;
 open IN, "< $infile" or die "$infile: $!";
 while(<IN>) {
     chomp;
@@ -29,7 +29,6 @@ while(<IN>) {
 close IN;
 
 $infile = $cnvloh_in;
-print "Reading $infile...\n";
 open IN, "< $infile" or die "$infile: $!";
 while(<IN>) {
     chomp;

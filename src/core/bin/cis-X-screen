@@ -14,6 +14,8 @@ SV_CAN=$8
 CNA_CAN=$9
 SNVINDEL_CAN=${10}
 
+LOG=$WORKDIR/log.txt
+
 SV_WIN=1000000
 CNA_WIN=1000000
 CNA_SIZE=5000000
@@ -54,7 +56,7 @@ perl $CIS_X_CORE_HOME/src/snvindel.prep.pl $SAMPLE_ID \
 
 twoBitToFa -seqList=$SNVINDEL_SEQLIST $REF_2BIT $SNVINDEL_FA
 perl $CIS_X_CORE_HOME/src/merge.fa.pl $SAMPLE_ID $SNVINDEL_VAR $SNVINDEL_FA $FIMO_FA_IN
-fimo --verbosity 1 --thresh 1e-3 $MOTIF $FIMO_FA_IN 2> /dev/null
+fimo --verbosity 1 --thresh 1e-3 $MOTIF $FIMO_FA_IN 2>> $LOG
 
 perl $CIS_X_CORE_HOME/src/snvindel.process.pl \
     $SAMPLE_ID \

@@ -37,27 +37,36 @@ if [ $# -lt 10 ]; then
     exit 1
 fi
 
+echo "INFO: $(date): cis-X-run: start"
+
 WORKDIR=$ROOTDIR/$SAMPLE_ID/working_space
 mkdir -p $WORKDIR
 cd $WORKDIR
 
 SNV4_OUT="$WORKDIR/$SAMPLE_ID.snv4.txt"
 HET_OUT="$WORKDIR/$SAMPLE_ID.heterozygous.markers.txt"
+
+echo "INFO: $(date): cis-X-run: getting markers"
 cis-X-mark $SAMPLE_ID $HIGH20 $CNV_LOH $SNV4_OUT $HET_OUT
 
+echo "INFO: $(date): cis-X-run: building matrices"
 MATRIX_OUT="$WORKDIR/matrix_combined_matrix_simple.tab"
 cis-X-build-matrix $RNABAM $SNV4_OUT $WORKDIR $MATRIX_OUT
 
+echo "INFO: $(date): cis-X-run: running allelic specific expression tests"
 ASE_RESULT_MARKER="$WORKDIR/$SAMPLE_ID.ase.combine.WGS.RNAseq.goodmarkers.binom.txt"
 ASE_RESULT_GENE="$WORKDIR/$SAMPLE_ID.ase.gene.model.fdr.txt"
 cis-X-ase $SAMPLE_ID $WORKDIR $HET_OUT $MATRIX_OUT $ASE_RESULT_MARKER $ASE_RESULT_GENE
 
+echo "INFO: $(date): cis-X-run: running outlier high expression tests"
 OHE_RESULT="$WORKDIR/$SAMPLE_ID.OHE.results.txt"
 cis-X-test-outliers $SAMPLE_ID $DISEASE $FPKM_MATRIX $OHE_RESULT
 
+echo "INFO: $(date): cis-X-run: nominating candidates"
 CANDIDATES_RESULT="$WORKDIR/$SAMPLE_ID.cisActivated.candidates.txt"
 cis-X-nominate $SAMPLE_ID $ASE_RESULT_GENE $OHE_RESULT $CANDIDATES_RESULT
 
+echo "INFO: $(date): cis-X-run: screening candidates"
 SV_CAN="$SAMPLE_ID.sv.candidates.txt"
 CNA_CAN="$SAMPLE_ID.cna.candidates.txt"
 SNVINDEL_CAN="$SAMPLE_ID.snvindel.candidates.txt"
@@ -72,3 +81,5 @@ cp $CANDIDATES_RESULT $RESDIR
 cp $SNVINDEL_CAN $RESDIR
 cp $CNA_CAN $RESDIR
 cp $SV_CAN $RESDIR
+
+echo "INFO: $(date): cis-X-run: done"

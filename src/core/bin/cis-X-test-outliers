@@ -14,11 +14,9 @@ WHITELIST=$CIS_X_HOME/refs/diseases/$DISEASE/exp.ref.white.txt
 WHOLELIST=$CIS_X_HOME/refs/diseases/$DISEASE/exp.ref.entire.txt
 
 if [ ! -f $BILIST ] || [ ! -f $WHITELIST ] || [ ! -f $WHOLELIST ]; then
-    echo "Reference expression data missing for $DISEASE. Exiting."
+    echo "ERROR: $(date): cis-X-test-outliers: reference expression matrices missing for $DISEASE"
     exit 1
 fi
-
-echo "Reference expression data checked."
 
 Rscript $CIS_X_CORE_HOME/src/exp.check.R \
     $SAMPLE_ID \
