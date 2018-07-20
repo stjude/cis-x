@@ -14,13 +14,13 @@
       "name": "markers",
       "label": "Single nucleotide variants",
       "class": "file",
-      "help": "Tab delimited text file containing raw sequence variants"
+      "help": "Tab-delimited text file containing raw sequence variants"
     },
     {
       "name": "cnv_loh",
       "label": "CNV/LOH regions",
       "class": "file",
-      "help": "Tab delimited text file containing any aneuploidy region existing in the tumor genome under analysis"
+      "help": "Tab-delimited text file containing any aneuploidy region existing in the tumor genome under analysis"
     },
     {
       "name": "bam",
@@ -36,25 +36,25 @@
       "name": "fpkm_matrix",
       "label": "Gene expression table",
       "class": "file",
-      "help": "Tab delimited text file containing gene level expressions for the tumor under analysis in FPKM (fragments per kilobase of transcript per million mapped reads)"
+      "help": "Tab-delimited text file containing gene level expressions for the tumor under analysis in FPKM (fragments per kilobase of transcript per million mapped reads)"
     },
     {
       "name": "snv_indel",
       "label": "Somatic SNV/indel list",
       "class": "file",
-      "help": "Tab delimited file containing somatic SNV/indel in the tumor genome"
+      "help": "Tab-delimited file containing somatic SNV/indels in the tumor genome"
     },
     {
       "name": "sv",
       "label": "Somatic SV",
       "class": "file",
-      "help": "Tab delimited file containing somatic acquired structural variants in the tumor genome"
+      "help": "Tab-delimited file containing somatic acquired structural variants in the tumor genome"
     },
     {
       "name": "cna",
       "label": "Somatic CNV",
       "class": "file",
-      "help": "Tab delimited file containing copy number aberrations in the tumor genome"
+      "help": "Tab-delimited file containing copy number aberrations in the tumor genome"
     },
     {
       "name": "disease",
