@@ -27,9 +27,9 @@ _should_ work.
 
 ### variants2matrix
 
-variants2matrix is a St. Jude tool that is available from [St. Jude
-Research]. It is expected to be in `PATH`, along with its Perl library and
-Java class paths, e.g.,
+variants2matrix is a St. Jude tool that is available from [St. Jude Research]
+(`variants2matrix.tar.gz`). It is expected to be in `PATH`, along with its
+Perl library and Java class paths, e.g.,
 
 ```
 $ V2M_HOME=$CIS_X_HOME/vendor/variants2matrix
@@ -40,9 +40,14 @@ $ export PERL5LIB=$V2M_HOME/lib/perl
 $ export CLASSPATH=$V2M_HOME/lib/java/bambino-1.0.jar:$V2M_HOME/lib/java/indelxref-1.0.jar:$V2M_HOME/lib/java/picard.jar:$V2M_HOME/lib/java/samplenamelib-1.0.jar
 ```
 
-[St. Jude Research]: https://www.stjuderesearch.org/site/lab/zhang/cis-x
-
 ### References
+
+Reference files are not included with the source due to their large sizes.
+
+Internal references are placed in `$CIS_X_HOME/refs`. These files can be
+downloaded from [St. Jude Research] (`cis-x-refs-*.tar.gz`). It includes a
+blacklist of problematic polymorphism markers and two reference expression
+matrices for T-ALL and AML.
 
 External references are expected to be in `$CIS_X_HOME/refs/external`. These
 are not distributed with cis-X, but the `cis-X seed` command can download and
@@ -337,5 +342,6 @@ Results are saved as tab-delimited files to `$RESULTS_DIR`.
       * `delta.abs`: absolute difference of the non-reference allele fraction between the WGS and RNA-seq
 
 [Ensembl]: http://www.ensembl.org/
-[RefSeq]: https://www.ncbi.nlm.nih.gov/refseq/
 [NIH Roadmap Epigenomics Project]: https://egg2.wustl.edu/roadmap/web_portal/index.html
+[RefSeq]: https://www.ncbi.nlm.nih.gov/refseq/
+[St. Jude Research]: https://www.stjuderesearch.org/site/lab/zhang/cis-x

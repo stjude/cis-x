@@ -79,13 +79,19 @@ RUN cd /tmp \
     && tar xf variants2matrix.tar.gz --directory /opt \
     && rm variants2matrix.tar.gz
 
+RUN cd /tmp \
+    && wget http://ftp.stjude.org/pub/software/cis-x/cis-x-refs-20180713.tar.gz \
+    && echo "03a045dd21d76b5b47fa381c910a5fef2aee87462486fdeef6fc1284de063146 *cis-x-refs-20180713.tar.gz" | sha256sum --check \
+    && mkdir /app \
+    && tar xf cis-x-refs-20180713.tar.gz --directory /app \
+    && rm cis-x-refs-20180713.tar.gz
+
 # set for ruby
 ENV LANG C.UTF-8
 
 ENV PATH /app/bin:/opt/meme/bin:${V2M_HOME}/bin:${PATH}
 
 COPY bin /app/bin
-COPY refs /app/refs
 COPY src /app/src
 
 ENTRYPOINT ["/app/bin/cis-X"]
