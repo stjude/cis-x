@@ -67,10 +67,17 @@ RUN cd /usr/local/bin \
     && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/liftOver \
     && chmod +x liftOver
 
-# paths for variants2matrix
+# variants2matrix
+
 ENV V2M_HOME /opt/variants2matrix
 ENV PERL5LIB ${V2M_HOME}/lib/perl
 ENV CLASSPATH ${V2M_HOME}/lib/java/bambino-1.0.jar:${V2M_HOME}/lib/java/indelxref-1.0.jar:${V2M_HOME}/lib/java/picard.jar:${V2M_HOME}/lib/java/samplenamelib-1.0.jar
+
+RUN cd /tmp \
+    && wget http://ftp.stjude.org/pub/software/cis-x/variants2matrix.tar.gz \
+    && echo "6502f1bd5d8ec64d357092c21b5eb3b9cefc135a41b8b0d0d3124c2ba2f80311 *variants2matrix.tar.gz" | sha256sum --check \
+    && tar xf variants2matrix.tar.gz --directory /opt \
+    && rm variants2matrix.tar.gz
 
 # set for ruby
 ENV LANG C.UTF-8
@@ -80,6 +87,5 @@ ENV PATH /app/bin:/opt/meme/bin:${V2M_HOME}/bin:${PATH}
 COPY bin /app/bin
 COPY refs /app/refs
 COPY src /app/src
-COPY vendor /opt
 
 ENTRYPOINT ["/app/bin/cis-X"]

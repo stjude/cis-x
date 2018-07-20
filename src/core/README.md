@@ -27,16 +27,20 @@ _should_ work.
 
 ### variants2matrix
 
-variants2matrix is (maybe) included with cis-X in the `vendor` directory. It
-is expected to be in `PATH`, along with its Perl library and Java class
-paths.
+variants2matrix is a St. Jude tool that is available from [St. Jude
+Research]. It is expected to be in `PATH`, along with its Perl library and
+Java class paths, e.g.,
 
 ```
-V2M_HOME=$(pwd)/vendor/variants2matrix
-export PATH=$V2M_HOME/bin:$PATH
-export PERL5LIB=$V2M_HOME/lib/perl
-export CLASSPATH=$V2M_HOME/lib/java/bambino-1.0.jar:$V2M_HOME/lib/java/indelxref-1.0.jar:$V2M_HOME/lib/java/picard.jar:$V2M_HOME/lib/java/samplenamelib-1.0.jar
+$ V2M_HOME=$CIS_X_HOME/vendor/variants2matrix
+$ wget http://ftp.stjude.org/pub/software/cis-x/variants2matrix.tar.gz
+$ tar xf variants2matrix.tar.gz --directory $CIS_X_HOME/vendor
+$ export PATH=$V2M_HOME/bin:$PATH
+$ export PERL5LIB=$V2M_HOME/lib/perl
+$ export CLASSPATH=$V2M_HOME/lib/java/bambino-1.0.jar:$V2M_HOME/lib/java/indelxref-1.0.jar:$V2M_HOME/lib/java/picard.jar:$V2M_HOME/lib/java/samplenamelib-1.0.jar
 ```
+
+[St. Jude Research]: https://www.stjuderesearch.org/site/lab/zhang/cis-x
 
 ### References
 
