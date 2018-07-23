@@ -7,7 +7,7 @@ main() {
     REFS_DIR=$HOME/refs
     RESULTS_DIR=$HOME/results
 
-    mkdir $DATA_DIR $RESULTS_DIR
+    mkdir $DATA_DIR $REFS_DIR $RESULTS_DIR
 
     dx download --output $DATA_DIR/wgs.markers.txt "$markers"
     dx download --output $DATA_DIR/wgs.cnvloh.txt "$cnv_loh"
@@ -18,8 +18,7 @@ main() {
     dx download --output $DATA_DIR/sv.txt "$sv"
     dx download --output $DATA_DIR/cna.txt "$cna"
 
-    dx ls $DX_PROJECT_CONTEXT_ID:/refs
-    dx download --recursive $DX_PROJECT_CONTEXT_ID:/refs
+    dx download --recursive --output $REFS_DIR 'St. Jude Reference Data:/pipeline/cis-X/*'
 
     dx-docker run \
         --volume $DATA_DIR:/data \

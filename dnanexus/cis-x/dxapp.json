@@ -127,6 +127,10 @@
       }
     }
   },
+  "access": {
+    "allProjects": "VIEW",
+    "project": "CONTRIBUTE"
+  },
   "authorizedUsers": [
     "org-stjude_cloud",
     "org-stjude_cloud_app_runners"
