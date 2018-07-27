@@ -46,10 +46,7 @@ RUN cd /tmp \
     && make install \
     && rm -r /tmp/meme*
 
-RUN cd /tmp \
-    && echo 'source("http://bioconductor.org/biocLite.R"); biocLite("multtest")' > install-multtest.R \
-    && Rscript install-multtest.R \
-    && rm install-multtest.R
+RUN echo 'source("http://bioconductor.org/biocLite.R"); biocLite("multtest")' | R --vanilla
 
 RUN cd /usr/local/bin \
     && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/twoBitToFa \
