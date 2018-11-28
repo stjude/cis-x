@@ -116,8 +116,9 @@ See the [Docker reference for `run`][docker-run] for more options.
 
 ## Demo
 
-The next example runs a cis-X image with the demo data and references. It
-assumes the demo was extracted to a `tmp` directory in the project directory.
+The next example runs cis-X with [demo data] (`cis-X-demo.tar.gz`). It
+assumes the demo is extracted to a `tmp` directory in the root of the
+project.
 
 ```
 $ docker run \
@@ -137,6 +138,8 @@ $ docker run \
     /data/SJALL018373_D1.test.cna.txt \
     TALL
 ```
+
+[demo data]: https://www.stjuderesearch.org/site/lab/zhang/cis-x
 
 [ref-exp]: https://github.com/stjude/cis-x/tree/master/src/ref-exp
 [run]: https://github.com/stjude/cis-x/tree/master/src/core
