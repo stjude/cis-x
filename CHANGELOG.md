@@ -10,6 +10,10 @@
   * core: Added arguments to set the threshold for the minimal coverage in WGS
     and RNA-seq when selecting heterozygous markers.
 
+### Fixed
+
+  * seed: Update download location for `GRCh37-lite.fa.gz`.
+
 ## 1.0.0 - 2018-07-23
 
   * Initial release

@@ -17,9 +17,9 @@ fi
 
 if [ ! -f $OUT_DIR/GRCh37-lite.2bit ]; then
     wget --directory-prefix $TMP_DIR \
-        http://genome.wustl.edu/pub/reference/GRCh37-lite/GRCh37-lite.fa.gz
+        https://ftp.ncbi.nih.gov/genomes/archive/old_genbank/Eukaryotes/vertebrates_mammals/Homo_sapiens/GRCh37/special_requests/GRCh37-lite.fa.gz
     # wget --directory-prefix $TMP_DIR \
-    #     http://genome.wustl.edu/pub/reference/GRCh37-lite/GRCh37-lite.fa.gz.md5
+    #     https://ftp.ncbi.nih.gov/genomes/archive/old_genbank/Eukaryotes/vertebrates_mammals/Homo_sapiens/GRCh37/special_requests/GRCh37-lite.md5.checksum
     # md5sum --check $TMP_DIR/GRCh37-lite.fa.gz.md5
     gzip --decompress $TMP_DIR/GRCh37-lite.fa.gz
     faToTwoBit $TMP_DIR/GRCh37-lite.fa $OUT_DIR/GRCh37-lite.2bit
