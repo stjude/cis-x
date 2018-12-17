@@ -5,10 +5,11 @@ my $cnvloh_in = $ARGV[2];
 my $snv4_out  = $ARGV[3];
 my $het_out   = $ARGV[4];
 my $bad_lst   = $ARGV[5];
+my $covg      = $ARGV[6];
 
 my $upper   = 0.7;
 my $lower   = 0.3;
-my $covg    = 10;
+#my $covg    = 10;
 my %badlst  = ();
 my %chrom   = ();
 my %col2snv = ();
@@ -47,7 +48,7 @@ close IN;
 my $outfile = $het_out;
 open OUT, "> $outfile" or die "$outfile: $!";
 open SNV4OUT, "> $snv4_out" or die "$snv4_out: $!";
-print OUT "chrom\tposition\tref\tmut\tref_T\tref_G\tmut_T\tmut_G\n";
+print OUT "chrom\tposition\tref\tmut\tref_T\tref_G\tmut_T\tmut_G\tcnvlohTag\n";
 open H20, "< $high20" or die "$high20: $!";
 while(<H20>) {
     chomp;
@@ -90,18 +91,21 @@ while(<H20>) {
     next if $badlst{$snv4};  ## drop the BAD markers.
 
     ### filter markers in cnv-loh regions
-    my $hit = 0;
+    ### updated 2018-12-04. no filter at this stage, give a tag instead indicating if a marker sits inside cnvloh region.
+#    my $hit = 0;
+    my $tag = "diploid";
     for my $id (sort keys %{$cnvloh{chrom}{$F[$col2snv{chr}]}}) {
         if ($F[$col2snv{pos}] >= $cnvloh{region}{$id}{start} and $F[$col2snv{pos}] <= $cnvloh{region}{$id}{end}) {
-            $hit = 1;
+#            $hit = 1;
+            $tag = "cnvloh";
         }
     }
-    next if $hit == 1;
+#    next if $hit == 1;
     ### end of cnv-loh filter
 
     my $maf = $F[$col2snv{mut_tum_num}] / $cvg;
     if ($lower <= $maf and $maf <= $upper) {
-        print OUT "$F[$col2snv{chr}]\t$F[$col2snv{pos}]\t$F[$col2snv{ref_g}]\t$F[$col2snv{mut_g}]\t$F[$col2snv{ref_tum_num}]\t$F[$col2snv{ref_norm_num}]\t$F[$col2snv{mut_tum_num}]\t$F[$col2snv{mut_norm_num}]\n";
+        print OUT "$F[$col2snv{chr}]\t$F[$col2snv{pos}]\t$F[$col2snv{ref_g}]\t$F[$col2snv{mut_g}]\t$F[$col2snv{ref_tum_num}]\t$F[$col2snv{ref_norm_num}]\t$F[$col2snv{mut_tum_num}]\t$F[$col2snv{mut_norm_num}]\t$tag\n";
         print SNV4OUT "$snv4\n";
     }
 }

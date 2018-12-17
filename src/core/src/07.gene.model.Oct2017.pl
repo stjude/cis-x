@@ -3,11 +3,13 @@
 my $sid       = $ARGV[0];
 my $input     = $ARGV[1];
 my $refgene   = $ARGV[2];
-my $ai_thresh = $ARGV[3];
-my $pvalue    = $ARGV[4];
-my $output    = $ARGV[5];
+my $ai_thresh_di = $ARGV[3];
+my $ai_thresh_cnv = $ARGV[4];
+my $pvalue    = $ARGV[5];
+my $cnv_loh_action = $ARGV[6];
+my $output    = $ARGV[7];
 
-my (%gene,@gene,%chr2g,%g2ase,%drop,$head);
+my (%gene,@gene,%chr2g,%g2ase,$head);
 my $infile = $refgene;
 open IN, "< $infile" or die "$infile: $!";
 while(<IN>) {
@@ -34,33 +36,41 @@ while(<IN>) {
         next;
     }
     my @F = split/\t/;
-    my $ai = $F[11];
-    my $pval = $F[10];
+    my $ai = $F[12];
+    my $pval = $F[11];
+    my $tag = $F[8];
     my $chrom = $F[0];
     my $pos = $F[1];
     my $ase = "no";
-    my $drop = 1;
-    if ($ai >= $ai_thresh and $pval < $pvalue) {
-        $ase = "yes";
-    }
     my $snv4 = "$F[0].$F[1].$F[2].$F[3]";
+    if ($cnv_loh_action eq "drop" and $tag eq "cnvloh") {
+        next;
+    }
+    if ($tag eq "diploid") {
+        if ($ai >= $ai_thresh_di and $pval < $pvalue) {
+            $ase = "yes";
+        }
+    }elsif ($tag eq "cnvloh") {
+        if ($ai >= $ai_thresh_cnv and $pval < $pvalue) {
+            $ase = "yes";
+        }
+    }else {
+        print "Error: wrong tag $tag for $snv4.\n";
+    }
     for my $g (keys %{$chr2g{$chrom}}) {
         if ($pos >= $gene{$g}{start} and $pos <= $gene{$g}{end}) {
             $g2ase{$g}{$snv4}{ai} = $ai;
             $g2ase{$g}{$snv4}{ase} = $ase;
             $g2ase{$g}{$snv4}{pval} = $pval;
-            $drop = 0;
+            $g2ase{$g}{$snv4}{tag} = $tag;
         }
-    }
-    if ($drop) {
-        $drop{$snv4} = $_;
     }
 }
 close IN;
 
 my $outfile = $output;
 open OUT, "> $outfile" or die "$outfile: $!";
-print OUT "gene\tgsym\tchrom\tstrand\tstart\tend\tcdsStartStat\tcdsEndStat\tmarkers\tase_markers\taverage_ai_all\taverage_ai_ase\tpval_all_markers\tpval_ase_markers\tai_all_markers\tai_ase_markers\n";
+print OUT "gene\tgsym\tchrom\tstrand\tstart\tend\tcdsStartStat\tcdsEndStat\tmarkers\tase_markers\taverage_ai_all\taverage_ai_ase\tpval_all_markers\tpval_ase_markers\tai_all_markers\tai_ase_markers\ttag_all_markers\n";
 for my $g (@gene) {
     my $markers = 0;
     my $ase_markers = 0;
@@ -70,6 +80,7 @@ for my $g (@gene) {
     my $p_ase = "na";
     my $ai_all = "na";
     my $ai_ase = "na";
+    my $tag_all = "na";
     if ($g2ase{$g}) {
         my @markers = sort keys %{$g2ase{$g}};
         my $sum1 = 0;
@@ -80,9 +91,11 @@ for my $g (@gene) {
             if ($p_all eq "na") {
                 $p_all = $g2ase{$g}{$m}{pval};
                 $ai_all = $g2ase{$g}{$m}{ai};
+                $tag_all = $g2ase{$g}{$m}{tag};
             }else {
                 $p_all .= ",$g2ase{$g}{$m}{pval}";
                 $ai_all .= ",$g2ase{$g}{$m}{ai}";
+                $tag_all .= ",$g2ase{$g}{$m}{tag}";
             }
             if ($g2ase{$g}{$m}{ase} eq "yes") {
                 $ase_markers++;
@@ -101,7 +114,6 @@ for my $g (@gene) {
             $avg_ase = sprintf("%.3f",$sum2/$ase_markers);
         }
     }
-    print OUT "$g\t$gene{$g}{name}\t$gene{$g}{chrom}\t$gene{$g}{strand}\t$gene{$g}{start}\t$gene{$g}{end}\t$gene{$g}{cdsstartstat}\t$gene{$g}{cdsendstat}\t$markers\t$ase_markers\t$avg_all\t$avg_ase\t$p_all\t$p_ase\t$ai_all\t$ai_ase\n";
+    print OUT "$g\t$gene{$g}{name}\t$gene{$g}{chrom}\t$gene{$g}{strand}\t$gene{$g}{start}\t$gene{$g}{end}\t$gene{$g}{cdsstartstat}\t$gene{$g}{cdsendstat}\t$markers\t$ase_markers\t$avg_all\t$avg_ase\t$p_all\t$p_ase\t$ai_all\t$ai_ase\t$tag_all\n";
 }
 close OUT;
-

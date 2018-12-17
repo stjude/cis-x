@@ -9,8 +9,12 @@ HET_OUT=$3
 MATRIX_OUT=$4
 ASE_RESULT_MARKER=$5
 ASE_RESULT_GENE=$6
+CNV_LOH_ACTION=$7
+COVG_RNA=$8
 
-THRESH_AI=0.3
+#THRESH_AI=0.3
+THRESH_AI_DI=0.3
+THRESH_AI_CNV=0.2
 THRESH_PVALUE_ASE=0.05
 
 GENE_MODEL=$CIS_X_HOME/refs/external/hg19_refGene
@@ -19,15 +23,17 @@ WGS_RNA_COUNT="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.txt"
 GENE_MODEL_Temp1="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.binom.genemodel.summary.txt"
 GENE_MODEL_Temp2="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.binom.genemodel.summary.merged.txt"
 
-perl $CIS_X_CORE_HOME/src/02.add.count.pl $SAMPLE_ID $HET_OUT $MATRIX_OUT $WGS_RNA_COUNT
+perl $CIS_X_CORE_HOME/src/02.add.count.pl $SAMPLE_ID $HET_OUT $MATRIX_OUT $WGS_RNA_COUNT $COVG_RNA
 Rscript $CIS_X_CORE_HOME/src/binom.R $WGS_RNA_COUNT $ASE_RESULT_MARKER
 
 perl $CIS_X_CORE_HOME/src/07.gene.model.Oct2017.pl \
     $SAMPLE_ID \
     $ASE_RESULT_MARKER \
     $GENE_MODEL \
-    $THRESH_AI \
+    $THRESH_AI_DI \
+    $THRESH_AI_CNV \
     $THRESH_PVALUE_ASE \
+    $CNV_LOH_ACTION \
     $GENE_MODEL_Temp1
 
 perl $CIS_X_CORE_HOME/src/05.merge.pl $GENE_MODEL_Temp1 $GENE_MODEL_Temp2

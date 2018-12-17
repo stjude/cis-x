@@ -1,15 +1,16 @@
 #! /usr/bin/perl -w
 
-my $thresh_ase_pvalue = $ARGV[0];
-my $thresh_ase_delta  = $ARGV[1];
-my $thresh_fpkm       = $ARGV[2];
-my $thresh_loo_pvalue = $ARGV[3];
-my $sid               = $ARGV[4];
-my $outfile           = $ARGV[5];
-my $ase_result_gene   = $ARGV[6];
-my $ohe_result        = $ARGV[7];
-my $thresh_loo_hi_perc= $ARGV[8];
-my $imprinting_genes  = $ARGV[9];
+my $thresh_ase_pvalue    = $ARGV[0];
+my $thresh_ase_delta_di  = $ARGV[1];
+my $thresh_ase_delta_cnv = $ARGV[2];
+my $thresh_fpkm          = $ARGV[3];
+my $thresh_loo_pvalue    = $ARGV[4];
+my $sid                  = $ARGV[5];
+my $outfile              = $ARGV[6];
+my $ase_result_gene      = $ARGV[7];
+my $ohe_result           = $ARGV[8];
+my $thresh_loo_hi_perc   = $ARGV[9];
+my $imprinting_genes     = $ARGV[10];
 
 my (%imprint,%g2loo,%glst);
 
@@ -67,21 +68,53 @@ while(<IN>) {
     next unless $g2loo{$F[1]};
     $glst{$F[1]} = 1;
     next unless $g2loo{$F[1]}{fpkm} >= $thresh_fpkm;
+    my $tag = $F[16];
+    my @tag = split(/,/,$tag);
+    my $tagnum = scalar(@tag);
+    my $tagcnv = 0;
+    for my $t (@tag) {
+        if ($t eq "cnvloh") {
+            $tagcnv++;
+        }
+    }
+    my $class = "diploid";
+    if ($tagcnv/$tagnum > 0.3) {
+        $class = "cnvloh";
+    }
 #    next unless $g2loo{$F[1]}{pval} < $thresh_loo_pvalue;
-    if ($F[20] < $thresh_ase_pvalue) {
-        if ($F[17] >= $thresh_ase_delta) {
-            if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
-                $candidate_group = "ase_outlier";
-            }elsif ($g2loo{$F[1]}{rank}/$g2loo{$F[1]}{size} <= $thresh_loo_hi_perc) {
-                $candidate_group = "ase_high";
+    if ($F[21] < $thresh_ase_pvalue) {
+        if ($class eq "cnvloh") {
+            ### use $thresh_ase_delta_cnv if > 30% of the markers sits in cnvloh region.
+            if ($F[18] >= $thresh_ase_delta_cnv) {
+                if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                    $candidate_group = "ase_outlier";
+                }elsif ($g2loo{$F[1]}{rank}/$g2loo{$F[1]}{size} <= $thresh_loo_hi_perc) {
+                    $candidate_group = "ase_high";
+                }else {
+                    1;
+                }
             }else {
-                1;
+                if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                    $candidate_group = "uncertain_outlier";
+                }else {
+                    1;
+                }
             }
         }else {
-            if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
-                $candidate_group = "uncertain_outlier";
+            if ($F[18] >= $thresh_ase_delta_di) {
+                if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                    $candidate_group = "ase_outlier";
+                }elsif ($g2loo{$F[1]}{rank}/$g2loo{$F[1]}{size} <= $thresh_loo_hi_perc) {
+                    $candidate_group = "ase_high";
+                }else {
+                    1;
+                }
             }else {
-                1;
+                if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                    $candidate_group = "uncertain_outlier";
+                }else {
+                    1;
+                }
             }
         }
     }

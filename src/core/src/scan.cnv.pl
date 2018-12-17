@@ -39,14 +39,16 @@ while(<IN>) {
     my %target = ();
 ### check for intersection.
     my $chrom = $F[0];
-    my $left_pos = $F[1];
-    my $right_pos = $F[2];
+    my $pos_left = $F[1];
+    my $pos_right = $F[2];
+#    my $left_pos = $F[1];
+#    my $right_pos = $F[2];
     if ($chr2g{$chrom}) {
         my @g = keys %{$chr2g{$chrom}};
         for my $g (@g) {
-            if ($left_pos > $genes{$g}{end}+$win) {
+            if ($pos_left > $genes{$g}{end}+$win) {
                 1;
-            }elsif ($right_pos < $genes{$g}{start}-$win) {
+            }elsif ($pos_right < $genes{$g}{start}-$win) {
                 1;
             }else {
                 $record = 1;

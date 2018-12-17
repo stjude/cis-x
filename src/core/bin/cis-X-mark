@@ -8,6 +8,7 @@ HIGH20=$2
 CNVLOH=$3
 SNV4_OUT=$4
 HET_OUT=$5
+COVG_WGS=$6
 
 BADLST=$CIS_X_HOME/refs/SuperBad.good.bad.new
 
@@ -17,4 +18,5 @@ perl $CIS_X_CORE_HOME/src/01.get.markder.pl \
     $CNVLOH \
     $SNV4_OUT \
     $HET_OUT \
-    $BADLST
+    $BADLST \
+    $COVG_WGS
