@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [1.1.0] - 2018-12-17
 
 ### Added
 
@@ -17,3 +17,5 @@
 ## 1.0.0 - 2018-07-23
 
   * Initial release
+
+[1.1.0]: https://github.com/stjude/cis-x/compare/v1.0.0...v1.1.0
