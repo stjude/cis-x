@@ -35,7 +35,10 @@ main() {
         /data/mut.txt \
         /data/sv.txt \
         /data/cna.txt \
-        $disease
+        $disease \
+        $cnv_loh_action \
+        $min_coverage_wgs \
+        $min_coverage_rna_seq
 
     cis_activated_candidates=$(dx upload --brief $RESULTS_DIR/$sample_id/$sample_id.cisActivated.candidates.txt)
     sv_candidates=$(dx upload --brief $RESULTS_DIR/$sample_id/$sample_id.sv.candidates.txt)

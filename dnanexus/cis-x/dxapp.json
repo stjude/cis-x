@@ -61,6 +61,22 @@
       "label": "Disease subtype",
       "class": "string",
       "choices": ["TALL", "AML"]
+    },
+    {
+      "name": "cnv_loh_action",
+      "label": "CNV/LOH action",
+      "class": "string",
+      "choices": ["keep", "drop"]
+    },
+    {
+      "name": "min_coverage_wgs",
+      "label": "Minimum coverage in WGS",
+      "class": "int"
+    },
+    {
+      "name": "min_coverage_rna_seq",
+      "label": "Minimum coverage in WGS",
+      "class": "int"
     }
   ],
   "outputSpec": [

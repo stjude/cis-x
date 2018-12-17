@@ -135,6 +135,15 @@ cis-X currently only works with hg19 (GRCh37).
 
   * `disease`: The disease name.
 
+  * `cnv_loh_action`: The behavior when handling markers in CNV/LOH regions. Can
+    be either `keep` or `drop`.
+
+  * `min_coverage_wgs`: The minimum coverage in WGS to be included in the
+    analysis.
+
+  * `min_coverage_rna_seq`: The minimum coverage in RNA-seq to be included in
+    the analysis.
+
 [cis-X ref-exp]: https://github.com/stjude/cis-x/tree/master/src/ref-exp
 [22237106]: https://www.ncbi.nlm.nih.gov/pubmed/22237106
 
