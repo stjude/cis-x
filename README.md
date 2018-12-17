@@ -102,7 +102,10 @@ $ docker run \
     /data/$SOMATIC_SNV_INDEL \
     /data/$SOMATIC_SV \
     /data/$SOMATIC_CNV \
-    $DISEASE
+    $DISEASE \
+    $CNV_LOH_ACTION \
+    $MIN_COV_WGS \
+    $MIN_COV_RNA_SEQ
 ```
 
 Note that pathname arguments are relative to the container's target. For
@@ -136,7 +139,10 @@ $ docker run \
     /data/SJALL018373_D1.test.mut.txt \
     /data/SJALL018373_D1.test.sv.txt \
     /data/SJALL018373_D1.test.cna.txt \
-    TALL
+    TALL \
+    drop \
+    10 \
+    10
 ```
 
 [demo data]: https://www.stjuderesearch.org/site/lab/zhang/cis-x
