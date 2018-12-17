@@ -20,7 +20,7 @@ CNV_LOH_ACTION=${11}
 COVG_WGS=${12}
 COVG_RNA=${13}
 
-if [ $# -lt 11 ]; then
+if [ $# -lt 13 ]; then
     basename $0
     echo
     echo "USAGE:"
