@@ -19,12 +19,13 @@ DISEASE=${10}
 CNV_LOH_ACTION=${11}
 COVG_WGS=${12}
 COVG_RNA=${13}
+THRESH_CANDIDATE_FPKM=${14}
 
-if [ $# -lt 13 ]; then
+if [ $# -lt 14 ]; then
     basename $0
     echo
     echo "USAGE:"
-    echo "    cis-X run <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease> <cnv-loh-action> <min coverage in WGS> <min coverage in RNA-seq>"
+    echo "    cis-X run <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease> <cnv-loh-action> <min coverage in WGS> <min coverage in RNA-seq> <FPKM threshold for nominate cis-activated candidate>"
     echo
     echo "ARGS:"
     echo "    <sample-id>       Sample ID"
@@ -37,9 +38,10 @@ if [ $# -lt 13 ]; then
     echo "    <sv>              Path to somatic SVs"
     echo "    <cna>             Path to somatic CNVs"
     echo "    <disease>         Disease name"
-    echo "    <cnv-loh-action>  Action of markers in CNV/LOH regions, either 'keep' or 'drop'"
-    echo "    <min coverage in WGS>      Minimal coverage in WGS to include a heterozygous marker"
-    echo "    <min coverage in RNA-seq>  Minimal coverage in RNA-seq to include a heterozygous marker"
+    echo "    <cnv-loh-action>  Action of markers in CNV/LOH regions, either keep or drop"
+    echo "    <min coverage in WGS>          Minimal coverage in WGS to include a heterozygous marker"
+    echo "    <min coverage in RNA-seq>      Minimal coverage in RNA-seq to include a heterozygous marker"
+    echo "    <fpkm threshold for candidate> FPKM threshold for nominate cis-activated candidate"
     exit 1
 fi
 
@@ -70,7 +72,7 @@ cis-X-test-outliers $SAMPLE_ID $DISEASE $FPKM_MATRIX $OHE_RESULT
 
 echo "INFO: $(date): cis-X-run: nominating candidates"
 CANDIDATES_RESULT="$WORKDIR/$SAMPLE_ID.cisActivated.candidates.txt"
-cis-X-nominate $SAMPLE_ID $ASE_RESULT_GENE $OHE_RESULT $CANDIDATES_RESULT
+cis-X-nominate $SAMPLE_ID $ASE_RESULT_GENE $OHE_RESULT $CANDIDATES_RESULT $THRESH_CANDIDATE_FPKM
 
 echo "INFO: $(date): cis-X-run: screening candidates"
 SV_CAN="$SAMPLE_ID.sv.candidates.txt"

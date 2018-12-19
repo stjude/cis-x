@@ -105,7 +105,8 @@ $ docker run \
     $DISEASE \
     $CNV_LOH_ACTION \
     $MIN_COV_WGS \
-    $MIN_COV_RNA_SEQ
+    $MIN_COV_RNA_SEQ \
+    $FPKM_THRESHOLD_CANDIDATE
 ```
 
 Note that pathname arguments are relative to the container's target. For
@@ -142,7 +143,8 @@ $ docker run \
     TALL \
     drop \
     10 \
-    10
+    5 \
+    0.1
 ```
 
 [demo data]: https://www.stjuderesearch.org/site/lab/zhang/cis-x
