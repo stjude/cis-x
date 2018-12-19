@@ -77,6 +77,11 @@
       "name": "min_coverage_rna_seq",
       "label": "Minimum coverage in WGS",
       "class": "int"
+    },
+    {
+      "name": "fpkm_threshold_candidate",
+      "label": "Candidate FPKM threshold",
+      "class": "float"
     }
   ],
   "outputSpec": [

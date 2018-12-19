@@ -38,7 +38,8 @@ main() {
         $disease \
         $cnv_loh_action \
         $min_coverage_wgs \
-        $min_coverage_rna_seq
+        $min_coverage_rna_seq \
+        $fpkm_threshold_candidate
 
     cis_activated_candidates=$(dx upload --brief $RESULTS_DIR/$sample_id/$sample_id.cisActivated.candidates.txt)
     sv_candidates=$(dx upload --brief $RESULTS_DIR/$sample_id/$sample_id.sv.candidates.txt)

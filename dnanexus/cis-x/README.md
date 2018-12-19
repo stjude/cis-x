@@ -144,6 +144,9 @@ cis-X currently only works with hg19 (GRCh37).
   * `min_coverage_rna_seq`: The minimum coverage in RNA-seq to be included in
     the analysis.
 
+  * `fpkm_threshold_candidate`: The FPKM threshold for the nomination of a
+    cis-activated candidate.
+
 [cis-X ref-exp]: https://github.com/stjude/cis-x/tree/master/src/ref-exp
 [22237106]: https://www.ncbi.nlm.nih.gov/pubmed/22237106
 
