@@ -62,19 +62,23 @@ reference files.
 cis-X-run
 
 USAGE:
-    cis-X run <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease>
+    cis-X run <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease> <cnv-loh-action> <min coverage in WGS> <min coverage in RNA-seq> <FPKM threshold for nominate cis-activated candidate>
 
 ARGS:
-    <sample-id>    Sample ID
-    <results-dir>  Output directory
-    <markers>      Path to single nucleotide markers
-    <cnv-loh>      Path to CNV/LOH regions
-    <bam>          Path to a RNA-Seq BAM (index must be in same directory)
-    <fpkm-matrix>  Path to gene expression table
-    <snv-indel>    Path to somatic SNV/indels
-    <sv>           Path to somatic SVs
-    <cna>          Path to somatic CNVs
-    <disease>      Disease name
+    <sample-id>       Sample ID
+    <results-dir>     Output directory
+    <markers>         Path to single nucleotide markers
+    <cnv-loh>         Path to CNV/LOH regions
+    <bam>             Path to a RNA-Seq BAM (index must be in same directory)
+    <fpkm-matrix>     Path to gene expression table
+    <snv-indel>       Path to somatic SNV/indels
+    <sv>              Path to somatic SVs
+    <cna>             Path to somatic CNVs
+    <disease>         Disease name
+    <cnv-loh-action>  Action of markers in CNV/LOH regions, either keep or drop
+    <min coverage in WGS>          Minimal coverage in WGS to include a heterozygous marker
+    <min coverage in RNA-seq>      Minimal coverage in RNA-seq to include a heterozygous marker
+    <fpkm threshold for candidate> FPKM threshold for nominate cis-activated candidate
 ```
 
 ## Inputs
@@ -204,6 +208,9 @@ Running cis-X requires quite a few inputs.
 
   * `min_coverage_rna_seq`: The minimum coverage in RNA-seq to be included in
     the analysis.
+
+  * `fpkm_threshold_candidate`: The FPKM threshold for the nomination of a
+    cis-activated candidate.
 
 [cis-X ref-exp]: https://github.com/stjude/cis-x/tree/master/src/ref-exp
 [22237106]: https://www.ncbi.nlm.nih.gov/pubmed/22237106
