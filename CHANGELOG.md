@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## [1.2.0] - 2019-01-08
+
+### Added
 
   * core: Added argument to set the FPKM threshold for the nomination of
     a cis-activated candidate.
