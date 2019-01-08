@@ -36,8 +36,8 @@ $ V2M_HOME=$CIS_X_HOME/vendor/variants2matrix
 $ wget http://ftp.stjude.org/pub/software/cis-x/variants2matrix.tar.gz
 $ tar xf variants2matrix.tar.gz --directory $CIS_X_HOME/vendor
 $ export PATH=$V2M_HOME/bin:$PATH
-$ export PERL5LIB=$V2M_HOME/lib/perl
-$ export CLASSPATH=$V2M_HOME/lib/java/bambino-1.0.jar:$V2M_HOME/lib/java/indelxref-1.0.jar:$V2M_HOME/lib/java/picard.jar:$V2M_HOME/lib/java/samplenamelib-1.0.jar
+$ export PERL5LIB=$V2M_HOME/lib/perl:$PERL5LIB
+$ export CLASSPATH=$V2M_HOME/lib/java/bambino-1.0.jar:$V2M_HOME/lib/java/indelxref-1.0.jar:$V2M_HOME/lib/java/picard.jar:$V2M_HOME/lib/java/samplenamelib-1.0.jar:$CLASSPATH
 ```
 
 ### References
