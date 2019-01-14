@@ -25,4 +25,5 @@
 
   * Initial release
 
+[1.2.0]: https://github.com/stjude/cis-x/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/stjude/cis-x/compare/v1.0.0...v1.1.0
