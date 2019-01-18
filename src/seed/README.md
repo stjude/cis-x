@@ -62,7 +62,7 @@ cis-X.
     (Delineation of DNaseI-accessible regulatory regions > Promoter). All files
     are merged with two extra columns: cell line name and tissue of origin.
 
-[`GRCh37-lite.fa`]: http://genome.wustl.edu/pub/reference/GRCh37-lite/
+[`GRCh37-lite.fa`]: https://ftp.ncbi.nih.gov/genomes/archive/old_genbank/Eukaryotes/vertebrates_mammals/Homo_sapiens/GRCh37/special_requests/
 [Human ES Cell (H1) topological domains]: http://chromosome.sdsc.edu/mouse/hi-c/download.html
 [UCSC Table Browser]: http://genome.ucsc.edu/cgi-bin/hgTables
 [HOCOMOCO v10]: http://hocomoco11.autosome.ru/downloads_v10
