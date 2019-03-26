@@ -120,6 +120,9 @@ if ($varnum == 0) {
             $tf = $tf2gsym{$F[0]};
         }
         next unless $tf;
+        if ($tf eq "MYBL1" or $tf eq "MYBL2") { ### 2019-03-11, The motif for MYB, MYBL1/2 are very similar in this version of db. May update in later version.
+            $tf = "MYB";
+        }
         if ($g2fpkm{$tf}) {
             $fpkm = $g2fpkm{$tf};
         }
