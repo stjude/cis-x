@@ -226,6 +226,7 @@ if ($varnum == 0) {
         }else {
             print "Wrong type for $F[1].\n";
         }
+        $var{$var}{tf}{$tf}{fpkm} = $fpkm;
     }
     close IN;
 
@@ -233,7 +234,7 @@ if ($varnum == 0) {
     print OUT "chrom\tpos\tref\tmut\ttype\ttarget\tdist\ttf\tEpiRoadmap_enhancer\tEpiRoadmap_promoter\tEpiRoadmap_dyadic\n";
     for my $var (sort keys %var) {
         my $pred_tf = "";
-        for my $tf (sort keys %{$var{$var}{tf}}) {
+        for my $tf (sort {$var{$var}{tf}{$b}{fpkm} <=> $var{$var}{tf}{$a}{fpkm}} keys %{$var{$var}{tf}}) {
             my $ref = 0;
             my $mut = 0;
             $ref = $var{$var}{tf}{$tf}{ref} if $var{$var}{tf}{$tf}{ref};
