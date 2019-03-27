@@ -220,9 +220,17 @@ if ($varnum == 0) {
             print "Wrong type for $type.\n";
         }
         if ($f[4] eq "mut") {
-            $var{$var}{tf}{$tf}{mut} = $mut;
+            if ($var{$var}{tf}{$tf}{mut} and $var{$var}{tf}{$tf}{mut} == 1) {
+                1;
+            }else {
+                $var{$var}{tf}{$tf}{mut} = $mut;
+            }
         }elsif ($f[4] eq "ref") {
-            $var{$var}{tf}{$tf}{ref} = $ref;
+            if ($var{$var}{tf}{$tf}{ref} and $var{$var}{tf}{$tf}{ref} == 1) {
+                1;
+            }else {
+                $var{$var}{tf}{$tf}{ref} = $ref;
+            }
         }else {
             print "Wrong type for $F[1].\n";
         }
@@ -266,4 +274,3 @@ if ($varnum == 0) {
     }
     close OUT;
 }
-
