@@ -41,6 +41,7 @@ while(<IN>) {
     my $tag = $F[8];
     my $chrom = $F[0];
     my $pos = $F[1];
+    my $maf_rna = $F[7];
     my $ase = "no";
     my $snv4 = "$F[0].$F[1].$F[2].$F[3]";
     if ($cnv_loh_action eq "drop" and $tag eq "cnvloh") {
@@ -63,6 +64,7 @@ while(<IN>) {
             $g2ase{$g}{$snv4}{ase} = $ase;
             $g2ase{$g}{$snv4}{pval} = $pval;
             $g2ase{$g}{$snv4}{tag} = $tag;
+            $g2ase{$g}{$snv4}{mafrna} = $maf_rna;
         }
     }
 }
@@ -70,7 +72,7 @@ close IN;
 
 my $outfile = $output;
 open OUT, "> $outfile" or die "$outfile: $!";
-print OUT "gene\tgsym\tchrom\tstrand\tstart\tend\tcdsStartStat\tcdsEndStat\tmarkers\tase_markers\taverage_ai_all\taverage_ai_ase\tpval_all_markers\tpval_ase_markers\tai_all_markers\tai_ase_markers\ttag_all_markers\n";
+print OUT "gene\tgsym\tchrom\tstrand\tstart\tend\tcdsStartStat\tcdsEndStat\tmarkers\tase_markers\taverage_ai_all\taverage_ai_ase\tpval_all_markers\tpval_ase_markers\tai_all_markers\tai_ase_markers\ttag_all_markers\tmaf_rna_all_markers\n";
 for my $g (@gene) {
     my $markers = 0;
     my $ase_markers = 0;
@@ -81,6 +83,7 @@ for my $g (@gene) {
     my $ai_all = "na";
     my $ai_ase = "na";
     my $tag_all = "na";
+    my $maf_rna_all = "na";
     if ($g2ase{$g}) {
         my @markers = sort keys %{$g2ase{$g}};
         my $sum1 = 0;
@@ -92,10 +95,12 @@ for my $g (@gene) {
                 $p_all = $g2ase{$g}{$m}{pval};
                 $ai_all = $g2ase{$g}{$m}{ai};
                 $tag_all = $g2ase{$g}{$m}{tag};
+                $maf_rna_all = $g2ase{$g}{$m}{mafrna};
             }else {
                 $p_all .= ",$g2ase{$g}{$m}{pval}";
                 $ai_all .= ",$g2ase{$g}{$m}{ai}";
                 $tag_all .= ",$g2ase{$g}{$m}{tag}";
+                $maf_rna_all .= ",$g2ase{$g}{$m}{mafrna}";
             }
             if ($g2ase{$g}{$m}{ase} eq "yes") {
                 $ase_markers++;
@@ -114,6 +119,6 @@ for my $g (@gene) {
             $avg_ase = sprintf("%.3f",$sum2/$ase_markers);
         }
     }
-    print OUT "$g\t$gene{$g}{name}\t$gene{$g}{chrom}\t$gene{$g}{strand}\t$gene{$g}{start}\t$gene{$g}{end}\t$gene{$g}{cdsstartstat}\t$gene{$g}{cdsendstat}\t$markers\t$ase_markers\t$avg_all\t$avg_ase\t$p_all\t$p_ase\t$ai_all\t$ai_ase\t$tag_all\n";
+    print OUT "$g\t$gene{$g}{name}\t$gene{$g}{chrom}\t$gene{$g}{strand}\t$gene{$g}{start}\t$gene{$g}{end}\t$gene{$g}{cdsstartstat}\t$gene{$g}{cdsendstat}\t$markers\t$ase_markers\t$avg_all\t$avg_ase\t$p_all\t$p_ase\t$ai_all\t$ai_ase\t$tag_all\t$maf_rna_all\n";
 }
 close OUT;
