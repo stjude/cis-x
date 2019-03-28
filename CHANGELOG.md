@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [1.3.0] - 2019-03-28
 
 ### Added
 
@@ -44,5 +44,6 @@
 
   * Initial release
 
+[1.3.0]: https://github.com/stjude/cis-x/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/stjude/cis-x/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/stjude/cis-x/compare/v1.0.0...v1.1.0
