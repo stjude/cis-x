@@ -26,8 +26,12 @@ $ cis-X seed <out-dir> [tmp-dir]
 
 ## References
 
-The following files are created by `cis-X seed`. They are all required to run
-cis-X.
+The following files (sans CGC) are created by `cis-X seed`. They are all
+required to run cis-X.
+
+  * `cancer_gene_census.v87.txt`: Tiers 1 and 2 [Cancer Gene Census] (CGC) from
+    COSMIC in TSV. This file requires an account and is not automatically
+    downloaded.
 
   * `GRCh37-lite.2bit`: Converted from [`GRCh37-lite.fa`] to 2bit using
     [faToTwoBit].
@@ -62,6 +66,7 @@ cis-X.
     (Delineation of DNaseI-accessible regulatory regions > Promoter). All files
     are merged with two extra columns: cell line name and tissue of origin.
 
+[Cancer Gene Census]: https://cancer.sanger.ac.uk/census
 [`GRCh37-lite.fa`]: https://ftp.ncbi.nih.gov/genomes/archive/old_genbank/Eukaryotes/vertebrates_mammals/Homo_sapiens/GRCh37/special_requests/
 [Human ES Cell (H1) topological domains]: http://chromosome.sdsc.edu/mouse/hi-c/download.html
 [UCSC Table Browser]: http://genome.ucsc.edu/cgi-bin/hgTables
