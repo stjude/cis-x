@@ -1,5 +1,24 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+  * core: Known oncogenes in the [COSMIC Cancer Gene Census] are used to
+    reevaluate cis-activated candidates.
+
+[COSMIC Cancer Gene Census]: https://cancer.sanger.ac.uk/census
+
+### Changed
+
+  * core: Increased default transcription factor FPKM value to 10 for
+    screening.
+
+  * core: The motif for MYB (MYBL1 and MYBL2) are similar and treated as the
+    same gene.
+
+  * core: SNV/indel candidates are sorted by FPKM value.
+
 ## [1.2.0] - 2019-01-08
 
 ### Added
