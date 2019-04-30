@@ -14,6 +14,8 @@ RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
         libkrb5-3 \
         wget \
         zlib1g-dev \
+        # bedtools
+        python-minimal \
         # variants2matrix
         openjdk-8-jre-headless \
         # ase, test-outliers
@@ -45,6 +47,15 @@ RUN cd /tmp \
     && make -j$(nproc) \
     && make install \
     && rm -r /tmp/meme*
+
+RUN cd /tmp \
+    && wget https://github.com/arq5x/bedtools2/releases/download/v2.28.0/bedtools-2.28.0.tar.gz \
+    && echo "15af6d10ed28fb3113cd3edce742fd4275f224bc06ecb98d70d869940220bc32 *bedtools-2.28.0.tar.gz" | sha256sum --check \
+    && tar xf bedtools-2.28.0.tar.gz \
+    && cd bedtools2 \
+    && make -j$(nproc) \
+    && cp bin/* /usr/local/bin \
+    && rm -r /tmp/bedtools*
 
 RUN echo 'source("http://bioconductor.org/biocLite.R"); biocLite("multtest")' | R --vanilla
 
