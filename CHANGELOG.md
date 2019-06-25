@@ -6,6 +6,8 @@
 
   * core: Tighten scoring method for when known oncogenes should be reevaluated.
 
+  * seed: `cancer_gene_census.txt` no longer has a version in its filename.
+
 ## [1.3.0] - 2019-03-28
 
 ### Added

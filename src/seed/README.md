@@ -29,9 +29,9 @@ $ cis-X seed <out-dir> [tmp-dir]
 The following files (sans CGC) are created by `cis-X seed`. They are all
 required to run cis-X.
 
-  * `cancer_gene_census.v87.txt`: Tiers 1 and 2 [Cancer Gene Census] (CGC) from
-    COSMIC in TSV. This file requires an account and is not automatically
-    downloaded.
+  * `cancer_gene_census.txt`: Tiers 1 and 2 [Cancer Gene Census] (CGC) from
+    COSMIC in TSV. While cis-X is tested with version 87, newer version should
+    work. This file requires an account and is not automatically downloaded.
 
   * `GRCh37-lite.2bit`: Converted from [`GRCh37-lite.fa`] to 2bit using
     [faToTwoBit].

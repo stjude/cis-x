@@ -17,7 +17,7 @@ THRESH_PVALUE_LOO=0.05
 THRESH_LOO_Hi_Perc=0.1
 
 IMPRINTING_GENES=$CIS_X_HOME/refs/external/ImprintGenes.txt
-ONCOGENES=$CIS_X_HOME/refs/external/cancer_gene_census.v87.txt
+ONCOGENES=$CIS_X_HOME/refs/external/cancer_gene_census.txt
 
 perl $CIS_X_CORE_HOME/src/ase.candidate.pl \
     $THRESH_PVALUE_ASE \
