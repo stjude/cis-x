@@ -150,17 +150,20 @@ while(<IN>) {
             }
         }
     }else {
-        ### for the known oncogenes in cosmic, rescue if raw p-value < 0.05 && all markers show mono-allelic transcription (maf-rna < 0.05 || maf-rna > 0.95).
+        ### for the known oncogenes in cosmic, rescue if raw p-value < 0.05 && over 90% of markers show mono-allelic transcription (maf-rna < 0.1 || maf-rna > 0.9).
         my $keep = 1;
         if ($oncog{$F[1]} and $F[20] < 0.05) {
             my @mafrna = split(/,/,$F[17]);
+            my $rnasig = 0;
+            my $rnatot = scalar(@mafrna);
             for my $f (@mafrna) {
-                if ($f > 0.95 or $f < 0.05) {
-                    1;
-                }else {
-                    $keep = 0;
+                if ($f > 0.9 or $f < 0.1) {
+                    $rnasig++;
                 }
             }
+            if ($rnasig/$rnatot < 0.9) {
+                    $keep = 0;
+                }
         }else {
             $keep = 0;
         }

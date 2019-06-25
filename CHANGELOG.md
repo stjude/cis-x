@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+  * core: Tighten scoring method for when known oncogenes should be reevaluated.
+
 ## [1.3.0] - 2019-03-28
 
 ### Added
