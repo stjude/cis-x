@@ -87,6 +87,7 @@ while(<H20>) {
     next unless $chrom{$F[$col2snv{chr}]};
     my $cvg = $F[$col2snv{ref_tum_num}] + $F[$col2snv{mut_tum_num}];
     next unless $cvg >= $covg;
+    next unless ($F[$col2snv{ref_tum_num}] >= 3 and $F[$col2snv{mut_tum_num}] >= 3); ### Require minimal 3 reads for each allele. This is for low covg sites, like 8. 2019-04-08.
     my $snv4 = "$F[$col2snv{chr}].$F[$col2snv{pos}].$F[$col2snv{ref_g}].$F[$col2snv{mut_g}]";
     next if $badlst{$snv4};  ## drop the BAD markers.
 

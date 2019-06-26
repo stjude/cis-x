@@ -4,7 +4,7 @@ my $sid      = $ARGV[0];
 my $het_wgs  = $ARGV[1];
 my $geno_rna = $ARGV[2];
 my $output   = $ARGV[3];
-my $cvg_cut  = $ARGV[4];
+#my $cvg_cut  = $ARGV[4];  ### output everything with minimal 3 reads support for at least one allele. Further filter will apply. 2019-04-08.
 
 my %count = ();
 my $infile = $geno_rna;
@@ -34,11 +34,12 @@ while(<IN>) {
     my $cvg_wgs = $F[4] + $F[6];
     my $freq_wgs = sprintf("%.3f",$F[6]/$cvg_wgs);
     my $cvg_rna = $count{$sid}{$snv4}{cvg};
-    if ($cvg_rna >= $cvg_cut) {
+#    if ($cvg_rna >= $cvg_cut) {
+#    if ($count{$sid}{$snv4}{ref} >= 3 or $count{$sid}{$snv4}{mut} >= 3) {
+    if ($cvg_rna >= 5) {
         $freq_rna = sprintf("%.3f",$count{$sid}{$snv4}{mut}/$cvg_rna);
         print OUT "$F[0]\t$F[1]\t$F[2]\t$F[3]\t$cvg_wgs\t$freq_wgs\t$cvg_rna\t$freq_rna\t$F[8]\t$count{$sid}{$snv4}{ref}\t$count{$sid}{$snv4}{mut}\n";
     }
 }
 close IN;
 close OUT;
-

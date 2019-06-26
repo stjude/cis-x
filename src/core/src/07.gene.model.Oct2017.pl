@@ -8,6 +8,9 @@ my $ai_thresh_cnv = $ARGV[4];
 my $pvalue    = $ARGV[5];
 my $cnv_loh_action = $ARGV[6];
 my $output    = $ARGV[7];
+my $covg_rna = $ARGV[8];
+
+$covg_rna = 3 if $covg_rna < 3;  ### 2019-04-08.
 
 my (%gene,@gene,%chr2g,%g2ase,$head);
 my $infile = $refgene;
@@ -44,6 +47,7 @@ while(<IN>) {
     my $maf_rna = $F[7];
     my $ase = "no";
     my $snv4 = "$F[0].$F[1].$F[2].$F[3]";
+    next unless $F[6] >= $covg_rna;  ### 2019-04-08.
     if ($cnv_loh_action eq "drop" and $tag eq "cnvloh") {
         next;
     }

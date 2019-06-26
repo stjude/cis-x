@@ -162,8 +162,8 @@ while(<IN>) {
                 }
             }
             if ($rnasig/$rnatot < 0.9) {
-                    $keep = 0;
-                }
+                $keep = 0;
+            }
         }else {
             $keep = 0;
         }

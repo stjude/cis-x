@@ -9,8 +9,9 @@ HET_OUT=$3
 MATRIX_OUT=$4
 ASE_RESULT_MARKER=$5
 ASE_RESULT_GENE=$6
-CNV_LOH_ACTION=$7
-COVG_RNA=$8
+ASE_RESULT_RUN=$7
+CNV_LOH_ACTION=$8
+COVG_RNA=$9
 
 #THRESH_AI=0.3
 THRESH_AI_DI=0.3
@@ -18,12 +19,17 @@ THRESH_AI_CNV=0.2
 THRESH_PVALUE_ASE=0.05
 
 GENE_MODEL=$CIS_X_HOME/refs/external/hg19_refGene
+GENE_MODEL_BED=$CIS_X_HOME/refs/external/hg19_refGene.bed
 
 WGS_RNA_COUNT="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.txt"
+ASE_RUNS="$WORKDIR/$SAMPLE_ID.ase.runs.txt"
+ASE_RUNS_BED="$WORKDIR/$SAMPLE_ID.ase.runs.bed"
+ASE_RUNS_GENE="$WORKDIR/$SAMPLE_ID.ase.runs.genes.txt"
 GENE_MODEL_Temp1="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.binom.genemodel.summary.txt"
 GENE_MODEL_Temp2="$WORKDIR/$SAMPLE_ID.combine.WGS.RNAseq.goodmarkers.binom.genemodel.summary.merged.txt"
 
-perl $CIS_X_CORE_HOME/src/02.add.count.pl $SAMPLE_ID $HET_OUT $MATRIX_OUT $WGS_RNA_COUNT $COVG_RNA
+#perl $CIS_X_CORE_HOME/src/02.add.count.pl $SAMPLE_ID $HET_OUT $MATRIX_OUT $WGS_RNA_COUNT $COVG_RNA
+perl $CIS_X_CORE_HOME/src/02.add.count.pl $SAMPLE_ID $HET_OUT $MATRIX_OUT $WGS_RNA_COUNT
 Rscript $CIS_X_CORE_HOME/src/binom.R $WGS_RNA_COUNT $ASE_RESULT_MARKER
 
 perl $CIS_X_CORE_HOME/src/07.gene.model.Oct2017.pl \
@@ -34,7 +40,14 @@ perl $CIS_X_CORE_HOME/src/07.gene.model.Oct2017.pl \
     $THRESH_AI_CNV \
     $THRESH_PVALUE_ASE \
     $CNV_LOH_ACTION \
-    $GENE_MODEL_Temp1
+    $GENE_MODEL_Temp1 \
+    $COVG_RNA
 
 perl $CIS_X_CORE_HOME/src/05.merge.pl $GENE_MODEL_Temp1 $GENE_MODEL_Temp2
 Rscript $CIS_X_CORE_HOME/src/fdr.R $GENE_MODEL_Temp2 $ASE_RESULT_GENE
+
+#perl $CIS_X_CORE_HOME/src/ase_runs.pl $ASE_RESULT_MARKER $THRESH_AI_DI $THRESH_AI_CNV $ASE_RUNS1 $ASE_RUNS_BED1 15 0.8 200000
+perl $CIS_X_CORE_HOME/src/ase_runs.pl $ASE_RESULT_MARKER $THRESH_AI_DI $THRESH_AI_CNV $ASE_RUNS $ASE_RUNS_BED 4 0.6 500000000
+#bedtools intersect -a $ASE_RUNS_BED1 -b $GENE_MODEL_BED -F 0.8 -wao > $ASE_RUNS_GENE1
+bedtools intersect -a $ASE_RUNS_BED -b $GENE_MODEL_BED -wao > $ASE_RUNS_GENE
+perl $CIS_X_CORE_HOME/src/proc_ase_runs.pl $ASE_RUNS $ASE_RUNS_GENE $ASE_RESULT_RUN

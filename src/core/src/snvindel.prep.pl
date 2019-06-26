@@ -3,14 +3,16 @@
 my $sid           = $ARGV[0];
 my $snvindel_in   = $ARGV[1];
 my $ase_result    = $ARGV[2];
-my $sv_result     = $ARGV[3];
-my $cna_result    = $ARGV[4];
-my $tad_ref       = $ARGV[5];
-my $snvindel_list = $ARGV[6];
-my $seqlist       = $ARGV[7];
-my $snvindel_win  = $ARGV[8];
+my $ase_result_run  = $ARGV[3];
+my $sv_result     = $ARGV[4];
+my $cna_result    = $ARGV[5];
+my $tad_ref       = $ARGV[6];
+my $snvindel_list = $ARGV[7];
+my $seqlist       = $ARGV[8];
+my $snvindel_win  = $ARGV[9];
+my $refgene       = $ARGV[10];
 
-my (%genes,%solved,%chr2g,%g2pro,%snvindel,%tad);
+my (%genes,%solved,%chr2g,%g2pro,%snvindel,%tad,%g2query);
 
 my $infile = $tad_ref;
 open IN, "< $infile" or die "$infile: $!";
@@ -45,6 +47,64 @@ while(<IN>) {
     }
 }
 close IN;
+
+$infile = $ase_result_run;
+open IN, "< $infile" or die "$infile: $!";
+while(<IN>) {
+    chomp;
+    next if $. == 1;
+    my @F = split/\t/;
+    if ($F[8]) {
+        my @G = split(/,/,$F[8]);
+        for my $g (@G) {
+            next if $genes{$g};
+            $g2query{$g}{tag} = 1;
+        }
+    }
+}
+close IN;
+
+$infile = $refgene;
+open IN, "< $infile" or die "$infile: $!";
+while(<IN>) {
+    chomp;
+    my @F = split/\t/;
+    if ($g2query{$F[3]}) {
+        my $len = $F[2] - $F[1];
+        if ($g2query{$F[3]}{tag} == 1 or ($len > $g2query{$F[3]}{len})) {
+            $g2query{$F[3]}{acc}    = $F[4];
+            $g2query{$F[3]}{chrom}  = $F[0];
+            $g2query{$F[3]}{strand} = $F[5];
+            $g2query{$F[3]}{start}  = $F[1];
+            $g2query{$F[3]}{end}    = $F[2];
+            $g2query{$F[3]}{len}    = $len;
+            $g2query{$F[3]}{tag}    = 2;
+        }else {
+            1;
+        }
+    }
+}
+close IN;
+
+for my $g (sort keys %g2query) {
+    if ($g2query{$g}{tag} == 1) {
+        print "Error, $g not annotated.\n";
+    }else {
+        $genes{$g}{gsym}   = $g;
+        $genes{$g}{chrom}  = $g2query{$g}{chrom};
+        $genes{$g}{strand} = $g2query{$g}{strand};
+        $genes{$g}{start}  = $g2query{$g}{start};
+        $genes{$g}{end}    = $g2query{$g}{end};
+        $chr2g{$g2query{$g}{chrom}}{$g} = 1;
+        if ($g2query{$g}{strand} eq "+") {
+            $g2pro{$g}{start} = $g2query{$g}{start} - 2000;
+            $g2pro{$g}{end}   = $g2query{$g}{start} + 200;
+        }elsif ($g2query{$g}{strand} eq "-") {
+            $g2pro{$g}{start} = $g2query{$g}{end} - 200;
+            $g2pro{$g}{end}   = $g2query{$g}{end} + 2000;
+        }
+    }
+}
 
 $infile = $sv_result;
 open IN, "< $infile" or die "$infile: $!";
@@ -203,4 +263,3 @@ for my $snv4 (sort keys %snvindel) {
 }
 close OUT;
 close SEQLST;
-
