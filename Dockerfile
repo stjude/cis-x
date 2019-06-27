@@ -65,7 +65,7 @@ RUN cd /usr/local/bin \
 
 # seed
 
-RUN gem install nokogiri --no-ri --no-rdoc
+RUN gem install --no-document nokogiri
 
 RUN cd /usr/local/bin \
     && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/faToTwoBit \
