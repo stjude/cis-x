@@ -2,9 +2,15 @@
 
 ## Unreleased
 
+### Added
+
+  * core: Identify regions with consecutive markers that exhibit ASE.
+
 ### Changed
 
   * core: Tighten scoring method for when known oncogenes should be reevaluated.
+
+  * core: Updated binomial distribution statistical model.
 
   * seed: `cancer_gene_census.txt` no longer has a version in its filename.
 
