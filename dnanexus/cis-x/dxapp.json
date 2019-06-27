@@ -5,6 +5,11 @@
   "dxapi": "1.0.0",
   "version": "1.3.0",
   "openSource": true,
+  "details": {
+    "upstreamUrl": "https://github.com/stjude/cis-x",
+    "upstreamVersion": "1.3.0",
+    "upstreamLicenses": ["Apache-2.0"]
+  },
   "inputSpec": [
     {
       "name": "sample_id",
