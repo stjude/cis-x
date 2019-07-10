@@ -143,8 +143,8 @@ $ docker run \
     TALL \
     drop \
     10 \
-    5 \
-    0.1
+    10 \
+    5
 ```
 
 [demo data]: https://www.stjuderesearch.org/site/lab/zhang/cis-x
