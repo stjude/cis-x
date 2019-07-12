@@ -14,11 +14,10 @@ A transcription factor binding analysis is also done, using motifs from
 
 cis-X currently only works with hg19 (GRCh37).
 
+More details and examples on running cis-X can be found in the [user guide].
+
 [HOCOMOCO]: http://hocomoco11.autosome.ru/
-
-## User guide
-
-Please check [User guide] for detailed information.
+[user guide]: https://www.stjuderesearch.org/site/docs/zhang/cis-x-instructions.pdf
 
 [User guide]:https://www.stjuderesearch.org/site/docs/zhang/cis-x-instructions.pdf
 
