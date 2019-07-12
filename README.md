@@ -46,7 +46,7 @@ SUBCOMMANDS:
 For more details on how to run each command, see its respective README:
 [ref-exp], [run], and [seed].
 
-## Docker
+### Docker
 
 cis-X has a `Dockerfile` to create a [Docker] image, which sets up and
 installs all the required dependencies (sans references). To use this image,
