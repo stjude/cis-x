@@ -19,8 +19,6 @@ More details and examples on running cis-X can be found in the [user guide].
 [HOCOMOCO]: http://hocomoco11.autosome.ru/
 [user guide]: https://www.stjuderesearch.org/site/docs/zhang/cis-x-instructions.pdf
 
-[User guide]:https://www.stjuderesearch.org/site/docs/zhang/cis-x-instructions.pdf
-
 ## Installation
 
 Installation is simply unpacking the source to a working directory and adding
@@ -68,14 +66,6 @@ In the cis-X project directory, build the Docker image.
 $ docker build --tag cis-x .
 ```
 
-#### References
-
-All external references are expected to be in one directory, e.g. `refs/external`. These files
-are not distributed with cis-X. See [cis-X seed] for more details and a list of required
-reference files.
-
-[cis-X seed]: https://github.com/stjude/cis-x/tree/master/src/seed
-
 #### Run
 
 The Docker image uses `bin/cis-X` as its entrypoint, giving access to all of its
@@ -83,8 +73,9 @@ commands.
 
 The image assumes two working directories: `/data` for inputs and `/results`
 for outputs. `/data` can be read-only, whereas `/results` needs write access.
-External references also need to be mounted to `/app/refs/external`. For
-example, mounting to these directories requires three flags:
+External references (see [cis-X seed][seed]) also need to be mounted to
+`/app/refs/external`. For example, mounting to these directories requires three
+flags:
 
 ```
 --mount type=bind,source=$HOME/research/data,target=/data,readonly \
