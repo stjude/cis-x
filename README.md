@@ -14,7 +14,10 @@ A transcription factor binding analysis is also done, using motifs from
 
 cis-X currently only works with hg19 (GRCh37).
 
+More details and examples on running cis-X can be found in the [user guide].
+
 [HOCOMOCO]: http://hocomoco11.autosome.ru/
+[user guide]: https://www.stjuderesearch.org/site/docs/zhang/cis-x-instructions.pdf
 
 ## Installation
 
@@ -70,8 +73,9 @@ commands.
 
 The image assumes two working directories: `/data` for inputs and `/results`
 for outputs. `/data` can be read-only, whereas `/results` needs write access.
-External references also need to be mounted to `/app/refs/external`. For
-example, mounting to these directories requires three flags:
+External references (see [cis-X seed][seed]) also need to be mounted to
+`/app/refs/external`. For example, mounting to these directories requires three
+flags:
 
 ```
 --mount type=bind,source=$HOME/research/data,target=/data,readonly \
