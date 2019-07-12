@@ -18,7 +18,9 @@ cis-X currently only works with hg19 (GRCh37).
 
 ## Documentation
 
-Please check [User guide]: https://www.stjuderesearch.org/site/docs/zhang/cis-x-instructions.pdf for detailed information
+Please check [User guide] for detailed information
+
+[User guide]:https://www.stjuderesearch.org/site/docs/zhang/cis-x-instructions.pdf
 
 ## Installation
 
