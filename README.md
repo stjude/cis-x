@@ -124,9 +124,21 @@ See the [Docker reference for `run`][docker-run] for more options.
 
 ## Demo
 
-The next example runs cis-X with [demo data] (`cis-X-demo.tar.gz`). It
-assumes the demo is extracted to a `tmp` directory in the root of the
-project.
+The next example runs cis-X with [demo data] (`cis-X-demo.tar.gz`).
+
+Set up the project home directory with the demo data. The following commands
+assume the demo is extracted to a `tmp` directory in the root of the project.
+
+```
+$ git clone https://github.com/stjude/cis-x.git
+$ cd cis-x
+$ docker build --tag cis-x .
+$ mkdir tmp
+$ wget --directory-prefix tmp http://ftp.stjude.org/pub/software/cis-x/cis-X-demo.tar.gz
+$ tar xf tmp/cis-X-demo.tar.gz --directory tmp
+```
+
+Then run cis-X.
 
 ```
 $ docker run \
