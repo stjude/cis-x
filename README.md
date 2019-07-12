@@ -71,7 +71,7 @@ $ docker build --tag cis-x .
 
 #### References
 
-External references are expected to be in `$CIS_X_HOME/refs/external`. These
+All external references are expected to be in one directory, e.g. `refs/external`. These files
 are not distributed with cis-X. See [cis-X seed] for more details and a list of required
 reference files.
 
