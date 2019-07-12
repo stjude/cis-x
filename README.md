@@ -69,6 +69,14 @@ In the cis-X project directory, build the Docker image.
 $ docker build --tag cis-x .
 ```
 
+#### References
+
+External references are expected to be in `$CIS_X_HOME/refs/external`. These
+are not distributed with cis-X. See [cis-X seed] for more details and a list of required
+reference files.
+
+[cis-X seed]: https://github.com/stjude/cis-x/tree/master/src/seed
+
 #### Run
 
 The Docker image uses `bin/cis-X` as its entrypoint, giving access to all of its
