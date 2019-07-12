@@ -12,8 +12,8 @@
   * [MEME Suite] =4.9.0
   * [twoBitToFa]\*
   * [variants2matrix] (See below.)
-  * [pre-build expression matrix for cancers]
-  
+  * [pre-built expression matrix for cancers]
+
 \* UCSC Genome Browser binaries are not versioned. The latest versions
 _should_ work.
 
