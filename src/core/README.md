@@ -47,7 +47,7 @@ Reference files are not included with the source due to their large sizes.
 Internal references are placed in `$CIS_X_HOME/refs`. These files can be
 downloaded from [St. Jude Research] (`cis-x-refs-*.tar.gz`). It includes a
 blacklist of problematic polymorphism markers and two reference expression
-matrices for T-ALL and AML.
+matrices for T-ALL and NBL.
 
 External references are expected to be in `$CIS_X_HOME/refs/external`. These
 are not distributed with cis-X, but the `cis-X seed` command can download and
