@@ -24,6 +24,18 @@ _should_ work.
 $ cis-X seed <out-dir> [tmp-dir]
 ```
 
+### In Docker
+
+```
+$ REFS_DIR=$(pwd)/refs
+$ mkdir -p $REFS_DIR/external 
+$ docker run \
+  --mount type=bind,source=$REFS_DIR/external,target=/refs/external \ 
+  cis-x \
+  seed \
+  /refs/external
+```
+
 ## References
 
 The following files (sans CGC) are created by `cis-X seed`. They are all
