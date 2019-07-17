@@ -87,6 +87,40 @@ The source directives can point to any absolute path that can be accessed
 locally. They do not need to match their target directory. Also note that the
 results directory must exist before running the command.
 
+##### Examples
+
+###### cis-X seed
+
+A basic example is running [cis-X seed][seed], which downloads and preprocesses
+required reference files to a directory. To run this locally, the `seed`
+subcommand is used, passing the destination directory of the resulting files.
+
+```
+$ cis-X seed /tmp/refs/external
+```
+
+To run this in a container using the Docker image, pass the subcommand and arguments
+as the command the container runs.
+
+```
+$ docker run cis-x seed /tmp/refs/external
+```
+
+This, however, writes files to the container, rather than the host. To write
+files to the host from the container, mount the host destination directory to
+the container, e.g., `$(pwd)/refs/external` to `/app/refs/external`. The
+argument passed to the command must match the target directory.
+
+```
+$ docker run \
+    --mount type=bind,source=$(pwd)/refs/external,target=/app/refs/external \
+    cis-x \
+    seed \
+    /app/refs/external
+```
+
+###### cis-X run
+
 The following template is the entire command to execute the `run` command,
 with variables showing what needs to be set.
 
