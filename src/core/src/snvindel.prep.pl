@@ -149,6 +149,9 @@ while(<IN>) {
     next if $. == 1;
     my @F = split/\t/;
     my $chrom = $F[0];
+    unless ($chrom =~ /^chr/) {
+        $chrom = "chr" . $chrom;
+    }
     my $pos = $F[1];
     my $target = "";
     my $dist_o = "";
@@ -189,7 +192,7 @@ while(<IN>) {
     if ($target) {
         $target =~ s/\,$//;
         $dist_o =~ s/\,$//;
-        my $snv4 = "$F[0].$F[1].$F[2].$F[3]";
+        my $snv4 = "$chrom.$F[1].$F[2].$F[3]";
         $snvindel{$snv4}{target} = $target;
         $snvindel{$snv4}{type}   = $F[4];
         $snvindel{$snv4}{dist}   = $dist_o;

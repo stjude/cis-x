@@ -2,6 +2,7 @@
 
 my $workdir = $ARGV[0];
 my $outfile = $ARGV[1];
+my $chr_string = $ARGV[2];
 
 open OUT, "> $outfile" or die "$outfile: $!";
 for my $i (1 .. 22) {
@@ -19,7 +20,13 @@ for my $i (1 .. 22) {
             }
             next;
         }
-        print OUT "$_\n";
+        if ($chr_string eq "TRUE") {
+            print OUT "$_\n";
+        }else {
+            my @F = split/\t/;
+            my $snv4 = "chr" . $F[1];
+            print OUT "$F[0]\t$snv4\t$F[2]\t$F[3]\n";
+        }
     }
     close IN;
 }

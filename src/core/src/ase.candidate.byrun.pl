@@ -58,20 +58,23 @@ while(<IN>) {
     next if $. == 1;
     my @F = split/\t/;
     $g2loo{$F[0]}{fpkm} = $F[1];
-    if ($F[8] ne "na") {
-        $g2loo{$F[0]}{pval} = $F[9];
-        $g2loo{$F[0]}{rank} = $F[10];
-        $g2loo{$F[0]}{size} = $F[8];
+    if ($F[12] ne "na") {
+        $g2loo{$F[0]}{tval} = $F[15];
+        $g2loo{$F[0]}{tperc} = $F[16];
+        $g2loo{$F[0]}{rank} = $F[14];
+        $g2loo{$F[0]}{size} = $F[12];
         $g2loo{$F[0]}{source} = "white_list";
     }elsif ($F[2] ne "na") {
-        $g2loo{$F[0]}{pval} = $F[3];
+        $g2loo{$F[0]}{tval} = $F[5];
+        $g2loo{$F[0]}{tperc} = $F[6];
         $g2loo{$F[0]}{rank} = $F[4];
         $g2loo{$F[0]}{size} = $F[2];
         $g2loo{$F[0]}{source} = "bi_cohort";
     }else {
-        $g2loo{$F[0]}{pval} = $F[6];
-        $g2loo{$F[0]}{rank} = $F[7];
-        $g2loo{$F[0]}{size} = $F[5];
+        $g2loo{$F[0]}{tval} = $F[10];
+        $g2loo{$F[0]}{tperc} = $F[11];
+        $g2loo{$F[0]}{rank} = $F[9];
+        $g2loo{$F[0]}{size} = $F[7];
         $g2loo{$F[0]}{source} = "entire_cohort";
     }
 }
@@ -97,9 +100,9 @@ while(<IN>) {
             }
             next unless $g2loo{$g};
             my $keep = 0;
-            if ($g2loo{$g}{fpkm} >= $thresh_fpkm and $g2loo{$g}{pval} < $thresh_loo_pvalue) {
+            if ($g2loo{$g}{fpkm} >= $thresh_fpkm and $g2loo{$g}{tperc} < $thresh_loo_pvalue) {
                 $keep = 1;
-            }elsif ($oncog{$g} and $g2loo{$g}{fpkm} >= 1 and $g2loo{$g}{pval} < $thresh_loo_pvalue) {
+            }elsif ($oncog{$g} and $g2loo{$g}{fpkm} >= 1 and $g2loo{$g}{tperc} < $thresh_loo_pvalue) {
                  $keep = 1;
             }else {
                 next;

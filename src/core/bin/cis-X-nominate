@@ -48,4 +48,4 @@ perl $CIS_X_CORE_HOME/src/ase.candidate.byrun.pl \
     $NUM_MARKERS \
     $ASE_RESULT_GENE \
     $THRESH_AI_DI \
-    $THRESH_AI_CNV
+    $THRESH_AI_CNV 

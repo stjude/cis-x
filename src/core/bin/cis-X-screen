@@ -14,6 +14,7 @@ WORKDIR=$8
 SV_CAN=$9
 CNA_CAN=${10}
 SNVINDEL_CAN=${11}
+ANNO_USER=${12}
 
 LOG=$WORKDIR/log.txt
 
@@ -73,4 +74,5 @@ perl $CIS_X_CORE_HOME/src/snvindel.process.pl \
     $SNVINDEL_CAN \
     $ROADMAP_ENH \
     $ROADMAP_PRO \
-    $ROADMAP_DYA
+    $ROADMAP_DYA \
+    $ANNO_USER

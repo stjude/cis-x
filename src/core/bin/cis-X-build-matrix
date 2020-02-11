@@ -6,6 +6,7 @@ RNABAM=$1
 SNV4_OUT=$2
 WORKDIR=$3
 MATRIX_OUT=$4
+CHR_STRING=$5
 
 LOG=$WORKDIR/log.txt
 
@@ -29,7 +30,7 @@ for i in $(seq 1 22); do
         rm commands.sh
     fi
 
-    perl $CIS_X_CORE_HOME/src/sepCHR.pl $SNV4_OUT $CHROM $SNV4_CHR
+    perl $CIS_X_CORE_HOME/src/sepCHR.pl $SNV4_OUT $CHROM $SNV4_CHR $CHR_STRING
 
     LINE_TEMP=$(wc -l $SNV4_CHR | sed -e 's/^ *//' | cut -d" " -f1)
 
@@ -43,7 +44,7 @@ for i in $(seq 1 22); do
     fi
 done
 
-perl $CIS_X_CORE_HOME/src/mergeVariantOut.pl $WORKDIR $MATRIX_OUT >> $LOG
+perl $CIS_X_CORE_HOME/src/mergeVariantOut.pl $WORKDIR $MATRIX_OUT $CHR_STRING >> $LOG
 
 MATRIX_OUT_LINE=$(wc -l $MATRIX_OUT | sed -e 's/^ *//' | cut -d" " -f1)
 

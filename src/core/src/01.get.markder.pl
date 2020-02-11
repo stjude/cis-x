@@ -36,6 +36,9 @@ while(<IN>) {
     next if $. == 1;
     my @F = split/\t/;
     my $chr = $F[0];
+    unless ($chr =~ /^chr/) {
+        $chr = "chr" . $chr;
+    }
     my $id = "$chr.$F[1].$F[2]";
     $cnvloh{chrom}{$chr}{$id}   = 1;
     $cnvloh{region}{$id}{chr}   = $chr;
@@ -84,18 +87,22 @@ while(<H20>) {
     }
 #    next unless $F[5] eq "SNP";
     next unless ($F[$col2snv{ref_g}] =~ /[ATCG]/ and $F[$col2snv{mut_g}] =~ /[ATCG]/); ### make sure only SNP was included.
-    next unless $chrom{$F[$col2snv{chr}]};
+    my $chrom_i = $F[$col2snv{chr}];
+    unless ($chrom_i =~ /^chr/) {
+        $chrom_i = "chr" . $chrom_i;
+    }
+    next unless $chrom{$chrom_i};
     my $cvg = $F[$col2snv{ref_tum_num}] + $F[$col2snv{mut_tum_num}];
     next unless $cvg >= $covg;
     next unless ($F[$col2snv{ref_tum_num}] >= 3 and $F[$col2snv{mut_tum_num}] >= 3); ### Require minimal 3 reads for each allele. This is for low covg sites, like 8. 2019-04-08.
-    my $snv4 = "$F[$col2snv{chr}].$F[$col2snv{pos}].$F[$col2snv{ref_g}].$F[$col2snv{mut_g}]";
+    my $snv4 = "$chrom_i.$F[$col2snv{pos}].$F[$col2snv{ref_g}].$F[$col2snv{mut_g}]";
     next if $badlst{$snv4};  ## drop the BAD markers.
 
     ### filter markers in cnv-loh regions
     ### updated 2018-12-04. no filter at this stage, give a tag instead indicating if a marker sits inside cnvloh region.
 #    my $hit = 0;
     my $tag = "diploid";
-    for my $id (sort keys %{$cnvloh{chrom}{$F[$col2snv{chr}]}}) {
+    for my $id (sort keys %{$cnvloh{chrom}{$chrom_i}}) {
         if ($F[$col2snv{pos}] >= $cnvloh{region}{$id}{start} and $F[$col2snv{pos}] <= $cnvloh{region}{$id}{end}) {
 #            $hit = 1;
             $tag = "cnvloh";
@@ -106,7 +113,7 @@ while(<H20>) {
 
     my $maf = $F[$col2snv{mut_tum_num}] / $cvg;
     if ($lower <= $maf and $maf <= $upper) {
-        print OUT "$F[$col2snv{chr}]\t$F[$col2snv{pos}]\t$F[$col2snv{ref_g}]\t$F[$col2snv{mut_g}]\t$F[$col2snv{ref_tum_num}]\t$F[$col2snv{ref_norm_num}]\t$F[$col2snv{mut_tum_num}]\t$F[$col2snv{mut_norm_num}]\t$tag\n";
+        print OUT "$chrom_i\t$F[$col2snv{pos}]\t$F[$col2snv{ref_g}]\t$F[$col2snv{mut_g}]\t$F[$col2snv{ref_tum_num}]\t$F[$col2snv{ref_norm_num}]\t$F[$col2snv{mut_tum_num}]\t$F[$col2snv{mut_norm_num}]\t$tag\n";
         print SNV4OUT "$snv4\n";
     }
 }

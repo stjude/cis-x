@@ -65,6 +65,9 @@ while(<IN>) {
     my $right = "";
     if ($F[0]) {
         my $chrom = $F[4];
+        unless ($chrom =~ /^chr/) {
+            $chrom = "chr" . $chrom;
+        }
         my $pos = $F[5];
         my @g = split(/,/,$F[0]);
         for my $tad (sort keys %{$tad{$chrom}}) {
@@ -99,6 +102,9 @@ while(<IN>) {
     }
     if ($F[2]) {
         my $chrom = $F[7];
+        unless ($chrom =~ /^chr/) {
+            $chrom = "chr" . $chrom;
+        }
         my $pos = $F[8];
         my @g = split(/,/,$F[2]);
         for my $tad (sort keys %{$tad{$chrom}}) {

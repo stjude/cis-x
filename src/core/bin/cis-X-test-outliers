@@ -12,8 +12,14 @@ OHE_RESULT=$4
 BILIST=$CIS_X_HOME/refs/diseases/$DISEASE/exp.ref.bi.txt
 WHITELIST=$CIS_X_HOME/refs/diseases/$DISEASE/exp.ref.white.txt
 WHOLELIST=$CIS_X_HOME/refs/diseases/$DISEASE/exp.ref.entire.txt
+PRECALT=$CIS_X_HOME/refs/diseases/$DISEASE/precal.tvalue.bin_gt1.txt
 
 if [ ! -f $BILIST ] || [ ! -f $WHITELIST ] || [ ! -f $WHOLELIST ]; then
+    echo "ERROR: $(date): cis-X-test-outliers: reference expression matrices missing for $DISEASE"
+    exit 1
+fi
+
+if [ ! -f $PRECALT ]; then
     echo "ERROR: $(date): cis-X-test-outliers: reference expression matrices missing for $DISEASE"
     exit 1
 fi
@@ -24,4 +30,5 @@ Rscript $CIS_X_CORE_HOME/src/exp.check.R \
     $BILIST \
     $WHOLELIST \
     $WHITELIST \
-    $OHE_RESULT
+    $OHE_RESULT \
+    $PRECALT

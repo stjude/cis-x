@@ -46,20 +46,23 @@ while(<IN>) {
     next if $. == 1;
     my @F = split/\t/;
     $g2loo{$F[0]}{fpkm} = $F[1];
-    if ($F[8] ne "na") {
-        $g2loo{$F[0]}{pval} = $F[9];
-        $g2loo{$F[0]}{rank} = $F[10];
-        $g2loo{$F[0]}{size} = $F[8];
+    if ($F[12] ne "na") {
+        $g2loo{$F[0]}{tval} = $F[15];
+        $g2loo{$F[0]}{tperc} = $F[16];
+        $g2loo{$F[0]}{rank} = $F[14];
+        $g2loo{$F[0]}{size} = $F[12];
         $g2loo{$F[0]}{source} = "white_list";
     }elsif ($F[2] ne "na") {
-        $g2loo{$F[0]}{pval} = $F[3];
+        $g2loo{$F[0]}{tval} = $F[5];
+        $g2loo{$F[0]}{tperc} = $F[6];
         $g2loo{$F[0]}{rank} = $F[4];
         $g2loo{$F[0]}{size} = $F[2];
         $g2loo{$F[0]}{source} = "bi_cohort";
     }else {
-        $g2loo{$F[0]}{pval} = $F[6];
-        $g2loo{$F[0]}{rank} = $F[7];
-        $g2loo{$F[0]}{size} = $F[5];
+        $g2loo{$F[0]}{tval} = $F[10];
+        $g2loo{$F[0]}{tperc} = $F[11];
+        $g2loo{$F[0]}{rank} = $F[9];
+        $g2loo{$F[0]}{size} = $F[7];
         $g2loo{$F[0]}{source} = "entire_cohort";
     }
 }
@@ -71,7 +74,7 @@ open IN, "< $infile" or die "$infile: $!";
 while(<IN>) {
     chomp;
     if ($. == 1) {
-        print OUT "$_\tFPKM\tloo.source\tloo.cohort.size\tloo.pval\tloo.rank\timprinting.status\tcandidate.group\tdescription\n";
+        print OUT "$_\tFPKM\tloo.source\tloo.cohort.size\tloo.tscore\tloo.tscore.perc\tloo.rank\timprinting.status\tcandidate.group\tdescription\n";
         next;
     }
     my @F = split/\t/;
@@ -111,7 +114,7 @@ while(<IN>) {
         if ($class eq "cnvloh") {
             ### use $thresh_ase_delta_cnv if > 30% of the markers sits in cnvloh region.
             if ($F[19] >= $thresh_ase_delta_cnv) {
-                if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                if ($g2loo{$F[1]}{tperc} < $thresh_loo_pvalue) {
                     $candidate_group = "ase_outlier";
                 }elsif ($g2loo{$F[1]}{rank}/$g2loo{$F[1]}{size} <= $thresh_loo_hi_perc) {
                     $candidate_group = "ase_high";
@@ -119,7 +122,7 @@ while(<IN>) {
                     1;
                 }
             }else {
-                if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                if ($g2loo{$F[1]}{tperc} < $thresh_loo_pvalue) {
                     $candidate_group = "uncertain_outlier";
                 }else {
                     1;
@@ -127,7 +130,7 @@ while(<IN>) {
             }
         }else {
             if ($F[19] >= $thresh_ase_delta_di) {
-                if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                if ($g2loo{$F[1]}{tperc} < $thresh_loo_pvalue) {
                     $candidate_group = "ase_outlier";
                 }elsif ($g2loo{$F[1]}{rank}/$g2loo{$F[1]}{size} <= $thresh_loo_hi_perc) {
                     $candidate_group = "ase_high";
@@ -135,7 +138,7 @@ while(<IN>) {
                     1;
                 }
             }else {
-                if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                if ($g2loo{$F[1]}{tperc} < $thresh_loo_pvalue) {
                     $candidate_group = "uncertain_outlier";
                 }else {
                     1;
@@ -171,7 +174,7 @@ while(<IN>) {
             if ($class eq "cnvloh") {
             ### use $thresh_ase_delta_cnv if > 30% of the markers sits in cnvloh region.
                 if ($F[19] >= $thresh_ase_delta_cnv) {
-                    if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                    if ($g2loo{$F[1]}{tperc} < $thresh_loo_pvalue) {
                         $candidate_group = "ase_outlier";
                     }elsif ($g2loo{$F[1]}{rank}/$g2loo{$F[1]}{size} <= $thresh_loo_hi_perc) {
                         $candidate_group = "ase_high";
@@ -179,7 +182,7 @@ while(<IN>) {
                         1;
                     }
                 }else {
-                    if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                    if ($g2loo{$F[1]}{tperc} < $thresh_loo_pvalue) {
                         $candidate_group = "uncertain_outlier";
                     }else {
                         1;
@@ -187,7 +190,7 @@ while(<IN>) {
                 }
             }else {
                 if ($F[19] >= $thresh_ase_delta_di) {
-                    if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                    if ($g2loo{$F[1]}{tperc} < $thresh_loo_pvalue) {
                         $candidate_group = "ase_outlier";
                     }elsif ($g2loo{$F[1]}{rank}/$g2loo{$F[1]}{size} <= $thresh_loo_hi_perc) {
                         $candidate_group = "ase_high";
@@ -195,7 +198,7 @@ while(<IN>) {
                         1;
                     }
                 }else {
-                    if ($g2loo{$F[1]}{pval} < $thresh_loo_pvalue) {
+                    if ($g2loo{$F[1]}{tperc} < $thresh_loo_pvalue) {
                         $candidate_group = "uncertain_outlier";
                     }else {
                         1;
@@ -210,6 +213,6 @@ while(<IN>) {
         }
     }
     next unless $candidate_group eq "ase_outlier";
-    print OUT "$_\t$g2loo{$F[1]}{fpkm}\t$g2loo{$F[1]}{source}\t$g2loo{$F[1]}{size}\t$g2loo{$F[1]}{pval}\t$g2loo{$F[1]}{rank}\t$imprint\t$candidate_group\t$description\n";
+    print OUT "$_\t$g2loo{$F[1]}{fpkm}\t$g2loo{$F[1]}{source}\t$g2loo{$F[1]}{size}\t$g2loo{$F[1]}{tval}\t$g2loo{$F[1]}{tperc}\t$g2loo{$F[1]}{rank}\t$imprint\t$candidate_group\t$description\n";
 }
 close IN;

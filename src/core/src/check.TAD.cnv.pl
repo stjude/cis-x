@@ -65,6 +65,9 @@ while(<IN>) {
     my $target = "";
     if ($F[0]) {
         my $chrom = $F[2];
+        unless ($chrom =~ /^chr/) {
+            $chrom = "chr" . $chrom;
+        }
         my $pos_l = $F[3];
         my $pos_r = $F[4];
         my @g = split(/,/,$F[0]);

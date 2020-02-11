@@ -10,6 +10,7 @@ my $output         = $ARGV[6];
 my $roadmap_enh    = $ARGV[7];
 my $roadmap_pro    = $ARGV[8];
 my $roadmap_dya    = $ARGV[9];
+my $anno_user      = $ARGV[10];
 
 my (%tf2gsym,%tflst,%g2fpkm,%var,%var2tf,%chr2var);
 
@@ -101,11 +102,36 @@ while(<IN>) {
 }
 close IN;
 
+if ($anno_user ne "NotSpecified") {
+    open IN, "< $anno_user" or die "$anno_user: $!";
+    while(<IN>) {
+        chomp;
+        my @F = split/\t/;
+        if ($. == 1) {
+            if ($#F < 2) {
+                print "Error: please provide the annotation file with BED format.\n";
+                exit;
+            }
+        }
+        my $uchrom = $F[0];
+        unless ($uchrom =~ /^chr/) {
+            $uchrom = "chr" . $uchrom;
+        }
+        for my $var (sort keys %{$chr2var{$uchrom}}) {
+            if ($var{$var}{pos} >= $F[1] and $var{$var}{pos} <= $F[2]) {
+                my $uname = "$F[0].$F[1].$F[2]";
+                $var{$var}{usr}{$uname} = 1;
+            }
+        }
+    }
+    close IN;
+}
+
 my @var = sort keys %var;
 my $varnum = scalar(@var);
 if ($varnum == 0) {
     open OUT, "> $output" or die "$output: $!";
-    print OUT "chrom\tpos\tref\tmut\ttarget\tdist\ttf\tEpiRoadmap_enhancer\tEpiRoadmap_promoter\tEpiRoadmap_dyadic\n";
+    print OUT "chrom\tpos\tref\tmut\ttarget\tdist\ttf\tEpiRoadmap_enhancer\tEpiRoadmap_promoter\tEpiRoadmap_dyadic\tUser_Annot\n";
     close OUT;
 }else {
     $infile = $fimo_pred;
@@ -239,7 +265,7 @@ if ($varnum == 0) {
     close IN;
 
     open OUT, "> $output" or die "$output: $!";
-    print OUT "chrom\tpos\tref\tmut\ttype\ttarget\tdist\ttf\tEpiRoadmap_enhancer\tEpiRoadmap_promoter\tEpiRoadmap_dyadic\n";
+    print OUT "chrom\tpos\tref\tmut\ttype\ttarget\tdist\ttf\tEpiRoadmap_enhancer\tEpiRoadmap_promoter\tEpiRoadmap_dyadic\tUser_Annot\n";
     for my $var (sort keys %var) {
         my $pred_tf = "";
         for my $tf (sort {$var{$var}{tf}{$b}{fpkm} <=> $var{$var}{tf}{$a}{fpkm}} keys %{$var{$var}{tf}}) {
@@ -257,6 +283,7 @@ if ($varnum == 0) {
             my $enh = "";
             my $pro = "";
             my $dya = "";
+            my $user = "";
             if ($var{$var}{enh}) {
                 my @enh = sort keys %{$var{$var}{enh}};
                 $enh = join(',',@enh);
@@ -269,7 +296,11 @@ if ($varnum == 0) {
                 my @dya = sort keys %{$var{$var}{dya}};
                 $dya = join(',',@dya);
             }
-            print OUT "$var[0]\t$var[1]\t$var[2]\t$var[3]\t$var{$var}{type}\t$var{$var}{target}\t$var{$var}{dist}\t$pred_tf\t$enh\t$pro\t$dya\n";
+            if ($var{$var}{usr}) {
+                my @user = sort keys %{$var{$var}{usr}};
+                $user = join(',',@user);
+            }
+            print OUT "$var[0]\t$var[1]\t$var[2]\t$var[3]\t$var{$var}{type}\t$var{$var}{target}\t$var{$var}{dist}\t$pred_tf\t$enh\t$pro\t$dya\t$user\n";
         }
     }
     close OUT;

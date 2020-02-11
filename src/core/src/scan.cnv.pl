@@ -97,6 +97,9 @@ while(<IN>) {
     my %target = ();
 ### check for intersection.
     my $chrom = $F[0];
+    unless ($chrom =~ /^chr/) {
+        $chrom = "chr" . $chrom;
+    }
     my $pos_left = $F[1];
     my $pos_right = $F[2];
 #    my $left_pos = $F[1];

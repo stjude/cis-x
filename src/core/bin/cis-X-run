@@ -6,44 +6,122 @@ CIS_X_HOME=$(realpath $(dirname $0)/../../..)
 CIS_X_CORE_HOME=$(realpath $(dirname $0)/..)
 PATH=$CIS_X_CORE_HOME/bin:$PATH
 
-SAMPLE_ID=$1
-ROOTDIR=$2
-HIGH20=$3
-CNV_LOH=$4
-RNABAM=$5
-FPKM_MATRIX=$6
-SNVINDEL_IN=$7
-SV_IN=$8
-CNA_IN=$9
-DISEASE=${10}
-CNV_LOH_ACTION=${11}
-COVG_WGS=${12}
-COVG_RNA=${13}
-THRESH_CANDIDATE_FPKM=${14}
-
-if [ $# -lt 14 ]; then
+usage() {
     basename $0
     echo
     echo "USAGE:"
-    echo "    cis-X run <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease> <cnv-loh-action> <min coverage in WGS> <min coverage in RNA-seq> <FPKM threshold for nominate cis-activated candidate>"
+    echo "    cis-X run -s <sample-id> -o <results-dir> -l <markers> -g <cnv-loh> -b <bam> -e <fpkm-matrix> -m <snv-indel> -v <sv> -c <cna> -d <disease> -a <cnv-loh-action> -w <min coverage in WGS> -r <min coverage in RNA-seq> -f <FPKM threshold for nominate cis-activated candidate> -u <user-annotation> -h <chr-string>"
     echo
     echo "ARGS:"
-    echo "    <sample-id>       Sample ID"
-    echo "    <results-dir>     Output directory"
-    echo "    <markers>         Path to single nucleotide markers"
-    echo "    <cnv-loh>         Path to CNV/LOH regions"
-    echo "    <bam>             Path to a RNA-Seq BAM (index must be in same directory)"
-    echo "    <fpkm-matrix>     Path to gene expression table"
-    echo "    <snv-indel>       Path to somatic SNV/indels"
-    echo "    <sv>              Path to somatic SVs"
-    echo "    <cna>             Path to somatic CNVs"
-    echo "    <disease>         Disease name"
-    echo "    <cnv-loh-action>  Action of markers in CNV/LOH regions, either keep or drop"
-    echo "    <min coverage in WGS>          Minimal coverage in WGS to include a heterozygous marker"
-    echo "    <min coverage in RNA-seq>      Minimal coverage in RNA-seq to include a heterozygous marker"
-    echo "    <fpkm threshold for candidate> FPKM threshold for nominate cis-activated candidate"
+    echo "    -s <sample-id>       Sample ID"
+    echo "    -o <results-dir>     Output directory"
+    echo "    -l <markers>         Path to single nucleotide markers"
+    echo "    -g <cnv-loh>         Path to CNV/LOH regions"
+    echo "    -b <bam>             Path to a RNA-Seq BAM (index must be in same directory)"
+    echo "    -e <fpkm-matrix>     Path to gene expression table"
+    echo "    -m <snv-indel>       Path to somatic SNV/indels"
+    echo "    -v <sv>              Path to somatic SVs"
+    echo "    -c <cna>             Path to somatic CNVs"
+    echo "    -d <disease>         Disease name"
+    echo "    -a <cnv-loh-action>  Action of markers in CNV/LOH regions, either keep or drop (default=keep)"
+    echo "    -w <min coverage in WGS>          Minimal coverage in WGS to include a heterozygous marker (default=10)"
+    echo "    -r <min coverage in RNA-seq>      Minimal coverage in RNA-seq to include a heterozygous marker (default=10)"
+    echo "    -f <fpkm threshold for candidate> FPKM threshold for nominate cis-activated candidate (default=5)"
+    echo "    -u <user-annotation> User applied annotation file in BED format (default=NotSpecified)"
+    echo "    -h <chr-string>      if the RNA-seq BAM with 'chr' in name, TRUE|FALSE (default=TRUE)"
+}
+
+CNV_LOH_ACTION=keep
+COVG_WGS=10
+COVG_RNA=10
+THRESH_CANDIDATE_FPKM=5
+ANNO_USER=NotSpecified
+CHR_STRING=TRUE
+
+while getopts s:o:l:g:b:e:m:v:c:d:a:w:r:f:u:h: option
+do
+case "${option}"
+in
+s) SAMPLE_ID=${OPTARG};;
+o) ROOTDIR=${OPTARG};;
+l) HIGH20=${OPTARG};;
+g) CNV_LOH=${OPTARG};;
+b) RNABAM=${OPTARG};;
+e) FPKM_MATRIX=${OPTARG};;
+m) SNVINDEL_IN=${OPTARG};;
+v) SV_IN=${OPTARG};;
+c) CNA_IN=${OPTARG};;
+d) DISEASE=${OPTARG};;
+a) CNV_LOH_ACTION=${OPTARG};;
+w) COVG_WGS=${OPTARG};;
+r) COVG_RNA=${OPTARG};;
+f) THRESH_CANDIDATE_FPKM=${OPTARG};;
+u) ANNO_USER=${OPTARG};;
+h) CHR_STRING=${OPTARG};;
+esac
+done
+
+echo "INFO: $(date): cis-X-run: checking parameters"
+if [[ ! $SAMPLE_ID ]]; then
+    echo "ERROR: sample-id not specified."
+    usage
+    exit 1
+elif [[ ! $ROOTDIR ]]; then
+    echo "ERROR: results-dir not specified."
+    usage
+    exit 1
+elif [[ ! -f $HIGH20 ]]; then
+    echo "ERROR: marker file $HIGH20 not exist."
+    usage
+    exit 1
+elif [[ ! -f $CNV_LOH ]]; then
+    echo "ERROR: cnv-loh file $CNV_LOH not exist."
+    usage
+    exit 1
+elif [[ ! -f $RNABAM ]]; then
+    echo "ERROR: RNA-seq BAM file $RNABAM not exist."
+    usage
+    exit 1
+elif [[ ! -f $FPKM_MATRIX ]]; then
+    echo "ERROR: fpkm-matrix file $FPKM_MATRIX not exist."
+    usage
+    exit 1
+elif [[ ! -f $SNVINDEL_IN ]]; then
+    echo "ERROR: snv-indel list file $SNVINDEL_IN not exist."
+    usage
+    exit 1
+elif [[ ! -f $SV_IN ]]; then
+    echo "ERROR: sv list file $SV_IN not exist."
+    usage
+    exit 1
+elif [[ ! -f $CNA_IN ]]; then
+    echo "ERROR: cna list file $CNA_IN not exist."
+    usage
+    exit 1
+elif [[ ! $DISEASE ]]; then
+    echo "ERROR: disease type not specified."
+    usage
+    exit 1
+elif [[ $ANNO_USER != NotSpecified && ! -f $ANNO_USER ]]; then
+    echo "ERROR: user specified annotation file $ANNO_USER not exist."
+    usage
     exit 1
 fi
+
+#SAMPLE_ID=$1
+#ROOTDIR=$2
+#HIGH20=$3
+#CNV_LOH=$4
+#RNABAM=$5
+#FPKM_MATRIX=$6
+#SNVINDEL_IN=$7
+#SV_IN=$8
+#CNA_IN=$9
+#DISEASE=${10}
+#CNV_LOH_ACTION=${11}
+#COVG_WGS=${12}
+#COVG_RNA=${13}
+#THRESH_CANDIDATE_FPKM=${14}
 
 echo "INFO: $(date): cis-X-run: start"
 
@@ -59,7 +137,7 @@ cis-X-mark $SAMPLE_ID $HIGH20 $CNV_LOH $SNV4_OUT $HET_OUT $COVG_WGS
 
 echo "INFO: $(date): cis-X-run: building matrices"
 MATRIX_OUT="$WORKDIR/matrix_combined_matrix_simple.tab"
-cis-X-build-matrix $RNABAM $SNV4_OUT $WORKDIR $MATRIX_OUT
+cis-X-build-matrix $RNABAM $SNV4_OUT $WORKDIR $MATRIX_OUT $CHR_STRING
 
 echo "INFO: $(date): cis-X-run: running allelic specific expression tests"
 ASE_RESULT_MARKER="$WORKDIR/$SAMPLE_ID.ase.combine.WGS.RNAseq.goodmarkers.binom.txt"
@@ -80,7 +158,7 @@ echo "INFO: $(date): cis-X-run: screening candidates"
 SV_CAN="$SAMPLE_ID.sv.candidates.txt"
 CNA_CAN="$SAMPLE_ID.cna.candidates.txt"
 SNVINDEL_CAN="$SAMPLE_ID.snvindel.candidates.txt"
-cis-X-screen $SAMPLE_ID $CANDIDATES_RESULT $CANDIDATES_RESULT_RUN $SV_IN $CNA_IN $SNVINDEL_IN $FPKM_MATRIX $WORKDIR $SV_CAN $CNA_CAN $SNVINDEL_CAN
+cis-X-screen $SAMPLE_ID $CANDIDATES_RESULT $CANDIDATES_RESULT_RUN $SV_IN $CNA_IN $SNVINDEL_IN $FPKM_MATRIX $WORKDIR $SV_CAN $CNA_CAN $SNVINDEL_CAN $ANNO_USER
 
 RESDIR="$ROOTDIR/$SAMPLE_ID"
 

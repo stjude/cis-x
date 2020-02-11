@@ -94,6 +94,9 @@ while(<IN>) {
     my %right = ();
 ### check breakpoint on left.
     my $chrom = $F[0];
+    unless ($chrom =~ /^chr/) {
+        $chrom = "chr" . $chrom;
+    }
     my $pos = $F[1];
     if ($chr2g{$chrom}) {
         my @g = keys %{$chr2g{$chrom}};
@@ -112,6 +115,9 @@ while(<IN>) {
     }
 ### check breakpoint on right.
     $chrom = $F[3];
+    unless ($chrom =~ /^chr/) {
+        $chrom = "chr" . $chrom;
+    }
     $pos = $F[4];
     if ($chr2g{$chrom}) {
         my @g = keys %{$chr2g{$chrom}};

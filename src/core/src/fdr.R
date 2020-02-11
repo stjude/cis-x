@@ -12,11 +12,11 @@ pval <- NULL
 ai <- NULL
 
 for (i in 1:nrow(dat)) {
-	x <- as.numeric(unlist(strsplit(as.character(dat[i,13]),",",perl=T)))
-	y <- as.numeric(unlist(strsplit(as.character(dat[i,15]),",",perl=T)))
-	x.geom <- exp(sum(log(x))/length(x))
-	y.m <- mean(y)
-	out <- rbind(out, c(x.geom,y.m))
+    x <- as.numeric(unlist(strsplit(as.character(dat[i,13]),",",perl=T)))
+    y <- as.numeric(unlist(strsplit(as.character(dat[i,15]),",",perl=T)))
+    x.geom <- exp(sum(log(x))/length(x))
+    y.m <- mean(y)
+    out <- rbind(out, c(x.geom,y.m))
 }
 
 colnames(out) <- c("comb.pval","mean.delta")
