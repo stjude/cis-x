@@ -26,20 +26,20 @@ main() {
         --volume $RESULTS_DIR:/results \
         cis-x \
         run \
-        $sample_id \
-        /results \
-        /data/wgs.markers.txt \
-        /data/wgs.cnvloh.txt \
-        /data/RNAseq.bam \
-        /data/RNAseq_all_fpkm.txt \
-        /data/mut.txt \
-        /data/sv.txt \
-        /data/cna.txt \
-        $disease \
-        $cnv_loh_action \
-        $min_coverage_wgs \
-        $min_coverage_rna_seq \
-        $fpkm_threshold_candidate
+        -s $sample_id \
+        -o /results \
+        -l /data/wgs.markers.txt \
+        -g /data/wgs.cnvloh.txt \
+        -b /data/RNAseq.bam \
+        -e /data/RNAseq_all_fpkm.txt \
+        -m /data/mut.txt \
+        -v /data/sv.txt \
+        -c /data/cna.txt \
+        -d $disease \
+        -a $cnv_loh_action \
+        -w $min_coverage_wgs \
+        -r $min_coverage_rna_seq \
+        -f $fpkm_threshold_candidate
 
     cis_activated_candidates=$(dx upload --brief $RESULTS_DIR/$sample_id/$sample_id.cisActivated.candidates.txt)
     sv_candidates=$(dx upload --brief $RESULTS_DIR/$sample_id/$sample_id.sv.candidates.txt)
