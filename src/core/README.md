@@ -62,23 +62,25 @@ reference files.
 cis-X-run
 
 USAGE:
-    cis-X run <sample-id> <results-dir> <markers> <cnv-loh> <bam> <fpkm-matrix> <snv-indel> <sv> <cna> <disease> <cnv-loh-action> <min coverage in WGS> <min coverage in RNA-seq> <FPKM threshold for nominate cis-activated candidate>
+    cis-X run -s <sample-id> -o <results-dir> -l <markers> -g <cnv-loh> -b <bam> -e <fpkm-matrix> -m <snv-indel> -v <sv> -c <cna> -d <disease> -a <cnv-loh-action> -w <min coverage in WGS> -r <min coverage in RNA-seq> -f <FPKM threshold for nominate cis-activated candidate> -u <user-annotation> -h <chr-string>
 
 ARGS:
-    <sample-id>       Sample ID
-    <results-dir>     Output directory
-    <markers>         Path to single nucleotide markers
-    <cnv-loh>         Path to CNV/LOH regions
-    <bam>             Path to a RNA-Seq BAM (index must be in same directory)
-    <fpkm-matrix>     Path to gene expression table
-    <snv-indel>       Path to somatic SNV/indels
-    <sv>              Path to somatic SVs
-    <cna>             Path to somatic CNVs
-    <disease>         Disease name
-    <cnv-loh-action>  Action of markers in CNV/LOH regions, either keep or drop
-    <min coverage in WGS>          Minimal coverage in WGS to include a heterozygous marker
-    <min coverage in RNA-seq>      Minimal coverage in RNA-seq to include a heterozygous marker
-    <fpkm threshold for candidate> FPKM threshold for nominate cis-activated candidate
+    -s <sample-id>       Sample ID
+    -o <results-dir>     Output directory
+    -l <markers>         Path to single nucleotide markers
+    -g <cnv-loh>         Path to CNV/LOH regions
+    -b <bam>             Path to a RNA-Seq BAM (index must be in same directory)
+    -e <fpkm-matrix>     Path to gene expression table
+    -m <snv-indel>       Path to somatic SNV/indels
+    -v <sv>              Path to somatic SVs
+    -c <cna>             Path to somatic CNVs
+    -d <disease>         Disease name
+    -a <cnv-loh-action>  Action of markers in CNV/LOH regions, either keep or drop (default=keep)
+    -w <min coverage in WGS>          Minimal coverage in WGS to include a heterozygous marker (default=10)
+    -r <min coverage in RNA-seq>      Minimal coverage in RNA-seq to include a heterozygous marker (default=10)
+    -f <fpkm threshold for candidate> FPKM threshold for nominate cis-activated candidate (default=5)
+    -u <user-annotation> User applied annotation file in BED format (default=NotSpecified)
+    -h <chr-string>      if the RNA-seq BAM with 'chr' in name, TRUE|FALSE (default=TRUE)
 ```
 
 ## Inputs

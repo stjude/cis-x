@@ -131,20 +131,20 @@ $ docker container run \
     --mount type=bind,source=$RESULT_DIR,target=/results \
     cis-x \
     run \
-    $SAMPLE_ID \
-    /results \
-    /data/$MARKERS \
-    /data/$CNV_LOH_REGIONS \
-    /data/$BAM \
-    /data/$GENE_EXPRESSION_TABLE \
-    /data/$SOMATIC_SNV_INDEL \
-    /data/$SOMATIC_SV \
-    /data/$SOMATIC_CNV \
-    $DISEASE \
-    $CNV_LOH_ACTION \
-    $MIN_COV_WGS \
-    $MIN_COV_RNA_SEQ \
-    $FPKM_THRESHOLD_CANDIDATE
+    -s $SAMPLE_ID \
+    -o /results \
+    -l /data/$MARKERS \
+    -g /data/$CNV_LOH_REGIONS \
+    -b /data/$BAM \
+    -e /data/$GENE_EXPRESSION_TABLE \
+    -m /data/$SOMATIC_SNV_INDEL \
+    -v /data/$SOMATIC_SV \
+    -c /data/$SOMATIC_CNV \
+    -d $DISEASE \
+    -a $CNV_LOH_ACTION \
+    -w $MIN_COV_WGS \
+    -r $MIN_COV_RNA_SEQ \
+    -f $FPKM_THRESHOLD_CANDIDATE
 ```
 
 Note that pathname arguments are relative to the container's target. For
@@ -181,20 +181,20 @@ $ docker container run \
     --mount type=bind,source=$(pwd)/tmp,target=/results \
     cis-x \
     run \
-    SJALL018373_D1 \
-    /results \
-    /data/SJALL018373_D1.test.wgs.markers.txt \
-    /data/SJALL018373_D1.test.wgs.cnvloh.txt \
-    /data/SJALL018373_D1.test.RNAseq.bam \
-    /data/SJALL018373_D1.test.RNASEQ_all_fpkm.txt \
-    /data/SJALL018373_D1.test.mut.txt \
-    /data/SJALL018373_D1.test.sv.txt \
-    /data/SJALL018373_D1.test.cna.txt \
-    TALL \
-    drop \
-    10 \
-    10 \
-    5
+    -s SJALL018373_D1 \
+    -o /results \
+    -l /data/SJALL018373_D1.test.wgs.markers.txt \
+    -g /data/SJALL018373_D1.test.wgs.cnvloh.txt \
+    -b /data/SJALL018373_D1.test.RNAseq.bam \
+    -e /data/SJALL018373_D1.test.RNASEQ_all_fpkm.txt \
+    -m /data/SJALL018373_D1.test.mut.txt \
+    -v /data/SJALL018373_D1.test.sv.txt \
+    -c /data/SJALL018373_D1.test.cna.txt \
+    -d TALL \
+    -a drop \
+    -w 10 \
+    -r 10 \
+    -f 5
 ```
 
 [demo data]: https://www.stjuderesearch.org/site/lab/zhang/cis-x
