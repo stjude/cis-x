@@ -183,6 +183,7 @@ cis-X currently only works with hg19 (GRCh37).
       * `loo.rank`: rank of the case under analysis among the reference cases
       * `imprinting.status`: imprinting status of the gene
       * `candidate.group`: status of the gene, combining both ASE and outlier tests
+      * `description`: status of the gene in COSMIC database
 
     Strand orientations are denoted with a `+` for a sense or coding strand
     and `-` for a antisense or non-coding strand.
@@ -228,6 +229,7 @@ cis-X currently only works with hg19 (GRCh37).
       * `EpiRoadmap_enhancer`: enhancer regions that overlap with the mutation (from the [NIH Roadmap Epigenomics Project])
       * `EpiRoadmap_promoter`: promoter regions that overlap with the mutation (from the [NIH Roadmap Epigenomics Project])
       * `EpiRoadmap_dyadic`: dyadic regions that overlap with the mutation (from the [NIH Roadmap Epigenomics Project])
+      * `User_Annot`: annotation from the user-provided BED file
 
   * `*.OHE.results.txt`: Raw results for outlier high expression test.
 
@@ -242,6 +244,8 @@ cis-X currently only works with hg19 (GRCh37).
       * `size.white`: number of cases in the whitelist reference cohort
       * `p.white`: p-value in the outlier test using the whitelist reference cohort
       * `rank.white`: rank of the expression level in the case under analysis compared to the whitelist reference cohort
+      * `tscore.white`: t-score representing if the gene showed outlier expresssion using the whitelist reference cohort
+      * `tscore.perc.white`: percentage of the t-score compared to the null distribution
 
   * `*.ase.gene.model.fdr.txt`: Raw results for gene level allelic specific
     expression test.
