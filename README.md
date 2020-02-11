@@ -63,7 +63,7 @@ be increased for the desktop version of Docker by going to Docker preferences
 In the cis-X project directory, build the Docker image.
 
 ```
-$ docker build --tag cis-x .
+$ docker image build --tag cis-x .
 ```
 
 #### Run
@@ -103,7 +103,7 @@ To run this in a container using the Docker image, pass the subcommand and argum
 as the command the container runs.
 
 ```
-$ docker run cis-x seed /tmp/refs/external
+$ docker container run cis-x seed /tmp/refs/external
 ```
 
 This, however, writes files to the container, rather than the host. To write
@@ -112,7 +112,7 @@ the container, e.g., `$(pwd)/refs/external` to `/app/refs/external`. The
 argument passed to the command must match the target directory.
 
 ```
-$ docker run \
+$ docker container run \
     --mount type=bind,source=$(pwd)/refs/external,target=/app/refs/external \
     cis-x \
     seed \
@@ -125,7 +125,7 @@ The following template is the entire command to execute the `run` command,
 with variables showing what needs to be set.
 
 ```
-$ docker run \
+$ docker container run \
     --mount type=bind,source=$DATA_DIR,target=/data,readonly \
     --mount type=bind,source=$REFS_DIR,target=/app/refs/external,readonly \
     --mount type=bind,source=$RESULT_DIR,target=/results \
@@ -166,7 +166,7 @@ assume the demo is extracted to a `tmp` directory in the root of the project.
 ```
 $ git clone https://github.com/stjude/cis-x.git
 $ cd cis-x
-$ docker build --tag cis-x .
+$ docker image build --tag cis-x .
 $ mkdir tmp
 $ wget --directory-prefix tmp http://ftp.stjude.org/pub/software/cis-x/cis-X-demo.tar.gz
 $ tar xf tmp/cis-X-demo.tar.gz --directory tmp
@@ -175,7 +175,7 @@ $ tar xf tmp/cis-X-demo.tar.gz --directory tmp
 Then run cis-X.
 
 ```
-$ docker run \
+$ docker container run \
     --mount type=bind,source=$(pwd)/tmp/demo/data,target=/data,readonly \
     --mount type=bind,source=$(pwd)/tmp/demo/ref,target=/app/refs/external,readonly \
     --mount type=bind,source=$(pwd)/tmp,target=/results \

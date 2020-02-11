@@ -6,7 +6,7 @@ applet only executes the `run` command.
 ## Build
 
 ```
-$ docker build --tag cis-x ../..
+$ docker image build --tag cis-x ../..
 $ dx-docker add-to-applet cis-x .
 $ dx build
 ```
