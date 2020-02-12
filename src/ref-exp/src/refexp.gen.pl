@@ -16,11 +16,11 @@ while(<IN>) {
     next if $. == 1;
     my @F = split/\t/;
     if ($F[5]>=10) {
-	    if ($F[15] == 1) {
-	        print OUT "$F[0]\t$F[16]\t$F[17]\t$F[18]\n";
-	    }else {
-	        print OUT "$F[0]\t$F[5]\t$F[6]\t$F[7]\n";
-	    }
+      if ($F[15] == 1) {
+          print OUT "$F[0]\t$F[16]\t$F[17]\t$F[18]\n";
+      }else {
+          print OUT "$F[0]\t$F[5]\t$F[6]\t$F[7]\n";
+      }
     }
 }
 close IN;

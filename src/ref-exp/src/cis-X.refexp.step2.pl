@@ -19,3 +19,5 @@ system "perl -w $codedir/collect.cohort.pl $config $workdir $expfile";
 system "perl -w $codedir/filter.cohort.v2.pl $codedir $workdir";
 system "Rscript $codedir/cleanup.bi.cases.R $workdir";
 system "perl -w $codedir/refexp.gen.pl $workdir $expfile";
+system "Rscript $codedir/precal.R $workdir";
+system "perl -w $codedir/format.precal.pl $workdir";

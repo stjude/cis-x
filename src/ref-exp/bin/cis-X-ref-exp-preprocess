@@ -10,12 +10,17 @@ ROOTDIR=$2
 HIGH20=$3
 RNABAM=$4
 CNV_LOH=$5
+CHR_STRING=$6
 
-if [ $# -lt 5 ]; then
+COVG_WGS=10
+COVG_RNA=10
+CNV_LOH_ACTION=drop
+
+if [ $# -lt 7 ]; then
     basename $0
     echo
     echo "USAGE:"
-    echo "    cis-X ref-exp preprocess <sample-id> <results-dir> <markers> <bam> <cnv-loh>"
+    echo "    cis-X ref-exp preprocess <sample-id> <results-dir> <markers> <bam> <cnv-loh> <chr-string>"
     exit 1
 fi
 
@@ -25,11 +30,15 @@ cd $WORKDIR
 
 SNV4_OUT="$WORKDIR/$SAMPLE_ID.snv4.txt"
 HET_OUT="$WORKDIR/$SAMPLE_ID.heterozygous.markers.txt"
-cis-X-mark $SAMPLE_ID $HIGH20 $CNV_LOH $SNV4_OUT $HET_OUT
+#cis-X-mark $SAMPLE_ID $HIGH20 $CNV_LOH $SNV4_OUT $HET_OUT
+cis-X-mark $SAMPLE_ID $HIGH20 $CNV_LOH $SNV4_OUT $HET_OUT $COVG_WGS
 
 MATRIX_OUT="$WORKDIR/matrix_combined_matrix_simple.tab"
-cis-X-build-matrix $RNABAM $SNV4_OUT $WORKDIR $MATRIX_OUT
+#cis-X-build-matrix $RNABAM $SNV4_OUT $WORKDIR $MATRIX_OUT
+cis-X-build-matrix $RNABAM $SNV4_OUT $WORKDIR $MATRIX_OUT $CHR_STRING
 
 ASE_RESULT_MARKER="$WORKDIR/$SAMPLE_ID.ase.combine.WGS.RNAseq.goodmarkers.binom.txt"
 ASE_RESULT_GENE="$WORKDIR/$SAMPLE_ID.ase.gene.model.fdr.txt"
-cis-X-ase $SAMPLE_ID $WORKDIR $HET_OUT $MATRIX_OUT $ASE_RESULT_MARKER $ASE_RESULT_GENE
+ASE_RESULT_RUN="$WORKDIR/$SAMPLE_ID.ase.candidates.runs.txt"
+#cis-X-ase $SAMPLE_ID $WORKDIR $HET_OUT $MATRIX_OUT $ASE_RESULT_MARKER $ASE_RESULT_GENE
+cis-X-ase $SAMPLE_ID $WORKDIR $HET_OUT $MATRIX_OUT $ASE_RESULT_MARKER $ASE_RESULT_GENE $ASE_RESULT_RUN $CNV_LOH_ACTION $COVG_RNA

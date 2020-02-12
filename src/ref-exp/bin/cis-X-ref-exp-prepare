@@ -4,13 +4,14 @@ CIS_X_REF_EXP_HOME=$(realpath $(dirname $0)/..)
 
 CONFIG=$1
 RESULTS_DIR=$2
+CHR_STRING=$3
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 3 ]; then
     basename $0
     echo
     echo "USAGE:"
-    echo "    cis-X ref-exp prepare <config> <results-dir>"
+    echo "    cis-X ref-exp prepare <config> <results-dir> <chr-string>"
     exit 1
 fi
 
-perl $CIS_X_REF_EXP_HOME/src/cis-X.refexp.step1.pl $CONFIG $RESULTS_DIR
+perl $CIS_X_REF_EXP_HOME/src/cis-X.refexp.step1.pl $CONFIG $RESULTS_DIR $CHR_STRING $COVG_WGS
