@@ -88,12 +88,11 @@ RUN cd /tmp \
     && rm variants2matrix.tar.gz
 
 RUN cd /tmp \
-    && wget http://ftp.stjude.org/pub/software/cis-x/cis-X-refs.zip \
-    && echo "26c75c7ae058b1148f0f087649b62706795272b28e5e1c995c9638ce85033dec *cis-X-refs.zip" | sha256sum --check \
-    && unzip cis-X-refs.zip \
-    && mkdir /app \
-    && mv cis-X-refs /app/refs \
-    && rm cis-X-refs.zip
+    && wget https://www.stjuderesearch.org/site/docs/zhang/cis-x-refs-20200212.tar.gz \
+    && echo "1074dd48157cd00dc407ff06e0bca01c0546d1886e6c1f6fb7d25e1d42b060c0 *cis-x-refs-20200212.tar.gz" | sha256sum --check \
+    && mkdir -p /app/refs \
+    && tar xf cis-x-refs-20200212.tar.gz --strip-components 1 --directory /app/refs \
+    && rm cis-x-refs-20200212.tar.gz
 
 # set for ruby
 ENV LANG C.UTF-8
