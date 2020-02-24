@@ -41,14 +41,18 @@ Reference matrices are tab-delimited files, including a header.
   * `exp.ref.bi.txt`: gene_name, num_cases, id, fpkm
   * `exp.ref.white.txt`: gene_name, num_cases, id, fpkm
 
+An extra file `precal.tvalue.bin_gt1.txt` is also used, which contains a
+line-delimited vector of normalized t-values across samples.
+
 If there is no prior knowledge, it is valid to create a reference matrix with
 no rows (but include the header). Note that having both empty biallelic
 expression and whitelist matrices will result in higher false negative rates
 for cis-activated candidates during analysis.
 
-Each disease under `$CIS_X_HOME/refs/diseases/$DISEASE` must have these three
-files. `$DISEASE` is the name given when running `cis-X run`. See the `TALL`
-and `AML` reference matrices as references.
+Each disease under `$CIS_X_HOME/refs/diseases/$DISEASE` must have these four
+files. `$DISEASE` is the name given when running `cis-X run`. See the `NBL` and
+`TALL` directories for examples of the reference expression matrices and
+normalized t-values vector.
 
 ## Example
 
