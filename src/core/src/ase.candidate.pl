@@ -74,7 +74,7 @@ open IN, "< $infile" or die "$infile: $!";
 while(<IN>) {
     chomp;
     if ($. == 1) {
-        print OUT "$_\tFPKM\tloo.source\tloo.cohort.size\tloo.tscore\tloo.tscore.perc\tloo.rank\timprinting.status\tcandidate.group\tdescription\n";
+        print OUT "$_\tFPKM\tloo.source\tloo.cohort.size\tloo.tstatistic\tloo.qval\tloo.rank\timprinting.status\tcandidate.group\tdescription\n";
         next;
     }
     my @F = split/\t/;

@@ -114,5 +114,5 @@ for (i in 1:length(fpkm.sid)) {
     out <- rbind(out,c(g.i,x.i.raw,l.bi,p.bi,r.bi,t.bi,t.bi.perc,l.cohort,p.cohort,r.cohort,t.cohort,t.cohort.perc,l.white,p.white,r.white,t.white,t.white.perc))
   }
 }
-colnames(out) <- c("Gene","fpkm.raw","size.bi","p.bi","rank.bi","tscore.bi","tscore.perc.bi","size.cohort","p.cohort","rank.cohort","tscore.cohort","tscore.perc.cohort","size.white","p.white","rank.white","tscore.white","tscore.perc.white")
+colnames(out) <- c("Gene","fpkm.raw","size.bi","p.bi","rank.bi","tstatistic.bi","qval.bi","size.cohort","p.cohort","rank.cohort","tstatistic.cohort","qval.cohort","size.white","p.white","rank.white","tstatistic.white","qval.white")
 write.table(out,file=outfile,sep="\t",row.names=F,quote=F)

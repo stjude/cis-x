@@ -15,6 +15,7 @@ SV_CAN=$9
 CNA_CAN=${10}
 SNVINDEL_CAN=${11}
 ANNO_USER=${12}
+TAD=${13}
 
 LOG=$WORKDIR/log.txt
 
@@ -26,7 +27,7 @@ SNVINDEL_WIN=200000
 TF_FPKM_THRESH=10
 PERC_OVERLAP=0.3
 
-TAD=$CIS_X_HOME/refs/external/hESC.combined.domain.hg19.bed
+#TAD=$CIS_X_HOME/refs/external/hESC.combined.domain.hg19.bed
 REFGENE=$CIS_X_HOME/refs/external/hg19_refGene.bed
 REF_2BIT=$CIS_X_HOME/refs/external/GRCh37-lite.2bit
 MOTIF=$CIS_X_HOME/refs/external/HOCOMOCOv10_HUMAN_mono_meme_format.meme

@@ -10,7 +10,7 @@ usage() {
     basename $0
     echo
     echo "USAGE:"
-    echo "    cis-X run -s <sample-id> -o <results-dir> -l <markers> -g <cnv-loh> -b <bam> -e <fpkm-matrix> -m <snv-indel> -v <sv> -c <cna> -d <disease> -a <cnv-loh-action> -w <min coverage in WGS> -r <min coverage in RNA-seq> -f <FPKM threshold for nominate cis-activated candidate> -u <user-annotation> -h <chr-string>"
+    echo "    cis-X run -s <sample-id> -o <results-dir> -l <markers> -g <cnv-loh> -b <bam> -e <fpkm-matrix> -m <snv-indel> -v <sv> -c <cna> -d <disease> -a <cnv-loh-action> -w <min coverage in WGS> -r <min coverage in RNA-seq> -f <FPKM threshold for nominate cis-activated candidate> -u <user-annotation> -h <chr-string> -t <tad-info>"
     echo
     echo "ARGS:"
     echo "    -s <sample-id>       Sample ID"
@@ -29,6 +29,7 @@ usage() {
     echo "    -f <fpkm threshold for candidate> FPKM threshold for nominate cis-activated candidate (default=5)"
     echo "    -u <user-annotation> User applied annotation file in BED format (default=NotSpecified)"
     echo "    -h <chr-string>      if the RNA-seq BAM with 'chr' in name, TRUE|FALSE (default=TRUE)"
+    echo "    -t <tad-info>         Path to the TAD annotation file in BED format in hg19 (default=hESC)"
 }
 
 CNV_LOH_ACTION=keep
@@ -37,8 +38,9 @@ COVG_RNA=10
 THRESH_CANDIDATE_FPKM=5
 ANNO_USER=NotSpecified
 CHR_STRING=TRUE
+TAD_INFO=hESC
 
-while getopts s:o:l:g:b:e:m:v:c:d:a:w:r:f:u:h: option
+while getopts s:o:l:g:b:e:m:v:c:d:a:w:r:f:u:h:t: option
 do
 case "${option}"
 in
@@ -58,6 +60,7 @@ r) COVG_RNA=${OPTARG};;
 f) THRESH_CANDIDATE_FPKM=${OPTARG};;
 u) ANNO_USER=${OPTARG};;
 h) CHR_STRING=${OPTARG};;
+t) TAD_INFO=${OPTARG};;
 esac
 done
 
@@ -106,6 +109,16 @@ elif [[ $ANNO_USER != NotSpecified && ! -f $ANNO_USER ]]; then
     echo "ERROR: user specified annotation file $ANNO_USER not exist."
     usage
     exit 1
+elif [[ $TAD_INFO != hESC && ! -f $TAD_INFO ]]; then
+    echo "ERROR: user specified TAD annotation file $TAD_INFO not exist."
+    usage
+    exit 1
+fi
+
+if [[ $TAD_INFO != hESC ]]; then
+    TAD=$TAD_INFO
+else
+    TAD=$CIS_X_HOME/refs/external/hESC.combined.domain.hg19.bed
 fi
 
 #SAMPLE_ID=$1
@@ -158,7 +171,7 @@ echo "INFO: $(date): cis-X-run: screening candidates"
 SV_CAN="$SAMPLE_ID.sv.candidates.txt"
 CNA_CAN="$SAMPLE_ID.cna.candidates.txt"
 SNVINDEL_CAN="$SAMPLE_ID.snvindel.candidates.txt"
-cis-X-screen $SAMPLE_ID $CANDIDATES_RESULT $CANDIDATES_RESULT_RUN $SV_IN $CNA_IN $SNVINDEL_IN $FPKM_MATRIX $WORKDIR $SV_CAN $CNA_CAN $SNVINDEL_CAN $ANNO_USER
+cis-X-screen $SAMPLE_ID $CANDIDATES_RESULT $CANDIDATES_RESULT_RUN $SV_IN $CNA_IN $SNVINDEL_IN $FPKM_MATRIX $WORKDIR $SV_CAN $CNA_CAN $SNVINDEL_CAN $ANNO_USER $TAD
 
 RESDIR="$ROOTDIR/$SAMPLE_ID"
 
