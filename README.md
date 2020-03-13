@@ -121,8 +121,8 @@ $ docker container run \
 
 ###### cis-X run
 
-The following template is the entire command to execute the `run` command,
-with variables showing what needs to be set.
+The following template shows the minimum set of arguments to execute the `run`
+command, with variables showing what needs to be set.
 
 ```
 $ docker container run \
@@ -140,11 +140,7 @@ $ docker container run \
     -m /data/$SOMATIC_SNV_INDEL \
     -v /data/$SOMATIC_SV \
     -c /data/$SOMATIC_CNV \
-    -d $DISEASE \
-    -a $CNV_LOH_ACTION \
-    -w $MIN_COV_WGS \
-    -r $MIN_COV_RNA_SEQ \
-    -f $FPKM_THRESHOLD_CANDIDATE
+    -d $DISEASE
 ```
 
 Note that pathname arguments are relative to the container's target. For
@@ -152,7 +148,8 @@ example, mounting `$HOME/research` and with an input located at
 `$HOME/research/sample-001/markers.txt`, the corresponding argument is
 `/data/sample-001/markers.txt`.
 
-See the [Docker reference for `run`][docker-run] for more options.
+See the [Docker reference for `run`][docker-run] for more container run
+options. See [cis-X run][run] for more runtime options.
 
 [docker-run]: https://docs.docker.com/engine/reference/run/
 
