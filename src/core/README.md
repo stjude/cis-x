@@ -62,7 +62,7 @@ reference files.
 cis-X-run
 
 USAGE:
-    cis-X run -s <sample-id> -o <results-dir> -l <markers> -g <cnv-loh> -b <bam> -e <fpkm-matrix> -m <snv-indel> -v <sv> -c <cna> -d <disease> -a <cnv-loh-action> -w <min coverage in WGS> -r <min coverage in RNA-seq> -f <FPKM threshold for nominate cis-activated candidate> -u <user-annotation> -h <chr-string>
+    cis-X run -s <sample-id> -o <results-dir> -l <markers> -g <cnv-loh> -b <bam> -e <fpkm-matrix> -m <snv-indel> -v <sv> -c <cna> -d <disease> -a <cnv-loh-action> -w <min coverage in WGS> -r <min coverage in RNA-seq> -f <FPKM threshold for nominate cis-activated candidate> -u <user-annotation> -h <chr-string> -t <tad-info>
 
 ARGS:
     -s <sample-id>       Sample ID
@@ -81,6 +81,7 @@ ARGS:
     -f <fpkm threshold for candidate> FPKM threshold for nominate cis-activated candidate (default=5)
     -u <user-annotation> User applied annotation file in BED format (default=NotSpecified)
     -h <chr-string>      if the RNA-seq BAM with 'chr' in name, TRUE|FALSE (default=TRUE)
+    -t <tad-info>         Path to the TAD annotation file in BED format in hg19 (default=hESC)
 ```
 
 ## Inputs
@@ -213,6 +214,14 @@ Running cis-X requires quite a few inputs.
 
   * `fpkm_threshold_candidate`: The FPKM threshold for the nomination of a
     cis-activated candidate.
+
+  * `user-annotation`: Annotations for the candidate SNV/indels in BED format.
+
+  * `chr-string`: Whether the names in the reference sequence dictionary are
+    prefixed with "chr".
+
+  * `tad-info`: TAD information defining the regulatory territory used in
+    noncoding variant analysis.
 
 [cis-X ref-exp]: https://github.com/stjude/cis-x/tree/master/src/ref-exp
 [22237106]: https://www.ncbi.nlm.nih.gov/pubmed/22237106
