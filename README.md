@@ -17,7 +17,7 @@ cis-X currently only works with hg19 (GRCh37).
 More details and examples on running cis-X can be found in the [user guide].
 
 [HOCOMOCO]: http://hocomoco11.autosome.ru/
-[user guide]: https://www.stjuderesearch.org/site/docs/zhang/cis-x-instructions-20200210.pdf
+[user guide]: https://www.stjuderesearch.org/site/docs/zhang/cis-x-instructions.pdf
 
 ## Installation
 
