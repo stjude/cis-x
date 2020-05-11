@@ -66,7 +66,7 @@
       "name": "disease",
       "label": "Disease subtype",
       "class": "string",
-      "choices": ["TALL", "AML"]
+      "choices": ["NBL", "TALL"]
     },
     {
       "name": "cnv_loh_action",
