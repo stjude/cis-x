@@ -147,6 +147,7 @@
     "interpreter": "bash",
     "distribution": "Ubuntu",
     "release": "16.04",
+    "version": "1",
     "file": "src/cis-x.sh"
   },
   "regionalOptions": {
