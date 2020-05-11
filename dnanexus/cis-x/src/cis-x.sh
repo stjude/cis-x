@@ -9,6 +9,8 @@ main() {
 
     mkdir $DATA_DIR $REFS_DIR $RESULTS_DIR
 
+    gzip --decompress --stdout $RESOURCES/tmp/cis-x-latest.tar.gz | docker load
+
     dx download --output $DATA_DIR/wgs.markers.txt "$markers"
     dx download --output $DATA_DIR/wgs.cnvloh.txt "$cnv_loh"
     dx download --output $DATA_DIR/RNAseq.bam "$bam"
@@ -20,10 +22,10 @@ main() {
 
     dx download --recursive --output $REFS_DIR 'St. Jude Reference Data:/pipeline/cis-X/*'
 
-    dx-docker run \
-        --volume $DATA_DIR:/data \
-        --volume $REFS_DIR:/app/refs/external \
-        --volume $RESULTS_DIR:/results \
+    docker run \
+        --mount type=bind,source=$DATA_DIR,target=/data,readonly \
+        --mount type=bind,source=$REFS_DIR,target=/app/refs/external,readonly \
+        --mount type=bind,source=$RESULTS_DIR,target=/results \
         cis-x \
         run \
         -s $sample_id \

@@ -6,12 +6,8 @@ applet only executes the `run` command.
 ## Build
 
 ```
-$ docker image build --tag cis-x ../..
-$ dx-docker add-to-applet cis-x .
+$ docker build --tag cis-x ../..
+$ mkdir -p resources/tmp
+$ docker save cis-x | gzip > resources/tmp/cis-x-latest.tar.gz
 $ dx build
 ```
-
-Note dx-docker exports the image in the ACI format, which requires
-[docker2aci] to be installed.
-
-[docker2aci]: https://github.com/appc/docker2aci
