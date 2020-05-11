@@ -1,5 +1,27 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+  * core: Add option to use user-specified TAD (topologically associating
+    domain) annotations. See `t` option. By default, this still uses hESC
+    (Human ES Cell).
+
+  * ref-exp: Add option to handle reference sequence names prefixed with "chr".
+    Set `chr-string` to either `TRUE` or `FALSE`.
+
+  * ref-exp: Build normalized t-values for a gene across samples. See
+    `precal.tvalue.bin_gt1.txt`.
+
+### Changed
+
+  * core: `cis-X-run` now uses short name arguments instead of unnamed
+    arguments. For example, instead of `cis-X run $SAMPLE_ID ...`, run `cis-X
+    run -s $SAMPLE_ID ...`.
+
+  * Synced with 2020-02-08 and 2020-03-13 revisions.
+
 ## [1.4.0] - 2019-07-10
 
 ### Added
