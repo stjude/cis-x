@@ -90,16 +90,16 @@ RUN cd /tmp \
 RUN cd /tmp \
     && wget https://www.stjuderesearch.org/site/docs/zhang/cis-x-refs-20200212.tar.gz \
     && echo "1074dd48157cd00dc407ff06e0bca01c0546d1886e6c1f6fb7d25e1d42b060c0 *cis-x-refs-20200212.tar.gz" | sha256sum --check \
-    && mkdir -p /app/refs \
-    && tar xf cis-x-refs-20200212.tar.gz --strip-components 1 --directory /app/refs \
+    && mkdir -p /opt/cis-x/refs \
+    && tar xf cis-x-refs-20200212.tar.gz --strip-components 1 --directory /opt/cis-x/refs \
     && rm cis-x-refs-20200212.tar.gz
 
 # set for ruby
 ENV LANG C.UTF-8
 
-ENV PATH /app/bin:/opt/meme/bin:${V2M_HOME}/bin:${PATH}
+ENV PATH /opt/cis-x/bin:/opt/meme/bin:${V2M_HOME}/bin:${PATH}
 
-COPY bin /app/bin
-COPY src /app/src
+COPY bin /opt/cis-x/bin
+COPY src /opt/cis-x/src
 
-ENTRYPOINT ["/app/bin/cis-X"]
+ENTRYPOINT ["/opt/cis-x/bin/cis-X"]

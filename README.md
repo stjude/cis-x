@@ -74,12 +74,12 @@ commands.
 The image assumes two working directories: `/data` for inputs and `/results`
 for outputs. `/data` can be read-only, whereas `/results` needs write access.
 External references (see [cis-X seed][seed]) also need to be mounted to
-`/app/refs/external`. For example, mounting to these directories requires three
-flags:
+`/opt/cis-x/refs/external`. For example, mounting to these directories requires
+three flags:
 
 ```
 --mount type=bind,source=$HOME/research/data,target=/data,readonly \
---mount type=bind,source=/tmp/references,target=/app/refs/external,readonly \
+--mount type=bind,source=/tmp/references,target=/opt/cis-x/refs/external,readonly \
 --mount type=bind,source=$(pwd)/cis-x-out,target=/results \
 ```
 
@@ -108,15 +108,15 @@ $ docker container run cis-x seed /tmp/refs/external
 
 This, however, writes files to the container, rather than the host. To write
 files to the host from the container, mount the host destination directory to
-the container, e.g., `$(pwd)/refs/external` to `/app/refs/external`. The
+the container, e.g., `$(pwd)/refs/external` to `/opt/cis-x/refs/external`. The
 argument passed to the command must match the target directory.
 
 ```
 $ docker container run \
-    --mount type=bind,source=$(pwd)/refs/external,target=/app/refs/external \
+    --mount type=bind,source=$(pwd)/refs/external,target=/opt/cis-x/refs/external \
     cis-x \
     seed \
-    /app/refs/external
+    /opt/cis-x/refs/external
 ```
 
 ###### cis-X run
@@ -127,7 +127,7 @@ command, with variables showing what needs to be set.
 ```
 $ docker container run \
     --mount type=bind,source=$DATA_DIR,target=/data,readonly \
-    --mount type=bind,source=$REFS_DIR,target=/app/refs/external,readonly \
+    --mount type=bind,source=$REFS_DIR,target=/opt/cis-x/refs/external,readonly \
     --mount type=bind,source=$RESULT_DIR,target=/results \
     cis-x \
     run \
@@ -174,7 +174,7 @@ Then run cis-X.
 ```
 $ docker container run \
     --mount type=bind,source=$(pwd)/tmp/demo/data,target=/data,readonly \
-    --mount type=bind,source=$(pwd)/tmp/demo/ref,target=/app/refs/external,readonly \
+    --mount type=bind,source=$(pwd)/tmp/demo/ref,target=/opt/cis-x/refs/external,readonly \
     --mount type=bind,source=$(pwd)/tmp,target=/results \
     cis-x \
     run \

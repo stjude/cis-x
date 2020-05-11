@@ -24,7 +24,7 @@ main() {
 
     docker run \
         --mount type=bind,source=$DATA_DIR,target=/data,readonly \
-        --mount type=bind,source=$REFS_DIR,target=/app/refs/external,readonly \
+        --mount type=bind,source=$REFS_DIR,target=/opt/cis-x/refs/external,readonly \
         --mount type=bind,source=$RESULTS_DIR,target=/results \
         cis-x \
         run \
