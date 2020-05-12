@@ -3,6 +3,7 @@
 main() {
     set -x
 
+    REFERENCE_DATA_PROJECT_ID=project-F5444K89PZxXjBqVJ3Pp79B4
     DATA_DIR=$HOME/data
     REFS_DIR=$HOME/refs
     RESULTS_DIR=$HOME/results
@@ -20,7 +21,7 @@ main() {
     dx download --output $DATA_DIR/sv.txt "$sv"
     dx download --output $DATA_DIR/cna.txt "$cna"
 
-    dx download --recursive --output $REFS_DIR 'St. Jude Reference Data:/pipeline/cis-X/*'
+    dx download --recursive --output $REFS_DIR "$REFERENCE_DATA_PROJECT_ID:/pipeline/cis-X/*"
 
     docker run \
         --mount type=bind,source=$DATA_DIR,target=/data,readonly \
