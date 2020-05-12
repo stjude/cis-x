@@ -33,7 +33,8 @@ RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
 # core
 
 RUN wget -O - https://cpanmin.us | perl - App::cpanminus \
-    && cpanm Data::Compare
+    && cpanm Data::Compare \
+    && chown --recursive root:root /root/.cpanm
 
 COPY src/other/meme_glam2_fix_new_gcc.patch tmp/
 
@@ -84,14 +85,14 @@ ENV CLASSPATH ${V2M_HOME}/lib/java/bambino-1.0.jar:${V2M_HOME}/lib/java/indelxre
 RUN cd /tmp \
     && wget http://ftp.stjude.org/pub/software/cis-x/variants2matrix.tar.gz \
     && echo "6502f1bd5d8ec64d357092c21b5eb3b9cefc135a41b8b0d0d3124c2ba2f80311 *variants2matrix.tar.gz" | sha256sum --check \
-    && tar xf variants2matrix.tar.gz --directory /opt \
+    && tar xf variants2matrix.tar.gz --directory /opt --no-same-owner \
     && rm variants2matrix.tar.gz
 
 RUN cd /tmp \
     && wget https://www.stjuderesearch.org/site/docs/zhang/cis-x-refs-20200212.tar.gz \
     && echo "1074dd48157cd00dc407ff06e0bca01c0546d1886e6c1f6fb7d25e1d42b060c0 *cis-x-refs-20200212.tar.gz" | sha256sum --check \
     && mkdir -p /opt/cis-x/refs \
-    && tar xf cis-x-refs-20200212.tar.gz --strip-components 1 --directory /opt/cis-x/refs \
+    && tar xf cis-x-refs-20200212.tar.gz --strip-components 1 --directory /opt/cis-x/refs --no-same-owner \
     && rm cis-x-refs-20200212.tar.gz
 
 # set for ruby
