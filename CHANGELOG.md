@@ -1,6 +1,6 @@
-# Changelog
+#Changelog
 
-## Unreleased
+## [1.5.0] - 2020-05-19
 
 ### Added
 
@@ -80,6 +80,7 @@
 
   * Initial release
 
+[1.4.0]: https://github.com/stjude/cis-x/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/stjude/cis-x/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/stjude/cis-x/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/stjude/cis-x/compare/v1.1.0...v1.2.0

@@ -3,11 +3,11 @@
   "title": "St. Jude cis-X",
   "summary": "Search for activating regulatory variants in the tumor genome",
   "dxapi": "1.0.0",
-  "version": "1.4.0-1",
+  "version": "1.5.0-1",
   "openSource": true,
   "details": {
     "upstreamUrl": "https://github.com/stjude/cis-x",
-    "upstreamVersion": "1.4.0",
+    "upstreamVersion": "1.5.0",
     "upstreamLicenses": ["Apache-2.0"]
   },
   "inputSpec": [
