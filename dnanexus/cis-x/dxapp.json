@@ -73,7 +73,7 @@
       "label": "CNV/LOH action",
       "class": "string",
       "choices": ["keep", "drop"],
-      "default": "drop"
+      "default": "keep"
     },
     {
       "name": "min_coverage_wgs",
@@ -85,13 +85,13 @@
       "name": "min_coverage_rna_seq",
       "label": "Minimum coverage in WGS",
       "class": "int",
-      "default": 5
+      "default": 10
     },
     {
       "name": "fpkm_threshold_candidate",
       "label": "Candidate FPKM threshold",
       "class": "float",
-      "default": 0.1
+      "default": 5.0
     }
   ],
   "outputSpec": [
