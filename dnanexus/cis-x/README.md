@@ -147,6 +147,9 @@ cis-X currently only works with hg19 (GRCh37).
   * `fpkm_threshold_candidate`: The FPKM threshold for the nomination of a
     cis-activated candidate.
 
+  * `chr_string`: Whether the names in the reference sequence dictionary are
+    prefixed with "chr".
+
 [cis-X ref-exp]: https://github.com/stjude/cis-x/tree/master/src/ref-exp
 [22237106]: https://www.ncbi.nlm.nih.gov/pubmed/22237106
 

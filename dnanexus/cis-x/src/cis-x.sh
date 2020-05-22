@@ -42,7 +42,8 @@ main() {
         -a $cnv_loh_action \
         -w $min_coverage_wgs \
         -r $min_coverage_rna_seq \
-        -f $fpkm_threshold_candidate
+        -f $fpkm_threshold_candidate \
+        -h $chr_string
 
     cis_activated_candidates=$(dx upload --brief $RESULTS_DIR/$sample_id/$sample_id.cisActivated.candidates.txt)
     sv_candidates=$(dx upload --brief $RESULTS_DIR/$sample_id/$sample_id.sv.candidates.txt)

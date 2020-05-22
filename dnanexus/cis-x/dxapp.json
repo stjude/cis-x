@@ -92,6 +92,13 @@
       "label": "Candidate FPKM threshold",
       "class": "float",
       "default": 5.0
+    },
+    {
+      "name": "chr_string",
+      "label": "Reference sequence names have 'chr' prefix",
+      "class": "string",
+      "choices": ["TRUE", "FALSE"],
+      "default": "TRUE"
     }
   ],
   "outputSpec": [
