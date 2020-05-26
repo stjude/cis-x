@@ -27,6 +27,11 @@ main() {
       CIS_X_EXTRA_ARGS="$CIS_X_EXTRA_ARGS -u $DATA_DIR/user_annotation.bed"
     fi
 
+    if [[ ! -z "$tad_info" ]]; then
+      dx download --output $DATA_DIR/tad_info.bed "$tad_info"
+      CIS_X_EXTRA_ARGS="$CIS_X_EXTRA_ARGS -t $DATA_DIR/tad_info.bed"
+    fi
+
     dx download --recursive --output $REFS_DIR "$REFERENCE_DATA_PROJECT_ID:/pipeline/cis-X/*"
 
     docker run \

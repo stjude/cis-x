@@ -152,6 +152,9 @@ cis-X currently only works with hg19 (GRCh37).
   * `chr_string`: Whether the names in the reference sequence dictionary are
     prefixed with "chr".
 
+  * `tad_info`: TAD information defining the regulatory territory used in
+    noncoding variant analysis.
+
 [cis-X ref-exp]: https://github.com/stjude/cis-x/tree/master/src/ref-exp
 [22237106]: https://www.ncbi.nlm.nih.gov/pubmed/22237106
 

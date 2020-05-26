@@ -105,6 +105,12 @@
       "class": "string",
       "choices": ["TRUE", "FALSE"],
       "default": "TRUE"
+    },
+    {
+      "name": "tad_info",
+      "label": "TAD annotations",
+      "class": "file",
+      "optional": true
     }
   ],
   "outputSpec": [
