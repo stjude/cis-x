@@ -94,6 +94,12 @@
       "default": 5.0
     },
     {
+      "name": "user_annotation",
+      "label": "User annotations",
+      "class": "file",
+      "optional": true
+    },
+    {
       "name": "chr_string",
       "label": "Reference sequence names have 'chr' prefix",
       "class": "string",

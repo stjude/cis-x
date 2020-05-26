@@ -7,6 +7,7 @@ main() {
     DATA_DIR=$HOME/data
     REFS_DIR=$HOME/refs
     RESULTS_DIR=$HOME/results
+    CIS_X_EXTRA_ARGS=""
 
     mkdir $DATA_DIR $REFS_DIR $RESULTS_DIR
 
@@ -20,6 +21,11 @@ main() {
     dx download --output $DATA_DIR/mut.txt "$snv_indel"
     dx download --output $DATA_DIR/sv.txt "$sv"
     dx download --output $DATA_DIR/cna.txt "$cna"
+
+    if [[ ! -z "$user_annotation" ]]; then
+      dx download --output $DATA_DIR/user_annotation.bed "$user_annotation"
+      CIS_X_EXTRA_ARGS="$CIS_X_EXTRA_ARGS -u $DATA_DIR/user_annotation.bed"
+    fi
 
     dx download --recursive --output $REFS_DIR "$REFERENCE_DATA_PROJECT_ID:/pipeline/cis-X/*"
 
@@ -43,7 +49,7 @@ main() {
         -w $min_coverage_wgs \
         -r $min_coverage_rna_seq \
         -f $fpkm_threshold_candidate \
-        -h $chr_string
+        -h $chr_string $CIS_X_EXTRA_ARGS
 
     cis_activated_candidates=$(dx upload --brief $RESULTS_DIR/$sample_id/$sample_id.cisActivated.candidates.txt)
     sv_candidates=$(dx upload --brief $RESULTS_DIR/$sample_id/$sample_id.sv.candidates.txt)

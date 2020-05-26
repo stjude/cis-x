@@ -147,6 +147,8 @@ cis-X currently only works with hg19 (GRCh37).
   * `fpkm_threshold_candidate`: The FPKM threshold for the nomination of a
     cis-activated candidate.
 
+  * `user_annotation`: Annotations for the candidate SNV/indels in BED format.
+
   * `chr_string`: Whether the names in the reference sequence dictionary are
     prefixed with "chr".
 
