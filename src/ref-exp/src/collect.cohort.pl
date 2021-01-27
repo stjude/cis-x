@@ -60,10 +60,10 @@ for my $sid (sort keys %sid) {
         next if $. == 1;
         my @F = split/\t/;
         next unless $g2fpkm{$F[1]};
-        if ($F[20]<0.05 and $F[17]>=0.3) {
+        if ($F[22]<0.05 and $F[19]>=0.3) {
             $dat{$F[1]}{ase}{sid} .= "$sid,";
             $dat{$F[1]}{ase}{fpkm} .= "$g2fpkm{$F[1]}{$sid},";
-        }elsif ($F[20] >= 0.05 and $F[9] == 0) { ### criteria updated on Dec 27, 2017.
+        }elsif ($F[22] >= 0.05 and $F[9] == 0) { ### criteria updated on Dec 27, 2017.
             $dat{$F[1]}{bi}{sid} .= "$sid,";
             $dat{$F[1]}{bi}{fpkm} .= "$g2fpkm{$F[1]}{$sid},";
         }else {

@@ -16,7 +16,7 @@ COVG_WGS=10
 COVG_RNA=10
 CNV_LOH_ACTION=drop
 
-if [ $# -lt 7 ]; then
+if [ $# -lt 6 ]; then
     basename $0
     echo
     echo "USAGE:"
