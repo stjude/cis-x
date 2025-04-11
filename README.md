@@ -92,6 +92,9 @@ results directory must exist before running the command.
 
 ###### cis-X seed
 
+> [!NOTE]
+> **cis-X seed** will likely not work due to [link rot](https://en.wikipedia.org/wiki/Link_rot). An alternative is to use the references included in the [demo data](#demo) instead.
+
 A basic example is running [cis-X seed][seed], which downloads and preprocesses
 required reference files to a directory. To run this locally, the `seed`
 subcommand is used, passing the destination directory of the resulting files.
