@@ -167,8 +167,6 @@ $ docker image build --tag cis-x .
 $ mkdir tmp
 $ wget --directory-prefix tmp http://ftp.stjude.org/pub/software/cis-x/cis-X-demo.tar.gz
 $ tar xf tmp/cis-X-demo.tar.gz --directory tmp
-$ wget --directory-prefix tmp https://www.stjuderesearch.org/site/docs/zhang/cancer_gene_census.txt.gz
-$ gzip --decompress --stdout tmp/cancer_gene_census.txt.gz > tmp/demo/ref/cancer_gene_census.txt
 ```
 
 Then run cis-X.
