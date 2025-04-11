@@ -62,7 +62,7 @@ RUN echo 'source("https://raw.githubusercontent.com/Bioconductor/LegacyInstall/8
     | R --vanilla
 
 RUN cd /usr/local/bin \
-    && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/twoBitToFa \
+    && wget https://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v385/twoBitToFa \
     && chmod +x twoBitToFa
 
 # seed
@@ -70,11 +70,11 @@ RUN cd /usr/local/bin \
 RUN gem install --no-document nokogiri --version 1.12.5
 
 RUN cd /usr/local/bin \
-    && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/faToTwoBit \
+    && wget https://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v385/faToTwoBit \
     && chmod +x faToTwoBit
 
 RUN cd /usr/local/bin \
-    && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/liftOver \
+    && wget https://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v385/liftOver \
     && chmod +x liftOver
 
 # variants2matrix
