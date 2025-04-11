@@ -58,7 +58,8 @@ RUN cd /tmp \
     && cp bin/* /usr/local/bin \
     && rm -r /tmp/bedtools*
 
-RUN echo 'source("http://bioconductor.org/biocLite.R"); biocLite("multtest")' | R --vanilla
+RUN echo 'source("https://raw.githubusercontent.com/Bioconductor/LegacyInstall/827129e25128453f19a61ce0e8f99d903155ad01/biocLite.R"); biocLite("multtest")' \
+    | R --vanilla
 
 RUN cd /usr/local/bin \
     && wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/twoBitToFa \
