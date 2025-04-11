@@ -17,7 +17,7 @@ cis-X currently only works with hg19 (GRCh37).
 More details and examples on running cis-X can be found in the [user guide].
 
 [HOCOMOCO]: http://hocomoco11.autosome.ru/
-[user guide]: https://www.stjuderesearch.org/site/docs/zhang/cis-x-instructions.pdf
+[user guide]: https://sjr-redesign.stjude.org/content/dam/research-redesign/labs/zhang-lab/cis-x-instructions.pdf
 
 ## Installation
 
@@ -48,15 +48,16 @@ For more details on how to run each command, see its respective README:
 
 ### Docker
 
-cis-X has a `Dockerfile` to create a [Docker] image, which sets up and
-installs all the required dependencies (sans references). To use this image,
-[install Docker](https://docs.docker.com/install) for your platform.
+cis-X has a `Dockerfile` to create a [Docker] image, which sets up and installs
+all the required dependencies (sans references). To use this image, [install
+Docker] for your platform.
 
 For typical inputs, cis-X requires at least 4 GiB of RAM. This resource can
 be increased for the desktop version of Docker by going to Docker preferences
 \> Advanced \> Memory.
 
 [Docker]: https://www.docker.com/
+[install Docker]: https://docs.docker.com/get-started/get-docker/
 
 #### Build
 
@@ -151,7 +152,7 @@ example, mounting `$HOME/research` and with an input located at
 See the [Docker reference for `run`][docker-run] for more container run
 options. See [cis-X run][run] for more runtime options.
 
-[docker-run]: https://docs.docker.com/engine/reference/run/
+[docker-run]: https://docs.docker.com/engine/containers/run/
 
 ## Demo
 
@@ -194,7 +195,7 @@ $ docker container run \
     -f 5
 ```
 
-[demo data]: https://www.stjuderesearch.org/site/lab/zhang/cis-x
+[demo data]: http://ftp.stjude.org/pub/software/cis-x/cis-X-demo.tar.gz
 
 [ref-exp]: https://github.com/stjude/cis-x/tree/master/src/ref-exp
 [run]: https://github.com/stjude/cis-x/tree/master/src/core
