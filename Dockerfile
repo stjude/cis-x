@@ -90,7 +90,7 @@ RUN cd /tmp \
     && rm variants2matrix.tar.gz
 
 RUN cd /tmp \
-    && wget https://www.stjuderesearch.org/site/docs/zhang/cis-x-refs-20200212.tar.gz \
+    && wget https://sjr-redesign.stjude.org/content/dam/research-redesign/labs/zhang-lab/cis-x-refs-20200212.tar.gz \
     && echo "1074dd48157cd00dc407ff06e0bca01c0546d1886e6c1f6fb7d25e1d42b060c0 *cis-x-refs-20200212.tar.gz" | sha256sum --check \
     && mkdir -p /opt/cis-x/refs \
     && tar xf cis-x-refs-20200212.tar.gz --strip-components 1 --directory /opt/cis-x/refs --no-same-owner \
